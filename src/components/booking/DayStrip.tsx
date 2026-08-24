@@ -80,12 +80,12 @@ export function DayStrip({
                         : "border-navy-200 bg-white text-navy-800 hover:border-teal-500 hover:bg-teal-50",
                   )}
                 >
-                  <span className="text-[14px] font-bold leading-none">
+                  <span className="text-[19px] font-bold leading-none">
                     {d.getMonth() + 1}/{d.getDate()}
                   </span>
                   <span
                     className={cx(
-                      "text-[11.5px] font-semibold leading-none",
+                      "text-[15px] font-semibold leading-none",
                       selected
                         ? "text-teal-100"
                         : disabled
@@ -99,7 +99,7 @@ export function DayStrip({
                   </span>
                   <span
                     className={cx(
-                      "mt-0.5 text-[10.5px] font-bold leading-none",
+                      "mt-0.5 text-[14px] font-bold leading-none",
                       selected
                         ? "text-white/90"
                         : disabled

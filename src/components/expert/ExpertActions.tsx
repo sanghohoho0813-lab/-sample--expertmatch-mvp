@@ -32,7 +32,7 @@ export function ExpertActions({ expert }: { expert: Expert }) {
         onClick={() => toggleFavorite(expert.id, expert.name)}
         aria-pressed={favorite}
         className={cx(
-          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[14px] font-semibold transition-all duration-200 active:scale-[0.97]",
+          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[19px] font-semibold transition-all duration-200 active:scale-[0.97]",
           favorite
             ? "border-danger-500 bg-danger-50 text-danger-600"
             : "border-white/25 text-white hover:bg-white/10",
@@ -51,7 +51,7 @@ export function ExpertActions({ expert }: { expert: Expert }) {
         onClick={() => toggleCompare(expert.id, expert.name)}
         aria-pressed={comparing}
         className={cx(
-          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[14px] font-semibold transition-all duration-200 active:scale-[0.97]",
+          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[19px] font-semibold transition-all duration-200 active:scale-[0.97]",
           comparing
             ? "border-teal-400 bg-teal-500 text-navy-950"
             : "border-white/25 text-white hover:bg-white/10",

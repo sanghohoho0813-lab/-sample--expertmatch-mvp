@@ -36,13 +36,13 @@ export function MobileBookingBar({ expert }: { expert: Expert }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             <Stars value={expert.rating} size={12} />
-            <span className="text-[12px] font-semibold text-navy-600">
+            <span className="text-[16px] font-semibold text-navy-600">
               {expert.rating.toFixed(1)}
             </span>
           </div>
-          <p className="mt-0.5 text-[17px] font-extrabold leading-none text-navy-900">
+          <p className="mt-0.5 text-[23px] font-extrabold leading-none text-navy-900">
             {formatPrice(expert.priceFrom)}
-            <span className="ml-0.5 text-[12.5px] font-semibold text-navy-500">
+            <span className="ml-0.5 text-[17px] font-semibold text-navy-500">
               원~
             </span>
           </p>
@@ -50,7 +50,7 @@ export function MobileBookingBar({ expert }: { expert: Expert }) {
 
         <Link
           href={`/booking/${expert.id}`}
-          className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl bg-teal-600 px-6 text-[15.5px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
+          className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl bg-teal-600 px-6 text-[21px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
         >
           상담 예약하기
         </Link>

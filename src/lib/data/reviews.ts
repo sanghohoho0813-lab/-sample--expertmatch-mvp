@@ -318,6 +318,7 @@ export const TESTIMONIALS = [
     quote:
       "혼자 검색만 반복하던 문제가 상담 한 번으로 정리됐어요. 어떤 순서로 준비해야 하는지 알게 된 게 가장 컸습니다.",
     expert: "김도현 전문가",
+    expertId: "kim-dohyun",
     rating: 5,
   },
   {
@@ -327,6 +328,7 @@ export const TESTIMONIALS = [
     quote:
       "광고비를 늘리는 대신 상세페이지를 먼저 고치라는 조언을 듣고 실행했습니다. 결과가 바로 숫자로 나왔습니다.",
     expert: "정민아 전문가",
+    expertId: "jung-mina",
     rating: 5,
   },
   {
@@ -336,6 +338,7 @@ export const TESTIMONIALS = [
     quote:
       "투자자가 어떤 순서로 보는지 알고 나니 덱 전체가 달라졌어요. 미팅에서 받는 질문의 성격 자체가 바뀌었습니다.",
     expert: "박재형 전문가",
+    expertId: "park-jaehyung",
     rating: 5,
   },
   {
@@ -345,6 +348,7 @@ export const TESTIMONIALS = [
     quote:
       "법인 전환을 계속 미루고 있었는데 제 매출로 직접 계산해주시니 바로 결정할 수 있었습니다.",
     expert: "최준호 전문가",
+    expertId: "choi-junho",
     rating: 5,
   },
 ];

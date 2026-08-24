@@ -25,18 +25,18 @@ const VALUES = [
 
 export function ValueStrip() {
   return (
-    <section className="border-b border-navy-100 bg-white">
-      <ul className="shell grid gap-x-6 gap-y-5 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:py-9">
+    <section className="border-b border-cream-200 bg-cream-50">
+      <ul className="shell grid gap-x-8 gap-y-7 py-11 sm:grid-cols-2 lg:grid-cols-4 lg:py-12">
         {VALUES.map((v) => {
           const ValueIcon = v.icon;
           return (
-            <li key={v.title} className="flex gap-3.5">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
-                <ValueIcon className="h-[22px] w-[22px]" strokeWidth={1.9} />
+            <li key={v.title} className="flex gap-4">
+              <span className="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl border border-gold-200 bg-white p-3 text-gold-600 shadow-[0_4px_14px_-8px_rgba(191,144,51,0.55)]">
+                <ValueIcon className="h-6 w-6" strokeWidth={1.9} />
               </span>
               <div className="min-w-0">
-                <h3 className="text-[15px] font-bold text-navy-900">{v.title}</h3>
-                <p className="mt-1 text-[13.5px] leading-relaxed text-navy-500">
+                <h3 className="text-[19px] font-bold text-navy-900">{v.title}</h3>
+                <p className="mt-1.5 text-[16px] leading-relaxed text-navy-500">
                   {v.body}
                 </p>
               </div>

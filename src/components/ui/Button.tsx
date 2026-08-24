@@ -17,9 +17,9 @@ const VARIANTS: Record<Variant, string> = {
 
 const SIZES: Record<Size, string> = {
   // 모바일 최소 터치영역 44px 확보
-  sm: "h-11 px-4 text-[14px] rounded-xl gap-1.5",
-  md: "h-12 px-5 text-[15px] rounded-xl gap-2",
-  lg: "h-14 px-7 text-[16px] rounded-2xl gap-2",
+  sm: "h-11 px-4 text-[19px] rounded-xl gap-1.5",
+  md: "h-12 px-5 text-[20px] rounded-xl gap-2",
+  lg: "h-14 px-7 text-[21px] rounded-2xl gap-2",
 };
 
 const BASE =

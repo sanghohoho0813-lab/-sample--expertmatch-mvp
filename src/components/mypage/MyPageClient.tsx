@@ -56,11 +56,11 @@ function EmptyState({
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-navy-50">
         <Search className="h-6 w-6 text-navy-300" strokeWidth={2} />
       </div>
-      <h3 className="mt-4 text-[17px] font-bold text-navy-900">{title}</h3>
-      <p className="mt-1.5 text-[14.5px] leading-relaxed text-navy-500">{body}</p>
+      <h3 className="mt-4 text-[23px] font-bold text-navy-900">{title}</h3>
+      <p className="mt-1.5 text-[19.5px] leading-relaxed text-navy-500">{body}</p>
       <Link
         href={actionHref}
-        className="mt-5 inline-flex h-12 items-center rounded-xl bg-teal-600 px-6 text-[15px] font-bold text-white transition-colors hover:bg-teal-700"
+        className="mt-5 inline-flex h-12 items-center rounded-xl bg-teal-600 px-6 text-[20px] font-bold text-white transition-colors hover:bg-teal-700"
       >
         {actionLabel}
       </Link>
@@ -80,29 +80,29 @@ function BookingRow({
   return (
     <li className="rounded-2xl border border-navy-100 bg-white p-4 transition-colors hover:border-navy-200 sm:p-5">
       <div className="flex items-start gap-3.5">
-        <Portrait name={booking.expertName} accent={booking.expertAccent} rounded="rounded-2xl" className="h-14 w-14" />
+        <Portrait name={booking.expertName} accent={booking.expertAccent} photo={booking.expertPhoto} rounded="rounded-2xl" className="h-14 w-14" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href={`/experts/${booking.expertId}`}
-              className="text-[16px] font-bold text-navy-900 transition-colors hover:text-teal-700"
+              className="text-[21px] font-bold text-navy-900 transition-colors hover:text-teal-700"
             >
               {booking.expertName}
             </Link>
             <span
               className={cx(
-                "rounded-md px-1.5 py-0.5 text-[11.5px] font-bold",
+                "rounded-md px-1.5 py-0.5 text-[15px] font-bold",
                 past ? "bg-navy-100 text-navy-500" : "bg-teal-50 text-teal-700",
               )}
             >
               {past ? "상담 완료" : "예약 확정"}
             </span>
           </div>
-          <p className="mt-0.5 truncate text-[13.5px] text-navy-500">
+          <p className="mt-0.5 truncate text-[18px] text-navy-500">
             {booking.expertTitle}
           </p>
 
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13.5px] text-navy-600">
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[18px] text-navy-600">
             <span className="inline-flex items-center gap-1.5 font-semibold text-navy-900">
               <CalendarClock className="h-4 w-4 text-teal-600" strokeWidth={2.2} />
               {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
@@ -114,13 +114,13 @@ function BookingRow({
           </div>
 
           {booking.note && (
-            <p className="mt-2.5 line-clamp-2 rounded-xl bg-navy-50 px-3 py-2 text-[13px] leading-relaxed text-navy-500">
+            <p className="mt-2.5 line-clamp-2 rounded-xl bg-navy-50 px-3 py-2 text-[17.5px] leading-relaxed text-navy-500">
               {booking.note}
             </p>
           )}
 
           <div className="mt-3.5 flex flex-wrap items-center justify-between gap-3 border-t border-dashed border-navy-100 pt-3">
-            <div className="flex items-center gap-2 text-[12.5px] text-navy-400">
+            <div className="flex items-center gap-2 text-[17px] text-navy-400">
               <span className="font-mono font-semibold text-navy-600">
                 {booking.code}
               </span>
@@ -133,7 +133,7 @@ function BookingRow({
               {past ? (
                 <Link
                   href={`/booking/${booking.expertId}`}
-                  className="inline-flex h-10 items-center rounded-xl border border-navy-200 bg-white px-3.5 text-[13.5px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
+                  className="inline-flex h-10 items-center rounded-xl border border-navy-200 bg-white px-3.5 text-[18px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
                 >
                   다시 예약
                 </Link>
@@ -141,7 +141,7 @@ function BookingRow({
                 <>
                   <Link
                     href="/chat"
-                    className="inline-flex h-10 items-center rounded-xl border border-navy-200 bg-white px-3.5 text-[13.5px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
+                    className="inline-flex h-10 items-center rounded-xl border border-navy-200 bg-white px-3.5 text-[18px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
                   >
                     상담 준비
                   </Link>
@@ -149,7 +149,7 @@ function BookingRow({
                     <button
                       type="button"
                       onClick={() => onCancel(booking.id)}
-                      className="inline-flex h-10 items-center gap-1.5 rounded-xl px-3 text-[13.5px] font-semibold text-navy-400 transition-colors hover:bg-danger-50 hover:text-danger-600"
+                      className="inline-flex h-10 items-center gap-1.5 rounded-xl px-3 text-[18px] font-semibold text-navy-400 transition-colors hover:bg-danger-50 hover:text-danger-600"
                     >
                       <Trash2 className="h-3.5 w-3.5" strokeWidth={2.2} />
                       예약 취소
@@ -207,14 +207,14 @@ export function MyPageClient() {
       <section className="overflow-hidden rounded-3xl bg-navy-900 p-6 sm:p-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-[15px] font-extrabold text-white">
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-[20px] font-extrabold text-white">
               게스트
             </span>
             <div>
-              <p className="text-[20px] font-extrabold tracking-tight text-white">
+              <p className="text-[26px] font-extrabold tracking-tight text-white">
                 게스트님
               </p>
-              <p className="mt-1 text-[13.5px] text-navy-300">
+              <p className="mt-1 text-[18px] text-navy-300">
                 데모 계정으로 둘러보는 중입니다
               </p>
             </div>
@@ -222,22 +222,22 @@ export function MyPageClient() {
 
           <dl className="grid grid-cols-3 gap-4 sm:gap-8">
             <div>
-              <dt className="text-[12px] text-navy-300">예정 상담</dt>
-              <dd className="mt-1 text-[20px] font-extrabold text-white">
+              <dt className="text-[16px] text-navy-300">예정 상담</dt>
+              <dd className="mt-1 text-[26px] font-extrabold text-white">
                 {ready ? upcoming.length : 0}
               </dd>
             </div>
             <div>
-              <dt className="text-[12px] text-navy-300">찜한 전문가</dt>
-              <dd className="mt-1 text-[20px] font-extrabold text-white">
+              <dt className="text-[16px] text-navy-300">찜한 전문가</dt>
+              <dd className="mt-1 text-[26px] font-extrabold text-white">
                 {ready ? favorites.length : 0}
               </dd>
             </div>
             <div>
-              <dt className="text-[12px] text-navy-300">누적 상담료</dt>
-              <dd className="mt-1 text-[20px] font-extrabold text-white">
+              <dt className="text-[16px] text-navy-300">누적 상담료</dt>
+              <dd className="mt-1 text-[26px] font-extrabold text-white">
                 {ready ? formatPrice(totalSpend) : 0}
-                <span className="ml-0.5 text-[12px] font-semibold text-navy-300">
+                <span className="ml-0.5 text-[16px] font-semibold text-navy-300">
                   원
                 </span>
               </dd>
@@ -257,7 +257,7 @@ export function MyPageClient() {
               onClick={() => setTab(t.id)}
               aria-current={active ? "page" : undefined}
               className={cx(
-                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-3.5 text-[14.5px] font-semibold transition-colors duration-200",
+                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-3.5 text-[19.5px] font-semibold transition-colors duration-200",
                 active ? "text-navy-900" : "text-navy-400 hover:text-navy-700",
               )}
             >
@@ -324,8 +324,8 @@ export function MyPageClient() {
 
             {tab === "reviews" && (
               <div className="rounded-2xl border border-navy-100 bg-white p-6">
-                <h3 className="text-[16px] font-bold text-navy-900">작성한 후기</h3>
-                <p className="mt-2 text-[14.5px] leading-relaxed text-navy-500">
+                <h3 className="text-[21px] font-bold text-navy-900">작성한 후기</h3>
+                <p className="mt-2 text-[19.5px] leading-relaxed text-navy-500">
                   상담이 완료되면 후기를 작성할 수 있습니다. 완료된 상담{" "}
                   <span className="font-bold text-navy-900">{done.length}건</span> 중
                   아직 작성한 후기가 없습니다.
@@ -337,12 +337,12 @@ export function MyPageClient() {
                         key={b.id}
                         className="flex items-center gap-3 rounded-xl border border-navy-100 p-3.5"
                       >
-                        <Portrait name={b.expertName} accent={b.expertAccent} rounded="rounded-xl" className="h-10 w-10" />
+                        <Portrait name={b.expertName} accent={b.expertAccent} photo={b.expertPhoto} rounded="rounded-xl" className="h-10 w-10" />
                         <div className="min-w-0 flex-1">
-                          <p className="text-[14.5px] font-bold text-navy-900">
+                          <p className="text-[19.5px] font-bold text-navy-900">
                             {b.expertName}
                           </p>
-                          <p className="text-[12.5px] text-navy-400">
+                          <p className="text-[17px] text-navy-400">
                             {formatDateKorean(b.date)} 상담
                           </p>
                         </div>
@@ -369,13 +369,13 @@ export function MyPageClient() {
                         )}
                       </div>
                       <div className="min-w-0 flex-1 rounded-2xl border border-navy-100 bg-white p-4">
-                        <p className="text-[12.5px] font-semibold text-teal-700">
+                        <p className="text-[17px] font-semibold text-teal-700">
                           {formatDateKorean(b.date)} {formatTimeKorean(b.time)}
                         </p>
-                        <p className="mt-1 text-[15px] font-bold text-navy-900">
+                        <p className="mt-1 text-[20px] font-bold text-navy-900">
                           {b.expertName} · {b.productName}
                         </p>
-                        <p className="mt-0.5 text-[13px] text-navy-500">
+                        <p className="mt-0.5 text-[17.5px] text-navy-500">
                           {METHOD_LABEL[b.method]} · {formatPrice(b.price)}원 · {b.code}
                         </p>
                       </div>
@@ -392,8 +392,8 @@ export function MyPageClient() {
             {tab === "profile" && (
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h3 className="text-[16px] font-bold text-navy-900">기본 정보</h3>
-                  <dl className="mt-4 space-y-3 text-[14.5px]">
+                  <h3 className="text-[21px] font-bold text-navy-900">기본 정보</h3>
+                  <dl className="mt-4 space-y-3 text-[19.5px]">
                     {[
                       { label: "이름", value: "게스트" },
                       { label: "계정 유형", value: "데모 계정" },
@@ -409,14 +409,14 @@ export function MyPageClient() {
                       </div>
                     ))}
                   </dl>
-                  <p className="mt-4 rounded-xl bg-navy-50 px-3.5 py-3 text-[13px] leading-relaxed text-navy-500">
+                  <p className="mt-4 rounded-xl bg-navy-50 px-3.5 py-3 text-[17.5px] leading-relaxed text-navy-500">
                     별도 회원가입 없이 바로 체험할 수 있도록 데모 계정이 자동으로
                     설정되어 있습니다.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h3 className="text-[16px] font-bold text-navy-900">빠른 이동</h3>
+                  <h3 className="text-[21px] font-bold text-navy-900">빠른 이동</h3>
                   <ul className="mt-4 space-y-2">
                     {[
                       { label: "전문가 찾기", href: "/experts" },
@@ -427,7 +427,7 @@ export function MyPageClient() {
                       <li key={l.label}>
                         <Link
                           href={l.href}
-                          className="flex min-h-[48px] items-center justify-between rounded-xl border border-navy-100 px-4 text-[14.5px] font-semibold text-navy-700 transition-colors hover:border-navy-200 hover:bg-navy-50"
+                          className="flex min-h-[48px] items-center justify-between rounded-xl border border-navy-100 px-4 text-[19.5px] font-semibold text-navy-700 transition-colors hover:border-navy-200 hover:bg-navy-50"
                         >
                           {l.label}
                           <ChevronRight className="h-4 w-4 text-navy-300" strokeWidth={2.2} />

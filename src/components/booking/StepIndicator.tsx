@@ -19,11 +19,11 @@ export function StepIndicator({
       {/* 모바일: 진행 바 */}
       <div className="lg:hidden">
         <div className="flex items-baseline justify-between">
-          <p className="text-[13px] font-bold text-teal-700">
+          <p className="text-[17.5px] font-bold text-teal-700">
             STEP {current + 1}
             <span className="ml-1 font-medium text-navy-400">/ {steps.length}</span>
           </p>
-          <p className="text-[14.5px] font-bold text-navy-900">{steps[current]}</p>
+          <p className="text-[19.5px] font-bold text-navy-900">{steps[current]}</p>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-navy-100">
           <div
@@ -53,7 +53,7 @@ export function StepIndicator({
               >
                 <span
                   className={cx(
-                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold transition-colors duration-200",
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[16px] font-bold transition-colors duration-200",
                     active
                       ? "bg-teal-600 text-white"
                       : done
@@ -65,7 +65,7 @@ export function StepIndicator({
                 </span>
                 <span
                   className={cx(
-                    "whitespace-nowrap text-[13.5px] font-semibold transition-colors duration-200",
+                    "whitespace-nowrap text-[18px] font-semibold transition-colors duration-200",
                     active
                       ? "text-navy-900"
                       : done

@@ -73,6 +73,20 @@ export const CATEGORIES: Category[] = [
   },
 ];
 
+/** 카테고리별 아이콘 톤 — 화면이 파랑/청록 일변도가 되지 않도록 */
+export const CATEGORY_TONE: Record<string, { tile: string; hover: string }> = {
+  startup: { tile: "bg-teal-50 text-teal-700", hover: "group-hover:bg-teal-600" },
+  marketing: { tile: "bg-rose-50 text-rose-600", hover: "group-hover:bg-rose-500" },
+  investment: { tile: "bg-gold-100 text-gold-600", hover: "group-hover:bg-gold-500" },
+  tax: { tile: "bg-sky-100 text-sky-600", hover: "group-hover:bg-sky-600" },
+  legal: { tile: "bg-indigo-50 text-indigo-600", hover: "group-hover:bg-indigo-600" },
+  career: { tile: "bg-emerald-50 text-emerald-600", hover: "group-hover:bg-emerald-600" },
+  hr: { tile: "bg-violet-50 text-violet-600", hover: "group-hover:bg-violet-600" },
+  design: { tile: "bg-orange-50 text-orange-600", hover: "group-hover:bg-orange-500" },
+  it: { tile: "bg-cyan-50 text-cyan-700", hover: "group-hover:bg-cyan-600" },
+  management: { tile: "bg-navy-100 text-navy-600", hover: "group-hover:bg-navy-800" },
+};
+
 export const CATEGORY_MAP: Record<string, Category> = Object.fromEntries(
   CATEGORIES.map((c) => [c.id, c]),
 );

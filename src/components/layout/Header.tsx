@@ -55,7 +55,7 @@ export function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-[15px] font-medium text-navy-600 transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900"
+              className="rounded-lg px-3 py-2 text-[20px] font-medium text-navy-600 transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900"
             >
               {item.label}
             </Link>
@@ -78,7 +78,7 @@ export function Header() {
           >
             <Heart className="h-5 w-5" />
             {ready && favorites.length > 0 && (
-              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[10px] font-bold text-white">
+              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[13px] font-bold text-white">
                 {favorites.length}
               </span>
             )}
@@ -86,7 +86,7 @@ export function Header() {
 
           <Link
             href="/mypage"
-            className="hidden rounded-lg px-3 py-2 text-[15px] font-medium text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900 lg:block"
+            className="hidden rounded-lg px-3 py-2 text-[20px] font-medium text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900 lg:block"
           >
             로그인
           </Link>
@@ -113,7 +113,7 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex min-h-[52px] items-center rounded-xl px-2 text-[16px] font-medium text-navy-700 transition-colors hover:bg-navy-50"
+                className="flex min-h-[52px] items-center rounded-xl px-2 text-[21px] font-medium text-navy-700 transition-colors hover:bg-navy-50"
               >
                 {item.label}
               </Link>

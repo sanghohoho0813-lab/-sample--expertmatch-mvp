@@ -57,10 +57,10 @@ export function RatingInline({
   return (
     <span className={cx("inline-flex items-center gap-1.5", className)}>
       <Stars value={rating} size={size} />
-      <span className="text-[13px] font-semibold text-navy-900">
+      <span className="text-[17.5px] font-semibold text-navy-900">
         {rating.toFixed(1)}
       </span>
-      <span className="text-[13px] text-navy-400">({reviewCount})</span>
+      <span className="text-[17.5px] text-navy-400">({reviewCount})</span>
     </span>
   );
 }

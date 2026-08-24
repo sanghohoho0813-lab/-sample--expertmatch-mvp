@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cx } from "@/lib/format";
 
 /**
@@ -101,14 +102,36 @@ const HAIR = [
 export function Portrait({
   name,
   accent,
+  photo,
   className,
   rounded = "rounded-2xl",
+  sizes = "(max-width: 640px) 120px, 400px",
+  priority = false,
 }: {
   name: string;
   accent: number;
+  /** 실제 프로필 사진 경로 (public/experts) */
+  photo?: string;
   className?: string;
   rounded?: string;
+  sizes?: string;
+  priority?: boolean;
 }) {
+  if (photo) {
+    return (
+      <div className={cx("relative overflow-hidden bg-navy-100", rounded, className)}>
+        <Image
+          src={photo}
+          alt={`${name} 전문가 프로필 사진`}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover object-top"
+        />
+      </div>
+    );
+  }
+
   const p = PALETTES[accent % PALETTES.length];
   const uid = `pf${accent}`;
 

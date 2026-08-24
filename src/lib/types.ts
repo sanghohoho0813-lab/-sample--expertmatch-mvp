@@ -64,7 +64,9 @@ export interface Expert {
   specialties: { title: string; description: string }[];
   career: CareerItem[];
   products: ConsultationProduct[];
-  /** 아바타 그라데이션 시드 (0-5) */
+  /** 프로필 사진 경로 (public/experts). 없으면 실루엣 placeholder로 대체된다 */
+  photo?: string;
+  /** placeholder 그라데이션 시드 (0-5) */
   accent: number;
   badge?: string;
   /** 추천 노출 순위 (낮을수록 상위) */
@@ -90,6 +92,7 @@ export interface Booking {
   expertName: string;
   expertTitle: string;
   expertAccent: number;
+  expertPhoto?: string;
   categoryName: string;
   productId: string;
   productName: string;

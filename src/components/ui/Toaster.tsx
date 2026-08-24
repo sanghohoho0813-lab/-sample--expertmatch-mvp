@@ -36,12 +36,12 @@ export function Toaster() {
             >
               <ToneIcon className="h-3.5 w-3.5" strokeWidth={3} />
             </span>
-            <p className="min-w-0 flex-1 text-[14px] leading-snug">{t.message}</p>
+            <p className="min-w-0 flex-1 text-[19px] leading-snug">{t.message}</p>
             {t.action && (
               <Link
                 href={t.action.href}
                 onClick={() => dismissToast(t.id)}
-                className="shrink-0 rounded-lg px-2 py-1 text-[13px] font-semibold text-teal-300 transition-colors hover:bg-white/10"
+                className="shrink-0 rounded-lg px-2 py-1 text-[17.5px] font-semibold text-teal-300 transition-colors hover:bg-white/10"
               >
                 {t.action.label}
               </Link>

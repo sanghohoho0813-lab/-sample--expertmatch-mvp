@@ -68,7 +68,7 @@ export default function ExpertDetailPage({
         <div className="shell relative py-6 sm:py-10">
           <nav
             aria-label="현재 위치"
-            className="flex flex-wrap items-center gap-1 text-[13px] text-navy-300"
+            className="flex flex-wrap items-center gap-1 text-[17.5px] text-navy-300"
           >
             <Link href="/" className="transition-colors hover:text-white">
               홈
@@ -90,73 +90,81 @@ export default function ExpertDetailPage({
 
           <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
             <div className="flex min-w-0 flex-1 flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
-            <Portrait name={expert.name} accent={expert.accent} rounded="rounded-3xl" className="h-24 w-24  sm:h-28 sm:w-28" />
+            <Portrait
+              name={expert.name}
+              accent={expert.accent}
+              photo={expert.photo}
+              rounded="rounded-3xl"
+              priority
+              sizes="(max-width: 640px) 132px, 168px"
+              className="h-[132px] w-[132px] shrink-0 shadow-pop ring-1 ring-white/15 sm:h-[168px] sm:w-[168px]"
+            />
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 {expert.categories.map((id) => (
                   <span
                     key={id}
-                    className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-2 py-1 text-[12.5px] font-semibold text-teal-200"
+                    className="inline-flex items-center gap-1 rounded-lg bg-white/10 px-2 py-1 text-[17px] font-semibold text-teal-200"
                   >
                     <Icon name={CATEGORY_MAP[id].icon} className="h-3.5 w-3.5" />
                     {CATEGORY_MAP[id].name}
                   </span>
                 ))}
                 {expert.badge && (
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-teal-500/20 px-2 py-1 text-[12.5px] font-bold text-teal-200">
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-teal-500/20 px-2 py-1 text-[17px] font-bold text-teal-200">
                     <BadgeCheck className="h-3.5 w-3.5" strokeWidth={2.4} />
                     {expert.badge}
                   </span>
                 )}
               </div>
 
-              <h1 className="mt-3 text-[28px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[34px]">
+              <h1 className="mt-3 text-[37px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[44px]">
                 {expert.name}
               </h1>
-              <p className="mt-1.5 text-[16px] font-semibold text-teal-200">
+              <p className="mt-1.5 text-[21px] font-semibold text-teal-200">
                 {expert.title}
               </p>
-              <p className="mt-1 text-[14px] text-navy-300">{expert.affiliation}</p>
+              <p className="mt-1 text-[19px] text-navy-300">{expert.affiliation}</p>
 
-              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-navy-100">
+              <p className="mt-4 max-w-2xl text-[20px] leading-relaxed text-navy-100">
                 {expert.headline}
               </p>
 
               <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
                 <div>
-                  <dt className="text-[12px] text-navy-300">평점</dt>
+                  <dt className="text-[16px] text-navy-300">평점</dt>
                   <dd className="mt-0.5 flex items-center gap-1.5">
                     <Star
                       className="h-4 w-4 text-amber-400"
                       fill="currentColor"
                       strokeWidth={0}
                     />
-                    <span className="text-[17px] font-extrabold text-white">
+                    <span className="text-[23px] font-extrabold text-white">
                       {expert.rating.toFixed(1)}
                     </span>
-                    <span className="text-[13px] text-navy-300">
+                    <span className="text-[17.5px] text-navy-300">
                       ({formatCount(expert.reviewCount)})
                     </span>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[12px] text-navy-300">상담 건수</dt>
-                  <dd className="mt-0.5 flex items-center gap-1.5 text-[17px] font-extrabold text-white">
+                  <dt className="text-[16px] text-navy-300">상담 건수</dt>
+                  <dd className="mt-0.5 flex items-center gap-1.5 text-[23px] font-extrabold text-white">
                     <MessagesSquare className="h-4 w-4 text-teal-300" strokeWidth={2.2} />
                     {formatCount(expert.consultCount)}회
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[12px] text-navy-300">경력</dt>
-                  <dd className="mt-0.5 flex items-center gap-1.5 text-[17px] font-extrabold text-white">
+                  <dt className="text-[16px] text-navy-300">경력</dt>
+                  <dd className="mt-0.5 flex items-center gap-1.5 text-[23px] font-extrabold text-white">
                     <Briefcase className="h-4 w-4 text-teal-300" strokeWidth={2.2} />
                     {expert.yearsOfExperience}년
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[12px] text-navy-300">사용 언어</dt>
-                  <dd className="mt-0.5 flex items-center gap-1.5 text-[15px] font-semibold text-white">
+                  <dt className="text-[16px] text-navy-300">사용 언어</dt>
+                  <dd className="mt-0.5 flex items-center gap-1.5 text-[20px] font-semibold text-white">
                     <Globe2 className="h-4 w-4 text-teal-300" strokeWidth={2.2} />
                     {expert.languages.join(" · ")}
                   </dd>
@@ -170,16 +178,16 @@ export default function ExpertDetailPage({
             </div>
 
             {/* 데스크톱 히어로 우측 요약 */}
-            <div className="hidden w-[280px] shrink-0 rounded-2xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-sm lg:block">
-              <p className="text-[12.5px] text-navy-300">최저 상담료</p>
-              <p className="mt-1 text-[26px] font-extrabold tracking-tight text-white">
+            <div className="hidden w-[316px] shrink-0 rounded-2xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-sm lg:block">
+              <p className="text-[17px] text-navy-300">최저 상담료</p>
+              <p className="mt-1 text-[34px] font-extrabold tracking-tight text-white">
                 {formatCount(lowest.price)}
-                <span className="ml-0.5 text-[13px] font-semibold text-navy-300">
+                <span className="ml-0.5 text-[17.5px] font-semibold text-navy-300">
                   원 / {lowest.minutes}분
                 </span>
               </p>
 
-              <dl className="mt-4 space-y-2.5 border-t border-white/10 pt-4 text-[13.5px]">
+              <dl className="mt-4 space-y-2.5 border-t border-white/10 pt-4 text-[18px]">
                 <div className="flex items-center justify-between gap-3">
                   <dt className="text-navy-300">이번 주 예약</dt>
                   <dd className="font-semibold text-white">
@@ -204,12 +212,12 @@ export default function ExpertDetailPage({
 
               <Link
                 href={`/booking/${expert.id}`}
-                className="mt-5 inline-flex h-12 w-full items-center justify-center gap-1.5 rounded-xl bg-teal-500 text-[15px] font-bold text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]"
+                className="mt-5 inline-flex h-12 w-full items-center justify-center gap-1.5 rounded-xl bg-teal-500 text-[20px] font-bold text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]"
               >
                 상담 예약하기
                 <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
               </Link>
-              <p className="mt-2.5 text-center text-[12px] text-navy-300">
+              <p className="mt-2.5 text-center text-[16px] text-navy-300">
                 예약 확정 시 알림을 보내드립니다
               </p>
             </div>
@@ -222,17 +230,17 @@ export default function ExpertDetailPage({
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-10">
           <div className="min-w-0 flex-1 space-y-12">
             <section id="intro" className="scroll-mt-24">
-              <h2 className="text-[19px] font-bold text-navy-900 sm:text-[21px]">
+              <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
                 전문가 소개
               </h2>
-              <p className="mt-3 whitespace-pre-line text-[15px] leading-[1.75] text-navy-600">
+              <p className="mt-3 whitespace-pre-line text-[20px] leading-[1.75] text-navy-600">
                 {expert.intro}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {expert.strengths.map((s) => (
                   <span
                     key={s}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-teal-100 bg-teal-50 px-3 py-2 text-[13.5px] font-semibold text-teal-800"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-teal-100 bg-teal-50 px-3 py-2 text-[18px] font-semibold text-teal-800"
                   >
                     <BadgeCheck className="h-4 w-4" strokeWidth={2.2} />
                     {s}
@@ -242,7 +250,7 @@ export default function ExpertDetailPage({
             </section>
 
             <section id="specialties" className="scroll-mt-24">
-              <h2 className="text-[19px] font-bold text-navy-900 sm:text-[21px]">
+              <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
                 주요 전문분야
               </h2>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -251,13 +259,13 @@ export default function ExpertDetailPage({
                     key={s.title}
                     className="rounded-2xl border border-navy-100 bg-white p-4 transition-colors hover:border-navy-200"
                   >
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-navy-900 text-[12.5px] font-bold text-white">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-navy-900 text-[17px] font-bold text-white">
                       {i + 1}
                     </span>
-                    <h3 className="mt-2.5 text-[15.5px] font-bold text-navy-900">
+                    <h3 className="mt-2.5 text-[21px] font-bold text-navy-900">
                       {s.title}
                     </h3>
-                    <p className="mt-1 text-[13.5px] leading-relaxed text-navy-500">
+                    <p className="mt-1 text-[18px] leading-relaxed text-navy-500">
                       {s.description}
                     </p>
                   </li>
@@ -266,7 +274,7 @@ export default function ExpertDetailPage({
             </section>
 
             <section id="career" className="scroll-mt-24">
-              <h2 className="text-[19px] font-bold text-navy-900 sm:text-[21px]">
+              <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
                 경력
               </h2>
               <ol className="mt-4 space-y-0">
@@ -285,15 +293,15 @@ export default function ExpertDetailPage({
                       )}
                     </div>
                     <div className="min-w-0 flex-1 pb-1">
-                      <p className="text-[12.5px] font-semibold text-teal-700">
+                      <p className="text-[17px] font-semibold text-teal-700">
                         {c.period}
                       </p>
-                      <p className="mt-1 text-[15.5px] font-bold text-navy-900">
+                      <p className="mt-1 text-[21px] font-bold text-navy-900">
                         {c.org}
                       </p>
-                      <p className="mt-0.5 text-[14px] text-navy-600">{c.role}</p>
+                      <p className="mt-0.5 text-[19px] text-navy-600">{c.role}</p>
                       {c.note && (
-                        <p className="mt-1 text-[13px] text-navy-400">{c.note}</p>
+                        <p className="mt-1 text-[17.5px] text-navy-400">{c.note}</p>
                       )}
                     </div>
                   </li>
@@ -303,7 +311,7 @@ export default function ExpertDetailPage({
 
             {/* 모바일에서는 상담 상품을 본문 흐름에 노출 */}
             <section id="products" className="scroll-mt-24 lg:hidden">
-              <h2 className="text-[19px] font-bold text-navy-900 sm:text-[21px]">
+              <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
                 상담 상품
               </h2>
               <div className="mt-4">
@@ -320,10 +328,10 @@ export default function ExpertDetailPage({
             />
 
             <section className="rounded-2xl border border-navy-100 bg-white p-5">
-              <h2 className="text-[16px] font-bold text-navy-900">
+              <h2 className="text-[21px] font-bold text-navy-900">
                 상담 전 알아두세요
               </h2>
-              <ul className="mt-3 space-y-2.5 text-[14px] leading-relaxed text-navy-600">
+              <ul className="mt-3 space-y-2.5 text-[19px] leading-relaxed text-navy-600">
                 <li className="flex gap-2">
                   <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
                   예약 시 남긴 질문은 상담 전에 전문가에게 전달됩니다.
@@ -341,7 +349,7 @@ export default function ExpertDetailPage({
           </div>
 
           {/* 데스크톱 우측 Sticky 예약 카드 */}
-          <aside className="hidden w-[340px] shrink-0 lg:block">
+          <aside className="hidden w-[384px] shrink-0 lg:block">
             <div className="sticky top-24">
               <BookingCard expert={expert} />
             </div>

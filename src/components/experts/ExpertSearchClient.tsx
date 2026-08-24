@@ -8,6 +8,7 @@ import { FilterPanel } from "@/components/experts/FilterPanel";
 import { Overlay } from "@/components/ui/Overlay";
 import { Icon } from "@/components/ui/Icon";
 import { CATEGORIES, SORT_OPTIONS, SUGGESTED_KEYWORDS } from "@/lib/data/categories";
+import { EXPERTS } from "@/lib/data/experts";
 import {
   EMPTY_FILTERS,
   activeFilterCount,
@@ -47,9 +48,17 @@ export function ExpertSearchClient() {
     }));
   }, [params]);
 
-  const suggestedCategories = useMemo(
-    () => categoriesForQuery(query),
-    [query],
+  const suggestedCategories = useMemo(() => categoriesForQuery(query), [query]);
+
+  const categoryCounts = useMemo(
+    () =>
+      Object.fromEntries(
+        CATEGORIES.map((c) => [
+          c.id,
+          EXPERTS.filter((e) => e.categories.includes(c.id)).length,
+        ]),
+      ),
+    [],
   );
 
   const results = useMemo(
@@ -136,6 +145,9 @@ export function ExpertSearchClient() {
           <button
             type="button"
             onClick={() => setSheetOpen(true)}
+            aria-label={
+              filterCount > 0 ? `필터 열기 (적용 ${filterCount}개)` : "필터 열기"
+            }
             className={cx(
               "inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl border px-4 text-[14.5px] font-semibold transition-colors lg:hidden",
               filterCount > 0
@@ -205,14 +217,15 @@ export function ExpertSearchClient() {
         </div>
       )}
 
-      <div className="mt-6 flex gap-8">
+      <div className="mt-6 flex gap-6 xl:gap-8">
         {/* 데스크톱 필터 사이드바 */}
-        <aside className="hidden w-[268px] shrink-0 lg:block">
-          <div className="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto rounded-2xl border border-navy-100 bg-white p-5 shadow-card scroll-slim">
+        <aside className="hidden w-[232px] shrink-0 lg:block">
+          <div className="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto rounded-2xl border border-navy-100 bg-white p-4 shadow-card scroll-slim">
             <FilterPanel
               filters={filters}
               onChange={setFilters}
               onReset={() => setFilters(EMPTY_FILTERS)}
+              counts={categoryCounts}
             />
           </div>
         </aside>
@@ -242,7 +255,7 @@ export function ExpertSearchClient() {
           </div>
 
           {results.length > 0 ? (
-            <div className="mt-4 grid gap-4 xl:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {results.map((expert) => (
                 <ExpertCard key={expert.id} expert={expert} />
               ))}
@@ -317,6 +330,7 @@ export function ExpertSearchClient() {
             filters={filters}
             onChange={setFilters}
             onReset={() => setFilters(EMPTY_FILTERS)}
+            counts={categoryCounts}
           />
         </div>
       </Overlay>

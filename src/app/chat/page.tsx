@@ -21,7 +21,7 @@ export default function ChatPage() {
           상담 예약 후 이용할 수 있습니다
         </h1>
         <p className="mt-3 text-[15px] leading-relaxed text-navy-500">
-          예약이 확정되면 전문가와 1:1 채팅으로 사전 질문을 주고받을 수 있어요.
+          예약이 확정되면 전문가와 1:1 채팅으로 사전 질문을 주고받을 수 있어요.{" "}
           <br className="hidden sm:block" />
           이번 데모에서는 채팅 기능이 제공되지 않습니다.
         </p>

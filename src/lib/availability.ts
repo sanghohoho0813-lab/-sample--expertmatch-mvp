@@ -65,3 +65,21 @@ export function startOfToday(): Date {
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }
+
+/** 이번 주 요일별(월~금) 예약 가능 여부 — 날짜에 의존하지 않는 결정적 값 */
+export const WEEK_LABELS = ["월", "화", "수", "목", "금"];
+
+export function weekdayAvailability(
+  expertId: string,
+  availableThisWeek: boolean,
+): boolean[] {
+  if (!availableThisWeek) return WEEK_LABELS.map(() => false);
+  const base = hash(`week:${expertId}`);
+  const days = WEEK_LABELS.map((_, i) => ((base >> (i * 2)) & 3) !== 0);
+  // 최소 2일은 열어둔다
+  if (days.filter(Boolean).length < 2) {
+    days[0] = true;
+    days[2] = true;
+  }
+  return days;
+}

@@ -43,7 +43,7 @@ export function HeroSearch() {
             onChange={(e) => setValue(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder="어떤 도움이 필요하신가요?"
+            placeholder="어떤 분야의 전문가가 필요하신가요?"
             className="h-12 w-full min-w-0 bg-transparent text-[16px] text-navy-900 outline-none placeholder:text-navy-300 sm:h-[52px]"
             autoComplete="off"
           />
@@ -60,7 +60,7 @@ export function HeroSearch() {
       <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2">
         <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-teal-300">
           <Sparkles className="h-3.5 w-3.5" strokeWidth={2.4} />
-          이런 고민이 많아요
+          인기 검색어
         </span>
         {SUGGESTED_KEYWORDS.map((k) => (
           <button

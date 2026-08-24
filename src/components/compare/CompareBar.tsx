@@ -3,11 +3,12 @@
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { GitCompareArrows, X } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { Overlay } from "@/components/ui/Overlay";
 import { CompareView } from "@/components/compare/CompareView";
 import { EXPERT_MAP } from "@/lib/data/experts";
 import { MAX_COMPARE, useAppStore } from "@/lib/store/AppStore";
+import { cx } from "@/lib/format";
 
 export function CompareBar() {
   const pathname = usePathname();
@@ -15,16 +16,21 @@ export function CompareBar() {
   const [open, setOpen] = useState(false);
 
   const experts = compare.map((id) => EXPERT_MAP[id]).filter(Boolean);
-  const hidden =
-    !ready ||
-    experts.length === 0 ||
-    pathname.startsWith("/booking");
+  const hidden = !ready || experts.length === 0 || pathname.startsWith("/booking");
+
+  // 전문가 상세에는 모바일 하단에 예약 CTA가 고정되어 있으므로 그 위로 띄운다
+  const stacked = /^\/experts\/[^/]+/.test(pathname);
 
   if (hidden) return null;
 
   return (
     <>
-      <div className="fixed inset-x-0 bottom-[56px] z-40 px-3 pb-3 pb-safe lg:bottom-0 lg:px-6 lg:pb-6">
+      <div
+        className={cx(
+          "fixed inset-x-0 z-40 px-3 pb-3 pb-safe lg:bottom-0 lg:px-6 lg:pb-6",
+          stacked ? "bottom-[128px]" : "bottom-[56px]",
+        )}
+      >
         <div className="mx-auto flex w-full max-w-shell animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 p-3 shadow-pop sm:gap-4 sm:px-4">
           <div className="hidden shrink-0 items-center gap-2 pl-1 text-white sm:flex">
             <GitCompareArrows className="h-5 w-5 text-teal-400" strokeWidth={2.2} />
@@ -34,7 +40,7 @@ export function CompareBar() {
           <ul className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto no-scrollbar">
             {experts.map((e) => (
               <li key={e.id} className="relative shrink-0">
-                <Avatar name={e.name} accent={e.accent} size="sm" />
+                <Portrait name={e.name} accent={e.accent} rounded="rounded-xl" className="h-10 w-10" />
                 <button
                   type="button"
                   onClick={() => removeCompare(e.id)}

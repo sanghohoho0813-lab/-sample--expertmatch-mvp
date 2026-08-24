@@ -7,16 +7,18 @@ import {
   ArrowLeft,
   ArrowRight,
   CalendarDays,
+  CalendarRange,
   Check,
   ChevronLeft,
   Clock3,
   ShieldCheck,
 } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { Stars } from "@/components/ui/Stars";
 import { Icon } from "@/components/ui/Icon";
 import { StepIndicator } from "@/components/booking/StepIndicator";
 import { MonthCalendar } from "@/components/booking/MonthCalendar";
+import { DayStrip } from "@/components/booking/DayStrip";
 import {
   CATEGORY_MAP,
   METHOD_HINT,
@@ -69,6 +71,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const [time, setTime] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   // 날짜 계산은 마운트 이후에만 수행 (하이드레이션 안전)
   useEffect(() => setToday(startOfToday()), []);
@@ -130,7 +133,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const summary = (
     <div className="rounded-2xl border border-navy-100 bg-white p-5 shadow-card">
       <div className="flex items-center gap-3">
-        <Avatar name={expert.name} accent={expert.accent} size="md" />
+        <Portrait name={expert.name} accent={expert.accent} rounded="rounded-2xl" className="h-14 w-14" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-[16px] font-bold text-navy-900">
             {expert.name}
@@ -219,12 +222,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             >
               <ChevronLeft className="h-5 w-5" strokeWidth={2.4} />
             </Link>
-            <Avatar
-              name={expert.name}
-              accent={expert.accent}
-              size="sm"
-              className="lg:hidden"
-            />
+            <Portrait name={expert.name} accent={expert.accent} rounded="rounded-xl" className="h-10 w-10 lg:hidden" />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-bold text-navy-900">
                 {expert.name} 전문가 상담 예약
@@ -338,7 +336,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   전문가가 제공하는 상담 방식 중에서 선택해 주세요.
                 </p>
 
-                <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+                <ul className="mt-5 space-y-2.5">
                   {(["video", "phone", "chat"] as ConsultMethod[]).map((m) => {
                     const available = expert.methods.includes(m);
                     const active = method === m;
@@ -350,7 +348,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                           onClick={() => setMethod(m)}
                           aria-pressed={active}
                           className={cx(
-                            "flex h-full w-full flex-col items-start gap-3 rounded-2xl border p-4 text-left transition-all duration-200 sm:p-5",
+                            "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all duration-200",
                             !available
                               ? "cursor-not-allowed border-navy-100 bg-navy-50/60 opacity-60"
                               : active
@@ -360,21 +358,39 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                         >
                           <span
                             className={cx(
-                              "flex h-11 w-11 items-center justify-center rounded-xl transition-colors",
+                              "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] transition-colors",
+                              active
+                                ? "border-teal-600 bg-teal-600"
+                                : "border-navy-200 bg-white",
+                            )}
+                            aria-hidden
+                          >
+                            <span
+                              className={cx(
+                                "h-1.5 w-1.5 rounded-full",
+                                active ? "bg-white" : "bg-transparent",
+                              )}
+                            />
+                          </span>
+                          <span
+                            className={cx(
+                              "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors",
                               active
                                 ? "bg-teal-600 text-white"
                                 : "bg-navy-50 text-navy-600",
                             )}
                           >
-                            <Icon name={METHOD_ICON[m]} className="h-5 w-5" />
+                            <Icon name={METHOD_ICON[m]} className="h-[18px] w-[18px]" />
                           </span>
-                          <span className="text-[16px] font-bold text-navy-900">
-                            {METHOD_LABEL[m]}
-                          </span>
-                          <span className="text-[13px] leading-snug text-navy-500">
-                            {available
-                              ? METHOD_HINT[m]
-                              : "이 전문가는 제공하지 않는 방식입니다"}
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-[15.5px] font-bold text-navy-900">
+                              {METHOD_LABEL[m]}
+                            </span>
+                            <span className="mt-0.5 block text-[13px] leading-snug text-navy-500">
+                              {available
+                                ? METHOD_HINT[m]
+                                : "이 전문가는 제공하지 않는 방식입니다"}
+                            </span>
                           </span>
                         </button>
                       </li>
@@ -396,17 +412,43 @@ export function BookingFlow({ expert }: { expert: Expert }) {
 
                 <div className="mt-5">
                   {today ? (
-                    <MonthCalendar
-                      expertId={expert.id}
-                      today={today}
-                      value={dateKey}
-                      onChange={(key) => {
-                        setDateKey(key);
-                        setTime(null);
-                      }}
-                    />
+                    <>
+                      <DayStrip
+                        expertId={expert.id}
+                        today={today}
+                        value={dateKey}
+                        onChange={(key) => {
+                          setDateKey(key);
+                          setTime(null);
+                        }}
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => setCalendarOpen((v) => !v)}
+                        aria-expanded={calendarOpen}
+                        className="mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[13.5px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                      >
+                        <CalendarRange className="h-4 w-4" strokeWidth={2.2} />
+                        {calendarOpen ? "달력 닫기" : "달력에서 선택"}
+                      </button>
+
+                      {calendarOpen && (
+                        <div className="mt-3 animate-fade-up">
+                          <MonthCalendar
+                            expertId={expert.id}
+                            today={today}
+                            value={dateKey}
+                            onChange={(key) => {
+                              setDateKey(key);
+                              setTime(null);
+                            }}
+                          />
+                        </div>
+                      )}
+                    </>
                   ) : (
-                    <div className="h-[420px] animate-pulse rounded-2xl bg-navy-100/70" />
+                    <div className="h-[92px] animate-pulse rounded-2xl bg-navy-100/70" />
                   )}
                 </div>
               </section>
@@ -432,34 +474,42 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   </button>
                 </p>
 
-                <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
-                  {slots.map((s) => {
-                    const active = time === s;
-                    return (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setTime(s)}
-                        aria-pressed={active}
-                        className={cx(
-                          "flex min-h-[52px] flex-col items-center justify-center rounded-xl border text-[15px] font-bold transition-all duration-200 active:scale-[0.96]",
-                          active
-                            ? "border-teal-600 bg-teal-600 text-white shadow-[0_6px_16px_-8px_rgba(5,144,137,0.9)]"
-                            : "border-navy-200 bg-white text-navy-800 hover:border-teal-400 hover:bg-teal-50",
-                        )}
-                      >
-                        {s}
-                        <span
-                          className={cx(
-                            "mt-0.5 text-[11px] font-medium",
-                            active ? "text-teal-100" : "text-navy-400",
-                          )}
-                        >
-                          {formatTimeKorean(s).split(" ")[0]}
-                        </span>
-                      </button>
-                    );
-                  })}
+                <div className="mt-5 space-y-5">
+                  {(
+                    [
+                      { label: "오전", list: slots.filter((s) => Number(s.slice(0, 2)) < 12) },
+                      { label: "오후", list: slots.filter((s) => Number(s.slice(0, 2)) >= 12) },
+                    ] as const
+                  )
+                    .filter((g) => g.list.length > 0)
+                    .map((group) => (
+                      <div key={group.label}>
+                        <p className="text-[13px] font-bold text-navy-400">
+                          {group.label}
+                        </p>
+                        <div className="mt-2.5 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
+                          {group.list.map((s) => {
+                            const active = time === s;
+                            return (
+                              <button
+                                key={s}
+                                type="button"
+                                onClick={() => setTime(s)}
+                                aria-pressed={active}
+                                className={cx(
+                                  "flex min-h-[48px] items-center justify-center rounded-xl border text-[15px] font-bold transition-all duration-200 active:scale-[0.96]",
+                                  active
+                                    ? "border-teal-600 bg-teal-600 text-white shadow-[0_8px_18px_-10px_rgba(14,124,134,0.95)]"
+                                    : "border-navy-200 bg-white text-navy-800 hover:border-teal-500 hover:bg-teal-50",
+                                )}
+                              >
+                                {s}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
                 </div>
 
                 {slots.length === 0 && (
@@ -537,7 +587,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
 
                 <div className="mt-5 overflow-hidden rounded-2xl border border-navy-100 bg-white">
                   <div className="flex items-center gap-3.5 border-b border-navy-100 bg-navy-50/60 p-4 sm:p-5">
-                    <Avatar name={expert.name} accent={expert.accent} size="md" />
+                    <Portrait name={expert.name} accent={expert.accent} rounded="rounded-2xl" className="h-14 w-14" />
                     <div className="min-w-0">
                       <p className="text-[16.5px] font-bold text-navy-900">
                         {expert.name}
@@ -638,8 +688,8 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             <div className="sticky top-[188px]">{summary}</div>
           </aside>
 
-          {/* 모바일 요약 (마지막 단계 이전에는 접힌 형태) */}
-          <div className="lg:hidden">{step >= 2 && summary}</div>
+          {/* 모바일 요약 */}
+          <div className="lg:hidden">{summary}</div>
         </div>
       </div>
 
@@ -655,7 +705,12 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             <ArrowLeft className="h-5 w-5" strokeWidth={2.2} />
           </button>
 
-          <div className="hidden min-w-0 flex-1 xs:block">
+          <div
+            className={cx(
+              "min-w-0 flex-1",
+              step < STEPS.length - 1 ? "hidden xs:block" : "hidden",
+            )}
+          >
             <p className="text-[11.5px] text-navy-400">총 상담료</p>
             <p className="text-[16px] font-extrabold leading-none text-navy-900">
               {formatPrice(product.price)}원

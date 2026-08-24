@@ -14,17 +14,11 @@ export function Logo({
       className={cx("group inline-flex items-center gap-2.5", className)}
       aria-label="(sample) ExpertMatch 홈"
     >
-      <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-navy-900 to-teal-600 text-white shadow-[0_4px_12px_-4px_rgba(11,26,51,0.6)] transition-transform duration-200 group-hover:scale-105">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-          <path
-            d="M4 15.5 9.2 9l4 4.4L20 6"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <circle cx="9.2" cy="9" r="1.9" fill="currentColor" />
-          <circle cx="19.4" cy="6.4" r="2.1" fill="#67E4D8" />
+      <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-[0_4px_12px_-4px_rgba(14,124,134,0.7)] transition-transform duration-200 group-hover:scale-105">
+        <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" fill="none" aria-hidden>
+          <circle cx="12" cy="12" r="8.6" stroke="currentColor" strokeWidth="1.6" opacity="0.55" />
+          <path d="M15.6 8.4 13.7 13.7 8.4 15.6l1.9-5.3 5.3-1.9Z" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.5" fill="#0C444B" />
         </svg>
       </span>
       <span className="flex flex-col leading-none">
@@ -34,7 +28,7 @@ export function Logo({
             tone === "dark" ? "text-navy-900" : "text-white",
           )}
         >
-          ExpertMatch
+          Expert Match
         </span>
         <span
           className={cx(

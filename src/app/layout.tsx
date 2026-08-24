@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "당신의 고민, 전문가의 경험으로 해결하세요. 창업·마케팅·투자·세무·법률 등 검증된 전문가에게 필요한 순간 바로 상담을 예약하세요.",
 };
 
+const PRETENDARD_HREF =
+  "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css";
+
 export const viewport: Viewport = {
   themeColor: "#0B1A33",
   width: "device-width",
@@ -33,11 +36,27 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
+        {/*
+          Pretendard는 렌더를 막지 않도록 비동기로 불러온다.
+          로드 전/실패 시에는 시스템 한글 폰트 스택으로 정상 표시된다.
+        */}
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
+          id="font-pretendard"
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+          media="print"
+          href={PRETENDARD_HREF}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "var f=document.getElementById('font-pretendard');if(f){f.media='all'}",
+          }}
+        />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+          <link rel="stylesheet" href={PRETENDARD_HREF} />
+        </noscript>
       </head>
       <body>
         <AppStoreProvider>

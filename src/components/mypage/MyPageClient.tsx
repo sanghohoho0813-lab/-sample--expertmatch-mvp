@@ -14,7 +14,7 @@ import {
   Trash2,
   UserRound,
 } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { Stars } from "@/components/ui/Stars";
 import { ExpertCard } from "@/components/experts/ExpertCard";
 import { METHOD_LABEL } from "@/lib/data/categories";
@@ -80,7 +80,7 @@ function BookingRow({
   return (
     <li className="rounded-2xl border border-navy-100 bg-white p-4 transition-colors hover:border-navy-200 sm:p-5">
       <div className="flex items-start gap-3.5">
-        <Avatar name={booking.expertName} accent={booking.expertAccent} size="md" />
+        <Portrait name={booking.expertName} accent={booking.expertAccent} rounded="rounded-2xl" className="h-14 w-14" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <Link
@@ -337,7 +337,7 @@ export function MyPageClient() {
                         key={b.id}
                         className="flex items-center gap-3 rounded-xl border border-navy-100 p-3.5"
                       >
-                        <Avatar name={b.expertName} accent={b.expertAccent} size="sm" />
+                        <Portrait name={b.expertName} accent={b.expertAccent} rounded="rounded-xl" className="h-10 w-10" />
                         <div className="min-w-0 flex-1">
                           <p className="text-[14.5px] font-bold text-navy-900">
                             {b.expertName}

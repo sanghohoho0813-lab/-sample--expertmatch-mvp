@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { CalendarPlus, Copy, Home, Ticket } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { useAppStore } from "@/lib/store/AppStore";
 import { formatDateFull, formatPrice, formatTimeKorean } from "@/lib/format";
@@ -100,11 +100,7 @@ export function BookingComplete() {
 
           <div className="mt-8 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up [animation-delay:120ms]">
             <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
-              <Avatar
-                name={booking.expertName}
-                accent={booking.expertAccent}
-                size="md"
-              />
+              <Portrait name={booking.expertName} accent={booking.expertAccent} rounded="rounded-2xl" className="h-14 w-14" />
               <div className="min-w-0 flex-1">
                 <p className="text-[17px] font-bold text-navy-900">
                   {booking.expertName}

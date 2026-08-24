@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
+  ArrowRight,
   BadgeCheck,
   Briefcase,
   ChevronRight,
@@ -10,17 +11,17 @@ import {
   MessagesSquare,
   Star,
 } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { Icon } from "@/components/ui/Icon";
 import { ExpertActions } from "@/components/expert/ExpertActions";
 import { BookingCard } from "@/components/expert/BookingCard";
 import { AvailabilityPreview } from "@/components/expert/AvailabilityPreview";
 import { ReviewList } from "@/components/expert/ReviewList";
 import { MobileBookingBar } from "@/components/expert/MobileBookingBar";
-import { CATEGORY_MAP } from "@/lib/data/categories";
+import { CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
 import { EXPERTS, getExpert } from "@/lib/data/experts";
 import { reviewsForExpert } from "@/lib/data/reviews";
-import { formatCount } from "@/lib/format";
+import { formatCount, responseLabel } from "@/lib/format";
 
 export function generateStaticParams() {
   return EXPERTS.map((e) => ({ id: e.id }));
@@ -49,6 +50,7 @@ export default function ExpertDetailPage({
 
   const reviews = reviewsForExpert(expert.id);
   const primaryCategory = CATEGORY_MAP[expert.categories[0]];
+  const lowest = expert.products.reduce((a, b) => (b.price < a.price ? b : a));
 
   return (
     <div className="pb-28 lg:pb-0">
@@ -86,8 +88,9 @@ export default function ExpertDetailPage({
             <span className="text-white">{expert.name}</span>
           </nav>
 
-          <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
-            <Avatar name={expert.name} accent={expert.accent} size="xl" />
+          <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
+            <div className="flex min-w-0 flex-1 flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
+            <Portrait name={expert.name} accent={expert.accent} rounded="rounded-3xl" className="h-24 w-24  sm:h-28 sm:w-28" />
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -163,6 +166,52 @@ export default function ExpertDetailPage({
               <div className="mt-6">
                 <ExpertActions expert={expert} />
               </div>
+              </div>
+            </div>
+
+            {/* 데스크톱 히어로 우측 요약 */}
+            <div className="hidden w-[280px] shrink-0 rounded-2xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-sm lg:block">
+              <p className="text-[12.5px] text-navy-300">최저 상담료</p>
+              <p className="mt-1 text-[26px] font-extrabold tracking-tight text-white">
+                {formatCount(lowest.price)}
+                <span className="ml-0.5 text-[13px] font-semibold text-navy-300">
+                  원 / {lowest.minutes}분
+                </span>
+              </p>
+
+              <dl className="mt-4 space-y-2.5 border-t border-white/10 pt-4 text-[13.5px]">
+                <div className="flex items-center justify-between gap-3">
+                  <dt className="text-navy-300">이번 주 예약</dt>
+                  <dd className="font-semibold text-white">
+                    {expert.availableThisWeek
+                      ? `${expert.openSlots}자리 가능`
+                      : "다음 주부터"}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <dt className="text-navy-300">응답 속도</dt>
+                  <dd className="font-semibold text-white">
+                    {responseLabel(expert.responseMinutes).replace("평균 ", "")}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <dt className="text-navy-300">상담 방식</dt>
+                  <dd className="font-semibold text-white">
+                    {expert.methods.map((m) => METHOD_LABEL[m].replace("상담", "")).join(" · ")}
+                  </dd>
+                </div>
+              </dl>
+
+              <Link
+                href={`/booking/${expert.id}`}
+                className="mt-5 inline-flex h-12 w-full items-center justify-center gap-1.5 rounded-xl bg-teal-500 text-[15px] font-bold text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]"
+              >
+                상담 예약하기
+                <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
+              </Link>
+              <p className="mt-2.5 text-center text-[12px] text-navy-300">
+                예약 확정 시 알림을 보내드립니다
+              </p>
             </div>
           </div>
         </div>

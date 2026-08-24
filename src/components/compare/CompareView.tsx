@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Check, Minus, X } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Portrait } from "@/components/ui/Portrait";
 import { Stars } from "@/components/ui/Stars";
 import { CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
 import { formatCount, formatPrice } from "@/lib/format";
@@ -161,7 +161,7 @@ export function CompareView({
                 <th key={e.id} className="border-l border-navy-100 p-4 align-bottom">
                   <div className="flex flex-col items-start gap-3">
                     <div className="flex w-full items-start justify-between gap-2">
-                      <Avatar name={e.name} accent={e.accent} size="md" />
+                      <Portrait name={e.name} accent={e.accent} rounded="rounded-2xl" className="h-14 w-14" />
                       <button
                         type="button"
                         onClick={() => onRemove(e.id)}
@@ -239,7 +239,7 @@ export function CompareView({
         {experts.map((e) => (
           <div key={e.id} className="rounded-2xl border border-navy-100 bg-white p-4">
             <div className="flex items-start gap-3">
-              <Avatar name={e.name} accent={e.accent} size="md" />
+              <Portrait name={e.name} accent={e.accent} rounded="rounded-2xl" className="h-14 w-14" />
               <div className="min-w-0 flex-1">
                 <Link
                   href={`/experts/${e.id}`}

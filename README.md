@@ -63,9 +63,9 @@ src/
 │  ├─ experts/              # ExpertCard, FilterPanel, ExpertSearchClient
 │  ├─ expert/               # 상세 페이지 구성요소 (BookingCard, ReviewList, ...)
 │  ├─ compare/              # CompareBar, CompareView
-│  ├─ booking/              # BookingFlow, MonthCalendar, StepIndicator, BookingComplete
+│  ├─ booking/              # BookingFlow, DayStrip, MonthCalendar, StepIndicator, BookingComplete
 │  ├─ mypage/               # MyPageClient
-│  └─ ui/                   # Avatar, Button, Stars, Overlay, Toaster, Icon
+│  └─ ui/                   # Portrait, Button, Stars, Overlay, Toaster, Icon
 └─ lib/
    ├─ data/                 # experts(12명), reviews(30개), categories(10개)
    ├─ store/AppStore.tsx    # 찜 / 비교 / 예약 상태 + Toast (localStorage 영속)
@@ -80,7 +80,8 @@ src/
 - **전문가 12명** — 분야, 경력, 평점, 상담 건수, 상담료, 상담 방식, 예약 가능 여부가 모두 다릅니다.
 - **리뷰 30개** — 실제 상담 후기 형태의 한국어 문장 (Lorem ipsum 없음).
 - **상담 슬롯** — `expertId + 날짜` 해시 기반으로 생성되어 새로고침해도 동일합니다.
-  일요일 휴무, 토요일 축소 운영, 일부 날짜 마감이 반영됩니다.
+  일요일 휴무, 토요일 축소 운영, 일부 날짜 마감이 반영되며,
+  오늘 날짜는 이미 지난 시간과 1시간 이내 임박한 시간을 제외합니다.
 
 ### 상태 저장
 
@@ -94,10 +95,18 @@ consultation_products / availability / bookings / reviews / favorites` 테이블
 RLS 정책을 정의해 두었습니다. Mock 데이터 구조와 1:1로 대응하므로 데이터 소스만
 교체하면 됩니다.
 
-## 반응형
+## 반응형 · QA
 
-375 / 390 / 430 / 768 / 1024 / 1280 / 1440 뷰포트에서 가로 스크롤과 요소 이탈이
-없도록 구성했습니다.
+375 / 390 / 430 / 768 / 1024 / 1280 / 1440 뷰포트를 실제 브라우저(Chromium)로
+검증했으며, 모든 구간에서 가로 스크롤과 요소 이탈이 없습니다.
+
+QA로 확인한 대표 플로우:
+
+- **Desktop** — 홈 → `창업` 검색 → 평점 필터 → 전문가 2명 비교 → 상세 →
+  상담 상품 → 방식 → 날짜 → 시간 → 내용 → 예약 → 완료 → 마이페이지 조회
+- **Mobile** — 홈 → 카테고리 → 목록 → 필터 시트 → 비교 → 상세 → 예약 → 완료 → 마이페이지
+
+TypeScript 오류 0, ESLint 경고 0, 브라우저 콘솔 오류·Hydration 경고 0입니다.
 
 - **모바일**: 하단 탭 내비게이션(홈/검색/예약/채팅/마이), 필터 바텀시트,
   예약 Sticky CTA, 세로 카드형 비교, 최소 44px 터치 영역
@@ -106,13 +115,31 @@ RLS 정책을 정의해 두었습니다. Mock 데이터 구조와 1:1로 대응�
 
 ## 디자인
 
-Deep Navy(`navy-900 #0B1A33`) + Teal(`teal-600 #059089`) 조합의
+첨부된 레퍼런스 디자인(PC 검색·비교 / 모바일 매칭·예약)을 기준으로 구현했습니다.
+
+Deep Navy(`navy-900 #16294B`) + Teal(`teal-600 #0E7C86`) 조합의
 Premium Professional Marketplace 톤입니다. 평점은 Warm Yellow(`amber-500`),
 경고는 Soft Red(`danger-500`)로 제한해 사용합니다.
 전환 시간은 150~300ms이며 `prefers-reduced-motion` 을 존중합니다.
 
-전문가 프로필 이미지는 외부 이미지 의존 없이 항상 동일한 비율로 렌더링되는
-그라데이션 모노그램 아바타를 사용합니다 (`src/components/ui/Avatar.tsx`).
+레퍼런스에서 가져온 주요 요소:
+
+- 네이비 Hero + 대형 검색창 + 인기 검색어 칩, 우측 나침반 일러스트(인라인 SVG)
+- 검증된 전문가 / 정확한 매칭 / 간편한 예약 / 안전한 상담 4-up 가치 스트립
+- 좌측 체크박스형 필터 사이드바 + 3열 전문가 카드 그리드
+- 카드: 프로필 이미지 · 평점 · 태그 · `50,000원 / 30분` · 요일별 예약 가능 스트립
+- 하단 비교 바 + 항목별 비교표(BEST 표시)
+- 모바일: 원형 카테고리 그리드, 상담 방식 라디오 행, 가로 날짜 선택, 시간 칩 그리드
+
+레이아웃은 기계적으로 복제하지 않고 반응형·사용성 관점에서 조정했습니다
+(예: 비교는 스펙에 맞춰 하단 Compare Bar + 모달, 예약은 6단계 Step 플로우).
+
+### 프로필 이미지
+
+전문가 프로필 이미지는 외부 이미지에 의존하지 않는 듀오톤 실루엣
+placeholder 를 사용합니다 (`src/components/ui/Portrait.tsx`).
+6종의 헤어·수트·배경 변형으로 카드가 복사한 것처럼 보이지 않게 했고,
+어떤 프레임 비율에서도 인물이 중앙에 유지됩니다(`preserveAspectRatio slice`).
 실제 사진이 준비되면 이 컴포넌트만 교체하면 됩니다.
 
 ## 구현 범위 밖 (의도적으로 제외)

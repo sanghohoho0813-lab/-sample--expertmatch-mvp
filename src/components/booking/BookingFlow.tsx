@@ -25,7 +25,7 @@ import {
   METHOD_ICON,
   METHOD_LABEL,
 } from "@/lib/data/categories";
-import { slotsFor, startOfToday } from "@/lib/availability";
+import { bookableSlots, startOfToday } from "@/lib/availability";
 import { createBookingCode, useAppStore } from "@/lib/store/AppStore";
 import {
   cx,
@@ -56,6 +56,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const { addBooking } = useAppStore();
 
   const [today, setToday] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date | null>(null);
   const [step, setStep] = useState(0);
   const [maxReached, setMaxReached] = useState(0);
   const [productId, setProductId] = useState(
@@ -74,13 +75,16 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   // 날짜 계산은 마운트 이후에만 수행 (하이드레이션 안전)
-  useEffect(() => setToday(startOfToday()), []);
+  useEffect(() => {
+    setToday(startOfToday());
+    setNow(new Date());
+  }, []);
 
   const product = expert.products.find((p) => p.id === productId) ?? expert.products[0];
 
   const slots = useMemo(
-    () => (dateKey ? slotsFor(expert.id, dateKey) : []),
-    [expert.id, dateKey],
+    () => (dateKey && now ? bookableSlots(expert.id, dateKey, now) : []),
+    [expert.id, dateKey, now],
   );
 
   const canAdvance = [
@@ -407,15 +411,16 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   언제 상담받으시겠어요?
                 </h1>
                 <p className="mt-2 text-[15px] text-navy-500">
-                  초록 점이 있는 날짜에 예약할 수 있어요.
+                  예약 가능한 자리가 남아 있는 날짜를 선택해 주세요.
                 </p>
 
                 <div className="mt-5">
-                  {today ? (
+                  {today && now ? (
                     <>
                       <DayStrip
                         expertId={expert.id}
                         today={today}
+                        now={now}
                         value={dateKey}
                         onChange={(key) => {
                           setDateKey(key);
@@ -427,25 +432,30 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                         type="button"
                         onClick={() => setCalendarOpen((v) => !v)}
                         aria-expanded={calendarOpen}
-                        className="mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[13.5px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                        className="mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[13.5px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50 lg:hidden"
                       >
                         <CalendarRange className="h-4 w-4" strokeWidth={2.2} />
                         {calendarOpen ? "달력 닫기" : "달력에서 선택"}
                       </button>
 
-                      {calendarOpen && (
-                        <div className="mt-3 animate-fade-up">
-                          <MonthCalendar
-                            expertId={expert.id}
-                            today={today}
-                            value={dateKey}
-                            onChange={(key) => {
-                              setDateKey(key);
-                              setTime(null);
-                            }}
-                          />
-                        </div>
-                      )}
+                      {/* 데스크톱에서는 달력을 항상 펼쳐 탐색 효율을 높인다 */}
+                      <div
+                        className={cx(
+                          "mt-3 animate-fade-up",
+                          calendarOpen ? "block" : "hidden lg:block",
+                        )}
+                      >
+                        <MonthCalendar
+                          expertId={expert.id}
+                          today={today}
+                          now={now}
+                          value={dateKey}
+                          onChange={(key) => {
+                            setDateKey(key);
+                            setTime(null);
+                          }}
+                        />
+                      </div>
                     </>
                   ) : (
                     <div className="h-[92px] animate-pulse rounded-2xl bg-navy-100/70" />

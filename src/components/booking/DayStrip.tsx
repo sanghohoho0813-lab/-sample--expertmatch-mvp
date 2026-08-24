@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { slotsFor } from "@/lib/availability";
+import { bookableSlots } from "@/lib/availability";
 import { cx, toDateKey } from "@/lib/format";
 
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
@@ -12,12 +12,14 @@ const PAGE = 7;
 export function DayStrip({
   expertId,
   today,
+  now,
   value,
   onChange,
   horizon = 28,
 }: {
   expertId: string;
   today: Date;
+  now: Date;
   value: string | null;
   onChange: (dateKey: string) => void;
   horizon?: number;
@@ -32,10 +34,10 @@ export function DayStrip({
         today.getDate() + i,
       );
       const dateKey = toDateKey(d);
-      const slots = slotsFor(expertId, dateKey);
+      const slots = bookableSlots(expertId, dateKey, now);
       return { d, dateKey, count: slots.length };
     });
-  }, [expertId, today, horizon]);
+  }, [expertId, today, now, horizon]);
 
   const page = days.slice(offset, offset + PAGE);
   const canPrev = offset > 0;

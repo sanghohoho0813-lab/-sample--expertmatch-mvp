@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { slotsFor } from "@/lib/availability";
+import { bookableSlots } from "@/lib/availability";
 import { cx, toDateKey } from "@/lib/format";
 
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
@@ -10,6 +10,7 @@ const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 export function MonthCalendar({
   expertId,
   today,
+  now,
   value,
   onChange,
   /** 예약 가능 기간 (오늘부터 n일) */
@@ -17,6 +18,7 @@ export function MonthCalendar({
 }: {
   expertId: string;
   today: Date;
+  now: Date;
   value: string | null;
   onChange: (dateKey: string) => void;
   horizon?: number;
@@ -59,7 +61,7 @@ export function MonthCalendar({
     setCursor((c) => new Date(c.getFullYear(), c.getMonth() + delta, 1));
 
   return (
-    <div className="rounded-2xl border border-navy-100 bg-white p-4 sm:p-5">
+    <div className="w-full max-w-[420px] rounded-2xl border border-navy-100 bg-white p-4 sm:p-5">
       <div className="flex items-center justify-between">
         <button
           type="button"
@@ -102,7 +104,7 @@ export function MonthCalendar({
           const dateKey = toDateKey(cell.date);
           const isPast = cell.date.getTime() < today.getTime();
           const isBeyond = cell.date.getTime() > last.getTime();
-          const slots = isPast || isBeyond ? [] : slotsFor(expertId, dateKey);
+          const slots = isPast || isBeyond ? [] : bookableSlots(expertId, dateKey, now);
           const disabled = isPast || isBeyond || slots.length === 0;
           const selected = value === dateKey;
           const isToday = dateKey === toDateKey(today);
@@ -118,7 +120,7 @@ export function MonthCalendar({
                 disabled ? " 예약 불가" : ` 예약 가능 ${slots.length}자리`
               }`}
               className={cx(
-                "relative flex aspect-square min-h-[44px] flex-col items-center justify-center rounded-xl text-[14.5px] font-semibold transition-all duration-200",
+                "relative flex h-11 w-full flex-col items-center justify-center rounded-xl text-[14.5px] font-semibold transition-all duration-200 sm:h-[46px]",
                 selected
                   ? "bg-teal-600 text-white shadow-[0_6px_16px_-8px_rgba(5,144,137,0.9)]"
                   : disabled

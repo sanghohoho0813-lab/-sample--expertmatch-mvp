@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CalendarDays } from "lucide-react";
-import { buildCalendar, startOfToday, type DayAvailability } from "@/lib/availability";
-import { formatTimeKorean, parseDateKey } from "@/lib/format";
+import { bookableSlots, startOfToday, type DayAvailability } from "@/lib/availability";
+import { formatTimeKorean, parseDateKey, toDateKey } from "@/lib/format";
 
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -13,7 +13,16 @@ export function AvailabilityPreview({ expertId }: { expertId: string }) {
 
   // 날짜는 클라이언트 마운트 이후 계산해 하이드레이션 불일치를 방지
   useEffect(() => {
-    setDays(buildCalendar(expertId, startOfToday(), 7));
+    const now = new Date();
+    const from = startOfToday();
+    setDays(
+      Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
+        const dateKey = toDateKey(d);
+        const slots = bookableSlots(expertId, dateKey, now);
+        return { dateKey, slots, isClosed: slots.length === 0 };
+      }),
+    );
   }, [expertId]);
 
   return (

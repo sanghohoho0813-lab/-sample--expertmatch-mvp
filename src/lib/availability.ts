@@ -45,22 +45,6 @@ export function slotsFor(expertId: string, dateKey: string): string[] {
   return slots;
 }
 
-/** 오늘부터 n일간의 예약 가능 현황 */
-export function buildCalendar(
-  expertId: string,
-  from: Date,
-  days: number,
-): DayAvailability[] {
-  const out: DayAvailability[] = [];
-  for (let i = 0; i < days; i += 1) {
-    const d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
-    const dateKey = toDateKey(d);
-    const slots = slotsFor(expertId, dateKey);
-    out.push({ dateKey, slots, isClosed: slots.length === 0 });
-  }
-  return out;
-}
-
 export function startOfToday(): Date {
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -82,4 +66,22 @@ export function weekdayAvailability(
     days[2] = true;
   }
   return days;
+}
+
+/**
+ * 실제로 예약 가능한 시간대.
+ * 오늘 날짜는 이미 지난 시간과 임박한 시간(1시간 이내)을 제외한다.
+ */
+export function bookableSlots(
+  expertId: string,
+  dateKey: string,
+  now: Date,
+): string[] {
+  const slots = slotsFor(expertId, dateKey);
+  if (slots.length === 0 || dateKey !== toDateKey(now)) return slots;
+  const cutoff = now.getHours() * 60 + now.getMinutes() + 60;
+  return slots.filter((s) => {
+    const [h, m] = s.split(":").map(Number);
+    return h * 60 + m >= cutoff;
+  });
 }

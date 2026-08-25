@@ -57,7 +57,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           : "border-navy-100 shadow-card hover:-translate-y-1 hover:border-navy-200 hover:shadow-card-hover",
       )}
     >
-      {/* 프로필 이미지 */}
+      {/* 프로필 이미지 — 원본이 정사각형이라 정사각 프레임이면 잘림 없이 상반신까지 보인다 */}
       <div className="relative col-start-1 row-start-1 sm:col-auto sm:row-auto">
         <Portrait
           name={expert.name}
@@ -65,7 +65,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           photo={expert.photo}
           rounded="rounded-xl sm:rounded-none sm:rounded-t-2xl"
           sizes="(max-width: 640px) 96px, (max-width: 1280px) 50vw, 400px"
-          className="aspect-square w-full sm:aspect-[3/2]"
+          className="aspect-square w-full"
         />
         {comparing && (
           <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-lg bg-teal-600 px-1.5 py-1 text-[14.5px] font-bold text-white shadow-sm sm:left-2.5 sm:top-2.5">

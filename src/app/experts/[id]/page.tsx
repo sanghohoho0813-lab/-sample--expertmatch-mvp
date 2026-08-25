@@ -18,6 +18,8 @@ import { BookingCard } from "@/components/expert/BookingCard";
 import { AvailabilityPreview } from "@/components/expert/AvailabilityPreview";
 import { ReviewList } from "@/components/expert/ReviewList";
 import { MobileBookingBar } from "@/components/expert/MobileBookingBar";
+import { TrackView } from "@/components/expert/TrackView";
+import { RecentExperts } from "@/components/experts/RecentExperts";
 import { CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
 import { EXPERTS, getExpert } from "@/lib/data/experts";
 import { reviewsForExpert } from "@/lib/data/reviews";
@@ -357,6 +359,11 @@ export default function ExpertDetailPage({
         </div>
       </div>
 
+      <div className="shell pb-4">
+        <RecentExperts exclude={expert.id} />
+      </div>
+
+      <TrackView expertId={expert.id} />
       <MobileBookingBar expert={expert} />
     </div>
   );

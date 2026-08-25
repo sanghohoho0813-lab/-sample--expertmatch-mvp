@@ -139,7 +139,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
               className={cx(
                 "shrink-0 whitespace-nowrap rounded-md bg-navy-50 px-1.5 py-1 text-[18px] font-medium leading-none text-navy-500",
                 // 좁은 화면에서 잘려 보이지 않도록 두 번째 태그는 sm 이상에서만 노출
-                i === 1 && "hidden sm:inline-flex",
+                i === 1 && "hidden xl:inline-flex",
               )}
             >
               {skill}
@@ -178,17 +178,19 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           <WeekStrip expert={expert} />
         </div>
 
-        <div className="mt-2.5 flex items-center gap-2 truncate text-[19px] text-navy-400">
-          {expert.methods.map((m) => (
-            <span key={m} className="inline-flex shrink-0 items-center">
-              <Icon name={METHOD_ICON[m]} className="h-3.5 w-3.5" />
-              <span className="sr-only">{METHOD_LABEL[m]}</span>
-            </span>
-          ))}
+        <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[17px] text-navy-400">
+          <span className="inline-flex shrink-0 items-center gap-1.5">
+            {expert.methods.map((m) => (
+              <span key={m} className="inline-flex items-center">
+                <Icon name={METHOD_ICON[m]} className="h-4 w-4" />
+                <span className="sr-only">{METHOD_LABEL[m]}</span>
+              </span>
+            ))}
+          </span>
           <span className="text-navy-200">|</span>
           <span className="shrink-0">경력 {expert.yearsOfExperience}년</span>
           <span className="text-navy-200">|</span>
-          <span className="truncate">상담 {formatCount(expert.consultCount)}회</span>
+          <span className="shrink-0">상담 {formatCount(expert.consultCount)}회</span>
         </div>
 
         <div className="relative z-10 mt-3 flex items-center gap-2">

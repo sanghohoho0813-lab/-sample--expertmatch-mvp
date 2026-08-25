@@ -17,9 +17,18 @@ interface PersistedState {
   favorites: string[];
   compare: string[];
   bookings: Booking[];
+  /** 최근 본 전문가 id (최신순) */
+  recent: string[];
 }
 
-const INITIAL: PersistedState = { favorites: [], compare: [], bookings: [] };
+const MAX_RECENT = 8;
+
+const INITIAL: PersistedState = {
+  favorites: [],
+  compare: [],
+  bookings: [],
+  recent: [],
+};
 
 export interface Toast {
   id: number;
@@ -38,6 +47,8 @@ interface AppStoreValue extends PersistedState {
   clearCompare: () => void;
   removeCompare: (id: string) => void;
   addBooking: (booking: Booking) => void;
+  markViewed: (id: string) => void;
+  clearRecent: () => void;
   cancelBooking: (id: string) => void;
   toasts: Toast[];
   pushToast: (toast: Omit<Toast, "id">) => void;
@@ -58,6 +69,7 @@ function readStorage(): PersistedState {
         ? parsed.compare.slice(0, MAX_COMPARE)
         : [],
       bookings: Array.isArray(parsed.bookings) ? parsed.bookings : [],
+      recent: Array.isArray(parsed.recent) ? parsed.recent.slice(0, MAX_RECENT) : [],
     };
   } catch {
     return INITIAL;
@@ -157,6 +169,21 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const markViewed = useCallback((id: string) => {
+    setState((prev) =>
+      prev.recent[0] === id
+        ? prev
+        : {
+            ...prev,
+            recent: [id, ...prev.recent.filter((r) => r !== id)].slice(0, MAX_RECENT),
+          },
+    );
+  }, []);
+
+  const clearRecent = useCallback(() => {
+    setState((prev) => ({ ...prev, recent: [] }));
+  }, []);
+
   const addBooking = useCallback((booking: Booking) => {
     setState((prev) => ({ ...prev, bookings: [booking, ...prev.bookings] }));
   }, []);
@@ -183,6 +210,8 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       clearCompare,
       removeCompare,
       addBooking,
+      markViewed,
+      clearRecent,
       cancelBooking,
       toasts,
       pushToast,
@@ -196,6 +225,8 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       clearCompare,
       removeCompare,
       addBooking,
+      markViewed,
+      clearRecent,
       cancelBooking,
       toasts,
       pushToast,

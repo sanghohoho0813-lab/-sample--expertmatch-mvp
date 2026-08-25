@@ -3,8 +3,16 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ChevronDown, SlidersHorizontal, Search, X } from "lucide-react";
+import {
+  SearchSuggest,
+  flattenSuggestions,
+  type SuggestItem,
+} from "@/components/experts/SearchSuggest";
+import { hasSuggestions, suggestFor } from "@/lib/suggest";
 import { ExpertCard } from "@/components/experts/ExpertCard";
 import { FilterPanel } from "@/components/experts/FilterPanel";
+import { ActiveFilterChips } from "@/components/experts/ActiveFilterChips";
+import { RecentExperts } from "@/components/experts/RecentExperts";
 import { Overlay } from "@/components/ui/Overlay";
 import { Icon } from "@/components/ui/Icon";
 import { CATEGORIES, SORT_OPTIONS, SUGGESTED_KEYWORDS } from "@/lib/data/categories";
@@ -34,6 +42,8 @@ export function ExpertSearchClient() {
     categories: initialCategory ? [initialCategory] : [],
   });
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [activeSuggest, setActiveSuggest] = useState(-1);
   const [categoryOpen, setCategoryOpen] = useState(panel === "categories");
 
   // URL이 바뀌면(홈에서 진입 등) 상태를 다시 맞춘다
@@ -68,6 +78,43 @@ export function ExpertSearchClient() {
 
   const filterCount = activeFilterCount(filters);
 
+  const suggestions = useMemo(() => suggestFor(input), [input]);
+  const flatSuggest = useMemo(
+    () => flattenSuggestions(suggestions),
+    [suggestions],
+  );
+  const showSuggest = suggestOpen && hasSuggestions(suggestions);
+
+  const pickSuggest = (item: SuggestItem) => {
+    setSuggestOpen(false);
+    if (item.kind === "expert") {
+      router.push(`/experts/${item.id}`);
+    } else if (item.kind === "category") {
+      setFilters({ ...EMPTY_FILTERS, categories: [item.id as CategoryId] });
+      setInput("");
+      submitSearch("");
+    } else {
+      setInput(item.label);
+      submitSearch(item.label);
+    }
+  };
+
+  const onSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggest) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveSuggest((i) => (i + 1) % flatSuggest.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveSuggest((i) => (i <= 0 ? flatSuggest.length - 1 : i - 1));
+    } else if (e.key === "Enter" && activeSuggest >= 0) {
+      e.preventDefault();
+      pickSuggest(flatSuggest[activeSuggest]);
+    } else if (e.key === "Escape") {
+      setSuggestOpen(false);
+    }
+  };
+
   const submitSearch = useCallback(
     (value: string) => {
       const q = value.trim();
@@ -101,11 +148,14 @@ export function ExpertSearchClient() {
     <div className="shell py-6 pb-40 lg:py-10 lg:pb-32">
       {/* 검색 바 */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div className="relative min-w-0 flex-1">
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            setSuggestOpen(false);
             submitSearch(input);
           }}
+          role="search"
           className="flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-navy-200 bg-white px-3 shadow-card transition-all duration-200 focus-within:border-teal-500 focus-within:ring-4 focus-within:ring-teal-500/10"
         >
           <Search className="h-5 w-5 shrink-0 text-navy-300" strokeWidth={2.2} />
@@ -115,7 +165,17 @@ export function ExpertSearchClient() {
           <input
             id="expert-search"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              setActiveSuggest(-1);
+            }}
+            onFocus={() => setSuggestOpen(true)}
+            onBlur={() => setSuggestOpen(false)}
+            onKeyDown={onSearchKeyDown}
+            role="combobox"
+            aria-expanded={showSuggest}
+            aria-controls="search-suggest"
+            aria-autocomplete="list"
             placeholder="분야·고민·전문가 검색"
             className="h-12 w-full min-w-0 bg-transparent text-[25px] outline-none"
             autoComplete="off"
@@ -140,6 +200,15 @@ export function ExpertSearchClient() {
             검색
           </button>
         </form>
+
+          {showSuggest && (
+            <SearchSuggest
+              suggestions={suggestions}
+              activeIndex={activeSuggest}
+              onPick={pickSuggest}
+            />
+          )}
+        </div>
 
         <div className="flex items-center gap-2">
           <button
@@ -232,7 +301,11 @@ export function ExpertSearchClient() {
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-[24px] text-navy-500">
+            <p
+              className="text-[24px] text-navy-500"
+              role="status"
+              aria-live="polite"
+            >
               검색 결과{" "}
               <span className="text-[27.5px] font-extrabold text-navy-900">
                 {results.length}명
@@ -253,6 +326,12 @@ export function ExpertSearchClient() {
               </button>
             )}
           </div>
+
+          <ActiveFilterChips
+            filters={filters}
+            onChange={setFilters}
+            onReset={() => setFilters(EMPTY_FILTERS)}
+          />
 
           {results.length > 0 ? (
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -296,6 +375,7 @@ export function ExpertSearchClient() {
               </button>
             </div>
           )}
+          <RecentExperts />
         </div>
       </div>
 

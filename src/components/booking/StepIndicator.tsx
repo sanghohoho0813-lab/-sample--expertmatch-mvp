@@ -34,7 +34,7 @@ export function StepIndicator({
       </div>
 
       {/* 데스크톱: 단계 목록 */}
-      <ol className="hidden lg:flex lg:items-center lg:gap-1">
+      <ol className="hidden lg:flex lg:items-center lg:gap-0.5 xl:gap-1">
         {steps.map((label, i) => {
           const done = i < current;
           const active = i === current;
@@ -46,7 +46,7 @@ export function StepIndicator({
                 disabled={!reachable}
                 onClick={() => reachable && onJump(i)}
                 className={cx(
-                  "flex items-center gap-2 rounded-xl px-2.5 py-2 transition-colors duration-200",
+                  "flex items-center gap-2 rounded-xl px-2 py-2 transition-colors duration-200 xl:px-2.5",
                   reachable && !active && "hover:bg-navy-50",
                   !reachable && "cursor-default",
                 )}
@@ -63,14 +63,12 @@ export function StepIndicator({
                 >
                   {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : i + 1}
                 </span>
+                {/* 좁은 데스크톱에서는 현재 단계 라벨만 노출해 가로 넘침을 막는다 */}
                 <span
                   className={cx(
-                    "whitespace-nowrap text-[21.5px] font-semibold transition-colors duration-200",
-                    active
-                      ? "text-navy-900"
-                      : done
-                        ? "text-navy-600"
-                        : "text-navy-300",
+                    "whitespace-nowrap text-[19px] font-semibold transition-colors duration-200 xl:text-[21px]",
+                    active ? "text-navy-900" : "hidden text-navy-600 xl:inline",
+                    !active && !done && "xl:text-navy-300",
                   )}
                 >
                   {label}
@@ -79,7 +77,7 @@ export function StepIndicator({
               {i < steps.length - 1 && (
                 <span
                   className={cx(
-                    "h-px w-5 transition-colors duration-200",
+                    "h-px w-3 transition-colors duration-200 xl:w-5",
                     done ? "bg-teal-300" : "bg-navy-100",
                   )}
                   aria-hidden

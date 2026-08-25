@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { CompareBar } from "@/components/compare/CompareBar";
 import { Toaster } from "@/components/ui/Toaster";
+import { ScrollTop } from "@/components/ui/ScrollTop";
 import { AppStoreProvider } from "@/lib/store/AppStore";
 
 export const metadata: Metadata = {
@@ -72,16 +73,25 @@ export default function RootLayout({
       </head>
       <body>
         <AppStoreProvider>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-navy-900 focus:px-5 focus:py-3 focus:text-[18px] focus:font-semibold focus:text-white"
+          >
+            본문으로 건너뛰기
+          </a>
           <div className="flex min-h-dvh flex-col">
             <MiraeTopBar />
             <Header />
-            <main className="flex-1">{children}</main>
+            <main id="main" className="flex-1">
+              {children}
+            </main>
             <Footer />
           </div>
           <Suspense fallback={null}>
             <MobileTabBar />
           </Suspense>
           <CompareBar />
+          <ScrollTop />
           <Toaster />
         </AppStoreProvider>
       </body>

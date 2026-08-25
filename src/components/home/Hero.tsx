@@ -58,20 +58,24 @@ export function Hero() {
               경력·자격 검증을 마친 전문가만 등록됩니다
             </span>
 
-            <h1 className="mt-6 text-[48px] font-extrabold leading-[1.18] tracking-[-0.035em] text-white sm:text-[78px] lg:text-[89px]">
+            <h1 className="mt-6 text-[37px] font-extrabold leading-[1.22] tracking-[-0.035em] text-white xs:text-[42px] sm:text-[64px] lg:text-[78px]">
               당신의 고민,
               <br />
-              <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-teal-200 via-teal-300 to-sky-300 bg-clip-text text-transparent">
-                  전문가의 경험
+              {/* '전문가의 경험으로'가 좁은 화면에서 끊기지 않도록 한 덩어리로 묶는다 */}
+              <span className="whitespace-nowrap">
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-teal-200 via-teal-300 to-sky-300 bg-clip-text text-transparent">
+                    전문가의 경험
+                  </span>
+                  <span
+                    className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-gold-400/80 to-transparent"
+                    aria-hidden
+                  />
                 </span>
-                <span
-                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-gold-400/80 to-transparent"
-                  aria-hidden
-                />
+                으로
               </span>
-              으로
-              <br className="sm:hidden" /> 해결하세요
+              <br />
+              해결하세요
             </h1>
 
             <p className="mt-6 max-w-2xl text-[23px] leading-relaxed text-navy-200 sm:text-[25px]">

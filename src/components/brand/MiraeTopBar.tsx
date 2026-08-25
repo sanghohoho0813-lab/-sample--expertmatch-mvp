@@ -10,16 +10,17 @@ export function MiraeTopBar() {
   return (
     <div className="relative z-[60] bg-[#071a22] text-white">
       <div className="shell flex min-h-[46px] flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
-        <p className="flex items-center gap-2.5 text-[17px] font-medium text-[#c9d6dc]">
+        <p className="flex min-w-0 items-center gap-2.5 text-[16.5px] font-medium text-[#c9d6dc]">
           <MiraeSymbol className="h-6 shrink-0" />
           <span>
-            <span className="font-bold text-white">미래에이아이랩</span>이 제작한
-            서비스 레퍼런스 데모입니다
+            <span className="font-bold text-white">미래에이아이랩</span>
+            <span className="hidden sm:inline">이 제작한 서비스 레퍼런스 데모입니다</span>
+            <span className="sm:hidden"> 제작 레퍼런스 데모</span>
           </span>
         </p>
         <Link
           href="/about"
-          className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[16.5px] font-semibold text-[#19c6f4] transition-colors hover:bg-white/10"
+          className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[16px] font-semibold text-[#19c6f4] transition-colors hover:bg-white/10"
         >
           제작사 소개
           <ArrowUpRight className="h-4 w-4" strokeWidth={2.4} />

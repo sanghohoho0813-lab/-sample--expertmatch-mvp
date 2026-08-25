@@ -29,19 +29,19 @@ export function ReviewList({
 
   return (
     <section id="reviews" className="scroll-mt-24">
-      <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
+      <h2 className="text-[30px] font-bold text-navy-900 sm:text-[34px]">
         리뷰 <span className="text-teal-700">{reviewCount}</span>
       </h2>
 
       <div className="mt-4 flex flex-col gap-5 rounded-2xl border border-navy-100 bg-white p-5 sm:flex-row sm:items-center sm:gap-8">
         <div className="flex shrink-0 items-center gap-4 sm:flex-col sm:items-start">
           <div>
-            <p className="text-[46px] font-extrabold leading-none tracking-tight text-navy-900">
+            <p className="text-[55px] font-extrabold leading-none tracking-tight text-navy-900">
               {rating.toFixed(1)}
             </p>
             <Stars value={rating} size={16} className="mt-2" />
           </div>
-          <p className="text-[17.5px] text-navy-400 sm:mt-1">
+          <p className="text-[21px] text-navy-400 sm:mt-1">
             전체 {reviewCount}개의 평가
           </p>
         </div>
@@ -49,7 +49,7 @@ export function ReviewList({
         <div className="min-w-0 flex-1 space-y-1.5">
           {distribution.map((d) => (
             <div key={d.star} className="flex items-center gap-2.5">
-              <span className="w-7 shrink-0 text-[17px] font-medium text-navy-500">
+              <span className="w-7 shrink-0 text-[20.5px] font-medium text-navy-500">
                 {d.star}점
               </span>
               <span className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-navy-100">
@@ -58,7 +58,7 @@ export function ReviewList({
                   style={{ width: `${(d.count / total) * 100}%` }}
                 />
               </span>
-              <span className="w-6 shrink-0 text-right text-[17px] text-navy-400">
+              <span className="w-6 shrink-0 text-right text-[20.5px] text-navy-400">
                 {d.count}
               </span>
             </div>
@@ -74,27 +74,27 @@ export function ReviewList({
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-100 text-[17.5px] font-bold text-navy-600">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-100 text-[21px] font-bold text-navy-600">
                   {r.author.slice(0, 1)}
                 </span>
                 <div>
-                  <p className="text-[19px] font-bold text-navy-900">{r.author}</p>
-                  <p className="text-[16px] text-navy-400">{r.productName}</p>
+                  <p className="text-[23px] font-bold text-navy-900">{r.author}</p>
+                  <p className="text-[19px] text-navy-400">{r.productName}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <Stars value={r.rating} size={13} />
-                <span className="text-[17px] text-navy-400">
+                <span className="text-[20.5px] text-navy-400">
                   {today ? relativeDay(r.date, today) : r.date}
                 </span>
               </div>
             </div>
-            <p className="mt-3 text-[19.5px] leading-relaxed text-navy-700">{r.body}</p>
+            <p className="mt-3 text-[23.5px] leading-relaxed text-navy-700">{r.body}</p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {r.tags.map((t) => (
                 <span
                   key={t}
-                  className="rounded-md bg-navy-50 px-2 py-1 text-[16px] font-medium text-navy-500"
+                  className="rounded-md bg-navy-50 px-2 py-1 text-[19px] font-medium text-navy-500"
                 >
                   #{t}
                 </span>
@@ -108,7 +108,7 @@ export function ReviewList({
         <button
           type="button"
           onClick={() => setShown((s) => s + PAGE)}
-          className="mt-4 h-12 w-full rounded-xl border border-navy-200 bg-white text-[20px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+          className="mt-4 h-12 w-full rounded-xl border border-navy-200 bg-white text-[24px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
         >
           리뷰 더보기 ({reviews.length - shown}개)
         </button>

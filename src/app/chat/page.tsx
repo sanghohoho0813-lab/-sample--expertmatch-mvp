@@ -17,10 +17,10 @@ export default function ChatPage() {
           </span>
         </div>
 
-        <h1 className="mt-6 text-[29px] font-bold text-navy-900 sm:text-[34px]">
+        <h1 className="mt-6 text-[35px] font-bold text-navy-900 sm:text-[41px]">
           상담 예약 후 이용할 수 있습니다
         </h1>
-        <p className="mt-3 text-[20px] leading-relaxed text-navy-500">
+        <p className="mt-3 text-[24px] leading-relaxed text-navy-500">
           예약이 확정되면 전문가와 1:1 채팅으로 사전 질문을 주고받을 수 있어요.{" "}
           <br className="hidden sm:block" />
           이번 데모에서는 채팅 기능이 제공되지 않습니다.
@@ -29,13 +29,13 @@ export default function ChatPage() {
         <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
           <Link
             href="/experts"
-            className="inline-flex h-12 items-center justify-center rounded-xl bg-teal-600 px-6 text-[20px] font-bold text-white transition-colors hover:bg-teal-700"
+            className="inline-flex h-12 items-center justify-center rounded-xl bg-teal-600 px-6 text-[24px] font-bold text-white transition-colors hover:bg-teal-700"
           >
             전문가 찾아보기
           </Link>
           <Link
             href="/mypage?tab=upcoming"
-            className="inline-flex h-12 items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-[20px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+            className="inline-flex h-12 items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-[24px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
           >
             <CalendarClock className="h-4 w-4" strokeWidth={2.2} />내 예약 보기
           </Link>

@@ -51,15 +51,15 @@ export function BookingComplete() {
   if (!booking) {
     return (
       <div className="shell py-20 text-center">
-        <h1 className="text-[29px] font-bold text-navy-900">
+        <h1 className="text-[35px] font-bold text-navy-900">
           예약 정보를 찾을 수 없습니다
         </h1>
-        <p className="mt-2 text-[20px] text-navy-500">
+        <p className="mt-2 text-[24px] text-navy-500">
           예약 내역은 브라우저에 저장됩니다. 다시 예약을 진행해 주세요.
         </p>
         <Link
           href="/experts"
-          className="mt-6 inline-flex h-12 items-center rounded-xl bg-teal-600 px-6 text-[20px] font-bold text-white transition-colors hover:bg-teal-700"
+          className="mt-6 inline-flex h-12 items-center rounded-xl bg-teal-600 px-6 text-[24px] font-bold text-white transition-colors hover:bg-teal-700"
         >
           전문가 찾아보기
         </Link>
@@ -88,10 +88,10 @@ export function BookingComplete() {
           <SuccessMark />
 
           <div className="mt-6 text-center animate-fade-up">
-            <h1 className="text-[34px] font-extrabold tracking-[-0.03em] text-navy-900 sm:text-[39px]">
+            <h1 className="text-[41px] font-extrabold tracking-[-0.03em] text-navy-900 sm:text-[47px]">
               상담 예약이 완료되었습니다
             </h1>
-            <p className="mt-3 text-[20px] leading-relaxed text-navy-500">
+            <p className="mt-3 text-[24px] leading-relaxed text-navy-500">
               {booking.expertName} 전문가에게 예약이 전달되었어요.
               <br />
               상담 시작 전에 알림으로 다시 안내해 드릴게요.
@@ -102,14 +102,14 @@ export function BookingComplete() {
             <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
               <Portrait name={booking.expertName} accent={booking.expertAccent} photo={booking.expertPhoto} rounded="rounded-2xl" className="h-14 w-14" />
               <div className="min-w-0 flex-1">
-                <p className="text-[23px] font-bold text-navy-900">
+                <p className="text-[27.5px] font-bold text-navy-900">
                   {booking.expertName}
                 </p>
-                <p className="truncate text-[18px] text-navy-500">
+                <p className="truncate text-[21.5px] text-navy-500">
                   {booking.expertTitle}
                 </p>
               </div>
-              <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1.5 text-[17px] font-bold text-teal-700">
+              <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1.5 text-[20.5px] font-bold text-teal-700">
                 {booking.categoryName}
               </span>
             </div>
@@ -128,17 +128,17 @@ export function BookingComplete() {
                   key={row.label}
                   className="flex items-start justify-between gap-4 px-5 py-3.5"
                 >
-                  <dt className="shrink-0 text-[19px] text-navy-500">{row.label}</dt>
-                  <dd className="text-right text-[19.5px] font-semibold text-navy-900">
+                  <dt className="shrink-0 text-[23px] text-navy-500">{row.label}</dt>
+                  <dd className="text-right text-[23.5px] font-semibold text-navy-900">
                     {row.value}
                   </dd>
                 </div>
               ))}
               <div className="flex items-center justify-between gap-4 px-5 py-4">
-                <dt className="text-[20px] font-bold text-navy-900">상담료</dt>
-                <dd className="text-[29px] font-extrabold tracking-tight text-navy-900">
+                <dt className="text-[24px] font-bold text-navy-900">상담료</dt>
+                <dd className="text-[35px] font-extrabold tracking-tight text-navy-900">
                   {formatPrice(booking.price)}
-                  <span className="ml-0.5 text-[17.5px] font-semibold text-navy-500">
+                  <span className="ml-0.5 text-[21px] font-semibold text-navy-500">
                     원
                   </span>
                 </dd>
@@ -147,18 +147,18 @@ export function BookingComplete() {
 
             <div className="flex items-center justify-between gap-3 border-t border-dashed border-navy-200 bg-navy-50/60 px-5 py-4">
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-[17px] text-navy-400">
+                <p className="flex items-center gap-1.5 text-[20.5px] text-navy-400">
                   <Ticket className="h-3.5 w-3.5" strokeWidth={2.2} />
                   예약번호
                 </p>
-                <p className="mt-0.5 truncate font-mono text-[21px] font-bold tracking-tight text-navy-900">
+                <p className="mt-0.5 truncate font-mono text-[25px] font-bold tracking-tight text-navy-900">
                   {booking.code}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={copyCode}
-                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[18px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[21.5px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
               >
                 <Copy className="h-3.5 w-3.5" strokeWidth={2.2} />
                 복사
@@ -168,10 +168,10 @@ export function BookingComplete() {
 
           {booking.note && (
             <div className="mt-4 rounded-2xl border border-navy-100 bg-white p-5 animate-fade-up [animation-delay:200ms]">
-              <p className="text-[17.5px] font-bold text-navy-500">
+              <p className="text-[21px] font-bold text-navy-500">
                 전문가에게 전달한 내용
               </p>
-              <p className="mt-2 whitespace-pre-line text-[19.5px] leading-relaxed text-navy-700">
+              <p className="mt-2 whitespace-pre-line text-[23.5px] leading-relaxed text-navy-700">
                 {booking.note}
               </p>
             </div>
@@ -180,21 +180,21 @@ export function BookingComplete() {
           <div className="mt-6 flex flex-col gap-2.5 sm:flex-row animate-fade-up [animation-delay:260ms]">
             <Link
               href="/mypage?tab=upcoming"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal-600 py-3.5 text-[21px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal-600 py-3.5 text-[25px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
             >
               <CalendarPlus className="h-4 w-4" strokeWidth={2.4} />
               내 예약 확인
             </Link>
             <Link
               href="/"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-navy-200 bg-white py-3.5 text-[21px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-navy-200 bg-white py-3.5 text-[25px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
             >
               <Home className="h-4 w-4" strokeWidth={2.2} />
               홈으로
             </Link>
           </div>
 
-          <p className="mt-5 text-center text-[17px] leading-relaxed text-navy-400">
+          <p className="mt-5 text-center text-[20.5px] leading-relaxed text-navy-400">
             데모 예약입니다. 실제 결제는 발생하지 않았으며 예약 내역은 이
             브라우저에만 저장됩니다.
           </p>

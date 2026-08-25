@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Heart, Menu, Search, X } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
-import { ButtonLink } from "@/components/ui/Button";
 import { useAppStore } from "@/lib/store/AppStore";
+import { DEMO_USER } from "@/lib/data/demoUser";
 import { cx } from "@/lib/format";
 
 const NAV = [
@@ -55,7 +55,7 @@ export function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-[20px] font-medium text-navy-600 transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900"
+              className="rounded-lg px-3 py-2 text-[24px] font-medium text-navy-600 transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900"
             >
               {item.label}
             </Link>
@@ -78,21 +78,28 @@ export function Header() {
           >
             <Heart className="h-5 w-5" />
             {ready && favorites.length > 0 && (
-              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[13px] font-bold text-white">
+              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[15.5px] font-bold text-white">
                 {favorites.length}
               </span>
             )}
           </Link>
 
           <Link
-            href="/mypage"
-            className="hidden rounded-lg px-3 py-2 text-[20px] font-medium text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900 lg:block"
+            href="/mypage?tab=profile"
+            className="hidden items-center gap-2.5 rounded-xl border border-navy-100 py-1.5 pl-1.5 pr-3.5 transition-colors hover:border-navy-200 hover:bg-navy-50 lg:inline-flex"
           >
-            로그인
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-[19px] font-extrabold text-white">
+              {DEMO_USER.initials}
+            </span>
+            <span className="leading-tight">
+              <span className="block text-[15px] font-semibold text-[#0e7f92]">
+                {DEMO_USER.org}
+              </span>
+              <span className="block text-[18px] font-bold text-navy-800">
+                {DEMO_USER.name}님
+              </span>
+            </span>
           </Link>
-          <ButtonLink href="/experts" size="sm" className="hidden lg:inline-flex">
-            회원가입
-          </ButtonLink>
 
           <button
             type="button"
@@ -113,20 +120,28 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex min-h-[52px] items-center rounded-xl px-2 text-[21px] font-medium text-navy-700 transition-colors hover:bg-navy-50"
+                className="flex min-h-[52px] items-center rounded-xl px-2 text-[25px] font-medium text-navy-700 transition-colors hover:bg-navy-50"
               >
                 {item.label}
               </Link>
             ))}
             <div className="my-2 h-px bg-navy-100" />
-            <div className="flex gap-2 pb-3">
-              <ButtonLink href="/mypage" variant="outline" size="md" className="flex-1">
-                로그인
-              </ButtonLink>
-              <ButtonLink href="/experts" size="md" className="flex-1">
-                회원가입
-              </ButtonLink>
-            </div>
+            <Link
+              href="/mypage?tab=profile"
+              className="mb-3 mt-1 flex items-center gap-3 rounded-xl border border-navy-100 bg-canvas p-3"
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-[19px] font-extrabold text-white">
+                {DEMO_USER.initials}
+              </span>
+              <span className="min-w-0 leading-tight">
+                <span className="block text-[15.5px] font-semibold text-[#0e7f92]">
+                  {DEMO_USER.org}
+                </span>
+                <span className="block text-[19px] font-bold text-navy-900">
+                  {DEMO_USER.name}님
+                </span>
+              </span>
+            </Link>
           </nav>
         </div>
       )}

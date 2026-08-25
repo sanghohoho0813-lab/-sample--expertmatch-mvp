@@ -21,7 +21,7 @@
 
   /* 한국어 가독성 우선 — 본문 기준 크기를 크게 잡는다 */
   body {
-    font-size: 18px;
+    font-size: 21px;
     line-height: 1.65;
     word-break: keep-all;
   }
@@ -86,11 +86,11 @@
   }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-navy-100 bg-navy-50 px-2.5 py-1 text-[17.5px] font-medium text-navy-600;
+    @apply inline-flex items-center gap-1 rounded-full border border-navy-100 bg-navy-50 px-2.5 py-1 text-[21px] font-medium text-navy-600;
   }
 
   .field {
-    @apply w-full rounded-xl border border-navy-200 bg-white px-4 py-3.5 text-[18px] text-navy-900 transition-colors duration-200 placeholder:text-navy-300 hover:border-navy-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
+    @apply w-full rounded-xl border border-navy-200 bg-white px-4 py-3.5 text-[21.5px] text-navy-900 transition-colors duration-200 placeholder:text-navy-300 hover:border-navy-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
   }
 
   .link-quiet {
@@ -98,11 +98,11 @@
   }
 
   .section-title {
-    @apply text-[30px] font-bold text-navy-900 sm:text-[36px];
+    @apply text-[36px] font-bold text-navy-900 sm:text-[43px];
   }
 
   .section-sub {
-    @apply mt-2.5 text-[19px] leading-relaxed text-navy-500 sm:text-[20px];
+    @apply mt-2.5 text-[23px] leading-relaxed text-navy-500 sm:text-[24px];
   }
 
   /* 모바일 하단 고정 요소를 위한 안전 여백 */

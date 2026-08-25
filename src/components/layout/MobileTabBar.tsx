@@ -64,12 +64,12 @@ export function MobileTabBar() {
                     strokeWidth={active ? 2.4 : 1.9}
                   />
                   {t.label === "예약" && ready && bookings.length > 0 && (
-                    <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[13px] font-bold text-white">
+                    <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[15.5px] font-bold text-white">
                       {bookings.length}
                     </span>
                   )}
                 </span>
-                <span className="text-[14.5px] font-semibold tracking-tight">
+                <span className="text-[17.5px] font-semibold tracking-tight">
                   {t.label}
                 </span>
               </Link>

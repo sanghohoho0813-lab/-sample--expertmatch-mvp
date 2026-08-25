@@ -41,24 +41,24 @@ export function HeroShowcase() {
             aria-hidden
           />
           <div className="absolute inset-x-0 bottom-0 z-20 p-5">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/40 bg-gold-300/15 px-2.5 py-1 text-[14px] font-bold text-gold-200 backdrop-blur-sm">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/40 bg-gold-300/15 px-2.5 py-1 text-[17px] font-bold text-gold-200 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-gold-300" />
               지금 상담 가능
             </span>
-            <p className="mt-2.5 text-[22px] font-extrabold tracking-tight text-white">
+            <p className="mt-2.5 text-[26.5px] font-extrabold tracking-tight text-white">
               {main.name}
-              <span className="ml-1.5 text-[15px] font-semibold text-navy-200">
+              <span className="ml-1.5 text-[18px] font-semibold text-navy-200">
                 전문가
               </span>
             </p>
-            <p className="mt-0.5 text-[15px] text-navy-200">{main.title}</p>
+            <p className="mt-0.5 text-[18px] text-navy-200">{main.title}</p>
             <div className="mt-2.5 flex items-center gap-2.5">
-              <span className="inline-flex items-center gap-1 text-[15px] font-bold text-white">
+              <span className="inline-flex items-center gap-1 text-[18px] font-bold text-white">
                 <Star className="h-4 w-4 text-gold-300" fill="currentColor" strokeWidth={0} />
                 {main.rating.toFixed(1)}
               </span>
               <span className="h-3 w-px bg-white/25" />
-              <span className="text-[15px] font-semibold text-white">
+              <span className="text-[18px] font-semibold text-white">
                 {formatPrice(main.products[0].price)}원
                 <span className="ml-0.5 font-normal text-navy-200">
                   / {main.products[0].minutes}분
@@ -70,7 +70,7 @@ export function HeroShowcase() {
       </div>
 
       {/* 좌하단 작은 카드 */}
-      <div className="absolute -bottom-14 -left-12 z-20 w-[196px] rotate-[3deg] rounded-2xl border border-white/15 bg-navy-900/70 p-2 shadow-pop backdrop-blur-md">
+      <div className="absolute -left-14 top-[44%] z-20 w-[196px] rotate-[3deg] rounded-2xl border border-white/15 bg-navy-900/70 p-2 shadow-pop backdrop-blur-md">
         <div className="flex items-center gap-2.5">
           <Portrait
             name={sub1.name}
@@ -81,9 +81,9 @@ export function HeroShowcase() {
             className="h-14 w-14 shrink-0"
           />
           <div className="min-w-0">
-            <p className="truncate text-[16px] font-bold text-white">{sub1.name}</p>
-            <p className="truncate text-[13px] text-navy-300">브랜드 · 마케팅</p>
-            <span className="mt-1 inline-flex items-center gap-0.5 text-[13px] font-bold text-gold-300">
+            <p className="truncate text-[19px] font-bold text-white">{sub1.name}</p>
+            <p className="truncate text-[15.5px] text-navy-300">브랜드 · 마케팅</p>
+            <span className="mt-1 inline-flex items-center gap-0.5 text-[15.5px] font-bold text-gold-300">
               <Star className="h-3 w-3" fill="currentColor" strokeWidth={0} />
               {sub1.rating.toFixed(1)}
             </span>
@@ -103,9 +103,9 @@ export function HeroShowcase() {
             className="h-14 w-14 shrink-0"
           />
           <div className="min-w-0">
-            <p className="truncate text-[16px] font-bold text-white">{sub2.name}</p>
-            <p className="truncate text-[13px] text-navy-300">투자유치 · IR</p>
-            <span className="mt-1 inline-flex items-center gap-0.5 text-[13px] font-bold text-gold-300">
+            <p className="truncate text-[19px] font-bold text-white">{sub2.name}</p>
+            <p className="truncate text-[15.5px] text-navy-300">투자유치 · IR</p>
+            <span className="mt-1 inline-flex items-center gap-0.5 text-[15.5px] font-bold text-gold-300">
               <Star className="h-3 w-3" fill="currentColor" strokeWidth={0} />
               {sub2.rating.toFixed(1)}
             </span>

@@ -35,8 +35,8 @@ export function ValueStrip() {
                 <ValueIcon className="h-6 w-6" strokeWidth={1.9} />
               </span>
               <div className="min-w-0">
-                <h3 className="text-[19px] font-bold text-navy-900">{v.title}</h3>
-                <p className="mt-1.5 text-[16px] leading-relaxed text-navy-500">
+                <h3 className="text-[23px] font-bold text-navy-900">{v.title}</h3>
+                <p className="mt-1.5 text-[19px] leading-relaxed text-navy-500">
                   {v.body}
                 </p>
               </div>

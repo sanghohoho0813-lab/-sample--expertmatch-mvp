@@ -117,7 +117,7 @@ export function ExpertSearchClient() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="분야·고민·전문가 검색"
-            className="h-12 w-full min-w-0 bg-transparent text-[21px] outline-none"
+            className="h-12 w-full min-w-0 bg-transparent text-[25px] outline-none"
             autoComplete="off"
           />
           {input && (
@@ -135,7 +135,7 @@ export function ExpertSearchClient() {
           )}
           <button
             type="submit"
-            className="h-9 shrink-0 rounded-lg bg-navy-900 px-4 text-[19px] font-semibold text-white transition-colors hover:bg-navy-800"
+            className="h-9 shrink-0 rounded-lg bg-navy-900 px-4 text-[23px] font-semibold text-white transition-colors hover:bg-navy-800"
           >
             검색
           </button>
@@ -149,7 +149,7 @@ export function ExpertSearchClient() {
               filterCount > 0 ? `필터 열기 (적용 ${filterCount}개)` : "필터 열기"
             }
             className={cx(
-              "inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl border px-4 text-[19.5px] font-semibold transition-colors lg:hidden",
+              "inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl border px-4 text-[23.5px] font-semibold transition-colors lg:hidden",
               filterCount > 0
                 ? "border-teal-600 bg-teal-50 text-teal-800"
                 : "border-navy-200 bg-white text-navy-700",
@@ -158,7 +158,7 @@ export function ExpertSearchClient() {
             <SlidersHorizontal className="h-4 w-4" strokeWidth={2.2} />
             필터
             {filterCount > 0 && (
-              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-600 px-1 text-[14.5px] font-bold text-white">
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-600 px-1 text-[17.5px] font-bold text-white">
                 {filterCount}
               </span>
             )}
@@ -172,7 +172,7 @@ export function ExpertSearchClient() {
               id="sort-select"
               value={sort}
               onChange={(e) => setSort(e.target.value as SortOption["id"])}
-              className="h-12 w-full appearance-none rounded-2xl border border-navy-200 bg-white pl-4 pr-9 text-[19.5px] font-semibold text-navy-800 outline-none transition-colors hover:border-navy-300 focus:border-teal-500 lg:w-[152px]"
+              className="h-12 w-full appearance-none rounded-2xl border border-navy-200 bg-white pl-4 pr-9 text-[23.5px] font-semibold text-navy-800 outline-none transition-colors hover:border-navy-300 focus:border-teal-500 lg:w-[152px]"
             >
               {SORT_OPTIONS.map((o) => (
                 <option key={o.id} value={o.id}>
@@ -191,7 +191,7 @@ export function ExpertSearchClient() {
       {/* 검색어 기반 분야 추천 */}
       {query && suggestedCategories.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2 rounded-2xl border border-teal-100 bg-teal-50/60 px-4 py-3">
-          <span className="text-[18px] font-semibold text-teal-900">
+          <span className="text-[21.5px] font-semibold text-teal-900">
             &lsquo;{query}&rsquo; 관련 분야
           </span>
           {suggestedCategories.map((id) => {
@@ -203,7 +203,7 @@ export function ExpertSearchClient() {
                 type="button"
                 onClick={() => toggleCategory(id)}
                 className={cx(
-                  "inline-flex min-h-[34px] items-center gap-1 rounded-lg border px-2.5 text-[17.5px] font-semibold transition-colors",
+                  "inline-flex min-h-[34px] items-center gap-1 rounded-lg border px-2.5 text-[21px] font-semibold transition-colors",
                   active
                     ? "border-teal-600 bg-teal-600 text-white"
                     : "border-teal-200 bg-white text-teal-800 hover:bg-teal-100",
@@ -232,13 +232,13 @@ export function ExpertSearchClient() {
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-[20px] text-navy-500">
+            <p className="text-[24px] text-navy-500">
               검색 결과{" "}
-              <span className="text-[23px] font-extrabold text-navy-900">
+              <span className="text-[27.5px] font-extrabold text-navy-900">
                 {results.length}명
               </span>
               {query && (
-                <span className="ml-1.5 text-[19px] text-navy-400">
+                <span className="ml-1.5 text-[23px] text-navy-400">
                   · &lsquo;{query}&rsquo; 검색
                 </span>
               )}
@@ -247,7 +247,7 @@ export function ExpertSearchClient() {
               <button
                 type="button"
                 onClick={() => setFilters(EMPTY_FILTERS)}
-                className="text-[18px] font-semibold text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
+                className="text-[21.5px] font-semibold text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
               >
                 필터 {filterCount}개 해제
               </button>
@@ -265,10 +265,10 @@ export function ExpertSearchClient() {
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-navy-50">
                 <Search className="h-6 w-6 text-navy-300" strokeWidth={2} />
               </div>
-              <h3 className="mt-4 text-[23px] font-bold text-navy-900">
+              <h3 className="mt-4 text-[27.5px] font-bold text-navy-900">
                 조건에 맞는 전문가가 없습니다
               </h3>
-              <p className="mt-1.5 text-[19.5px] text-navy-500">
+              <p className="mt-1.5 text-[23.5px] text-navy-500">
                 검색어를 바꾸거나 필터를 완화해 보세요.
               </p>
               <div className="mt-5 flex flex-wrap justify-center gap-2">
@@ -281,7 +281,7 @@ export function ExpertSearchClient() {
                       setFilters(EMPTY_FILTERS);
                       submitSearch(k);
                     }}
-                    className="min-h-[40px] rounded-xl border border-navy-200 bg-white px-3.5 text-[18px] font-medium text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                    className="min-h-[40px] rounded-xl border border-navy-200 bg-white px-3.5 text-[21.5px] font-medium text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
                   >
                     {k}
                   </button>
@@ -290,7 +290,7 @@ export function ExpertSearchClient() {
               <button
                 type="button"
                 onClick={resetAll}
-                className="mt-4 text-[19px] font-semibold text-teal-700 hover:text-teal-800"
+                className="mt-4 text-[23px] font-semibold text-teal-700 hover:text-teal-800"
               >
                 전체 전문가 다시 보기
               </button>
@@ -311,14 +311,14 @@ export function ExpertSearchClient() {
             <button
               type="button"
               onClick={() => setFilters(EMPTY_FILTERS)}
-              className="h-12 flex-1 rounded-xl border border-navy-200 bg-white text-[20px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
+              className="h-12 flex-1 rounded-xl border border-navy-200 bg-white text-[24px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
             >
               초기화
             </button>
             <button
               type="button"
               onClick={() => setSheetOpen(false)}
-              className="h-12 flex-[2] rounded-xl bg-teal-600 text-[20px] font-bold text-white transition-colors hover:bg-teal-700"
+              className="h-12 flex-[2] rounded-xl bg-teal-600 text-[24px] font-bold text-white transition-colors hover:bg-teal-700"
             >
               전문가 {results.length}명 보기
             </button>
@@ -357,8 +357,8 @@ export function ExpertSearchClient() {
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy-50 text-navy-700">
                 <Icon name={c.icon} className="h-5 w-5" />
               </span>
-              <span className="text-[20px] font-bold text-navy-900">{c.name}</span>
-              <span className="text-[17px] leading-snug text-navy-500">
+              <span className="text-[24px] font-bold text-navy-900">{c.name}</span>
+              <span className="text-[20.5px] leading-snug text-navy-500">
                 {c.tagline}
               </span>
             </button>

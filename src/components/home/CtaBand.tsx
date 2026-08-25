@@ -39,7 +39,7 @@ export function CtaBand() {
             </div>
           </div>
 
-          <h2 className="mt-7 text-[30px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[42px]">
+          <h2 className="mt-7 text-[36px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[60px]">
             혼자 검색하는 시간을 줄이고,
             <br />
             <span className="bg-gradient-to-r from-gold-200 to-gold-400 bg-clip-text text-transparent">
@@ -47,7 +47,7 @@ export function CtaBand() {
             </span>
             에게 바로 물어보세요
           </h2>
-          <p className="mt-5 text-[19px] leading-relaxed text-navy-200 sm:text-[20px]">
+          <p className="mt-5 text-[23px] leading-relaxed text-navy-200 sm:text-[24px]">
             회원가입 없이 데모로 전체 예약 과정을 체험할 수 있습니다.
           </p>
 
@@ -66,7 +66,7 @@ export function CtaBand() {
             </ButtonLink>
           </div>
 
-          <p className="mt-6 inline-flex items-center gap-1.5 text-[15px] text-navy-300">
+          <p className="mt-6 inline-flex items-center gap-1.5 text-[18px] text-navy-300">
             <ShieldCheck className="h-4 w-4 text-gold-300" strokeWidth={2.2} />
             데모 환경 · 실제 결제는 발생하지 않습니다
           </p>

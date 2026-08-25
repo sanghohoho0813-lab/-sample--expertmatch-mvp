@@ -13,7 +13,7 @@ export function FeaturedExperts() {
       <div className="shell">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="inline-flex items-center gap-1.5 text-[15px] font-bold uppercase tracking-[0.14em] text-gold-600">
+            <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
               <span className="h-px w-6 bg-gold-400" aria-hidden />
               Featured
             </span>
@@ -24,7 +24,7 @@ export function FeaturedExperts() {
           </div>
           <Link
             href="/experts"
-            className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+            className="inline-flex items-center gap-1.5 text-[20.5px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
           >
             전문가 전체보기
             <ArrowRight className="h-4 w-4" strokeWidth={2.4} />

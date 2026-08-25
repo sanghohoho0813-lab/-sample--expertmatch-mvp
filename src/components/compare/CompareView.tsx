@@ -25,7 +25,7 @@ const ROWS: Row[] = [
         {e.categories.map((c) => (
           <span
             key={c}
-            className="rounded-md bg-navy-50 px-1.5 py-0.5 text-[16px] font-semibold text-navy-600"
+            className="rounded-md bg-navy-50 px-1.5 py-0.5 text-[19px] font-semibold text-navy-600"
           >
             {CATEGORY_MAP[c].name}
           </span>
@@ -85,8 +85,8 @@ const ROWS: Row[] = [
               key={m}
               className={
                 on
-                  ? "inline-flex items-center gap-0.5 rounded-md bg-teal-50 px-1.5 py-0.5 text-[16px] font-semibold text-teal-700"
-                  : "inline-flex items-center gap-0.5 rounded-md bg-navy-50 px-1.5 py-0.5 text-[16px] text-navy-300"
+                  ? "inline-flex items-center gap-0.5 rounded-md bg-teal-50 px-1.5 py-0.5 text-[19px] font-semibold text-teal-700"
+                  : "inline-flex items-center gap-0.5 rounded-md bg-navy-50 px-1.5 py-0.5 text-[19px] text-navy-300"
               }
             >
               {on ? (
@@ -124,7 +124,7 @@ const ROWS: Row[] = [
     render: (e) => (
       <ul className="space-y-1">
         {e.strengths.map((s) => (
-          <li key={s} className="flex items-start gap-1.5 text-[17.5px] text-navy-600">
+          <li key={s} className="flex items-start gap-1.5 text-[21px] text-navy-600">
             <Check className="mt-[3px] h-3 w-3 shrink-0 text-teal-600" strokeWidth={3} />
             {s}
           </li>
@@ -154,7 +154,7 @@ export function CompareView({
         <table className="w-full min-w-[640px] border-collapse text-left">
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 w-[128px] bg-white p-4 align-bottom text-[17.5px] font-semibold text-navy-400">
+              <th className="sticky left-0 z-10 w-[128px] bg-white p-4 align-bottom text-[21px] font-semibold text-navy-400">
                 비교 항목
               </th>
               {experts.map((e) => (
@@ -176,11 +176,11 @@ export function CompareView({
                       <Link
                         href={`/experts/${e.id}`}
                         onClick={onNavigate}
-                        className="block text-[21px] font-bold text-navy-900 transition-colors hover:text-teal-700"
+                        className="block text-[25px] font-bold text-navy-900 transition-colors hover:text-teal-700"
                       >
                         {e.name}
                       </Link>
-                      <p className="mt-0.5 text-[17px] font-normal leading-snug text-navy-500">
+                      <p className="mt-0.5 text-[20.5px] font-normal leading-snug text-navy-500">
                         {e.title}
                       </p>
                     </div>
@@ -194,7 +194,7 @@ export function CompareView({
               <tr key={row.key} className={i % 2 === 1 ? "bg-navy-50/40" : undefined}>
                 <th
                   scope="row"
-                  className={`sticky left-0 z-10 p-4 align-top text-[17.5px] font-semibold text-navy-500 ${
+                  className={`sticky left-0 z-10 p-4 align-top text-[21px] font-semibold text-navy-500 ${
                     i % 2 === 1 ? "bg-[#FAFBFD]" : "bg-white"
                   }`}
                 >
@@ -203,12 +203,12 @@ export function CompareView({
                 {experts.map((e) => (
                   <td
                     key={e.id}
-                    className="border-l border-navy-100 p-4 align-top text-[18px] text-navy-700"
+                    className="border-l border-navy-100 p-4 align-top text-[21.5px] text-navy-700"
                   >
                     <div className="flex items-start gap-1.5">
                       <div className="min-w-0">{row.render(e)}</div>
                       {bestMap[row.key] === e.id && (
-                        <span className="mt-0.5 shrink-0 rounded-md bg-teal-600 px-1.5 py-0.5 text-[13px] font-bold text-white">
+                        <span className="mt-0.5 shrink-0 rounded-md bg-teal-600 px-1.5 py-0.5 text-[15.5px] font-bold text-white">
                           BEST
                         </span>
                       )}
@@ -224,7 +224,7 @@ export function CompareView({
                   <Link
                     href={`/booking/${e.id}`}
                     onClick={onNavigate}
-                    className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-[19px] font-semibold text-white transition-colors hover:bg-teal-700"
+                    className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-[23px] font-semibold text-white transition-colors hover:bg-teal-700"
                   >
                     상담 예약
                   </Link>
@@ -246,11 +246,11 @@ export function CompareView({
                 <Link
                   href={`/experts/${e.id}`}
                   onClick={onNavigate}
-                  className="text-[21px] font-bold text-navy-900"
+                  className="text-[25px] font-bold text-navy-900"
                 >
                   {e.name}
                 </Link>
-                <p className="mt-0.5 truncate text-[17.5px] text-navy-500">{e.title}</p>
+                <p className="mt-0.5 truncate text-[21px] text-navy-500">{e.title}</p>
               </div>
               <button
                 type="button"
@@ -265,14 +265,14 @@ export function CompareView({
             <dl className="mt-3.5 divide-y divide-navy-100 border-t border-navy-100">
               {ROWS.map((row) => (
                 <div key={row.key} className="flex gap-3 py-2.5">
-                  <dt className="w-[84px] shrink-0 pt-0.5 text-[17px] font-semibold text-navy-400">
+                  <dt className="w-[84px] shrink-0 pt-0.5 text-[20.5px] font-semibold text-navy-400">
                     {row.label}
                   </dt>
-                  <dd className="min-w-0 flex-1 text-[18px] text-navy-700">
+                  <dd className="min-w-0 flex-1 text-[21.5px] text-navy-700">
                     <div className="flex items-start gap-1.5">
                       <div className="min-w-0">{row.render(e)}</div>
                       {bestMap[row.key] === e.id && (
-                        <span className="mt-0.5 shrink-0 rounded-md bg-teal-600 px-1.5 py-0.5 text-[13px] font-bold text-white">
+                        <span className="mt-0.5 shrink-0 rounded-md bg-teal-600 px-1.5 py-0.5 text-[15.5px] font-bold text-white">
                           BEST
                         </span>
                       )}
@@ -285,7 +285,7 @@ export function CompareView({
             <Link
               href={`/booking/${e.id}`}
               onClick={onNavigate}
-              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-[20px] font-semibold text-white transition-colors hover:bg-teal-700"
+              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-[24px] font-semibold text-white transition-colors hover:bg-teal-700"
             >
               {e.name} 전문가 예약하기
             </Link>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/layout/Logo";
+import { MiraeLogo } from "@/components/brand/MiraeLogo";
 
 const COLUMNS = [
   {
@@ -38,24 +39,24 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-[19px] leading-relaxed text-navy-500">
+            <p className="mt-4 max-w-xs text-[23px] leading-relaxed text-navy-500">
               검증된 전문가와 필요한 순간을 연결합니다. 창업부터 세무·법률까지,
               고민에 맞는 전문가를 찾아 바로 상담을 예약하세요.
             </p>
-            <p className="mt-5 inline-flex rounded-lg bg-navy-50 px-2.5 py-1.5 text-[16px] font-medium text-navy-500">
+            <p className="mt-5 inline-flex rounded-lg bg-navy-50 px-2.5 py-1.5 text-[19px] font-medium text-navy-500">
               포트폴리오 데모 · 실제 결제와 상담은 진행되지 않습니다
             </p>
           </div>
 
           {COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="text-[19px] font-bold text-navy-900">{col.title}</h3>
+              <h3 className="text-[23px] font-bold text-navy-900">{col.title}</h3>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[19px] text-navy-500 transition-colors duration-200 hover:text-navy-900"
+                      className="text-[23px] text-navy-500 transition-colors duration-200 hover:text-navy-900"
                     >
                       {link.label}
                     </Link>
@@ -66,8 +67,12 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-navy-100 pt-6 text-[17.5px] text-navy-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 (sample) ExpertMatch. 데모 목적으로 제작된 샘플 서비스입니다.</p>
+        <div className="mt-10 flex flex-col gap-2 border-t border-navy-100 pt-6 text-[21px] text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © 2026{" "}
+            <span className="font-semibold text-navy-600">미래에이아이랩</span> ·
+            (sample) ExpertMatch. 데모 목적으로 제작된 샘플 서비스입니다.
+          </p>
           <p>모든 전문가 정보와 후기는 예시 데이터입니다.</p>
         </div>
       </div>

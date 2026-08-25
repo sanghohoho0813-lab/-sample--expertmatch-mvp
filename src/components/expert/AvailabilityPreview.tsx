@@ -28,17 +28,17 @@ export function AvailabilityPreview({ expertId }: { expertId: string }) {
   return (
     <section id="availability" className="scroll-mt-24">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-[25px] font-bold text-navy-900 sm:text-[28px]">
+        <h2 className="text-[30px] font-bold text-navy-900 sm:text-[34px]">
           상담 가능 시간
         </h2>
         <Link
           href={`/booking/${expertId}`}
-          className="text-[19px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+          className="text-[23px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
         >
           전체 일정 보기
         </Link>
       </div>
-      <p className="mt-1.5 text-[19px] text-navy-500">
+      <p className="mt-1.5 text-[23px] text-navy-500">
         앞으로 7일간 예약 가능한 시간입니다.
       </p>
 
@@ -61,26 +61,26 @@ export function AvailabilityPreview({ expertId }: { expertId: string }) {
                     : "border-navy-100 bg-white"
                 }`}
               >
-                <span className="text-[16px] font-semibold text-navy-400">
+                <span className="text-[19px] font-semibold text-navy-400">
                   {WEEKDAY[d.getDay()]}
                 </span>
                 <span
-                  className={`mt-0.5 text-[21px] font-extrabold ${
+                  className={`mt-0.5 text-[25px] font-extrabold ${
                     day.isClosed ? "text-navy-300" : "text-navy-900"
                   }`}
                 >
                   {d.getDate()}
                 </span>
                 {day.isClosed ? (
-                  <span className="mt-2 text-[16px] text-navy-300">마감</span>
+                  <span className="mt-2 text-[19px] text-navy-300">마감</span>
                 ) : (
-                  <span className="mt-2 inline-flex items-center gap-1 rounded-md bg-teal-50 px-1.5 py-1 text-[15px] font-bold text-teal-700">
+                  <span className="mt-2 inline-flex items-center gap-1 rounded-md bg-teal-50 px-1.5 py-1 text-[18px] font-bold text-teal-700">
                     <CalendarDays className="h-3 w-3" strokeWidth={2.4} />
                     {day.slots.length}자리
                   </span>
                 )}
                 {!day.isClosed && (
-                  <span className="mt-1.5 text-[15px] leading-tight text-navy-400">
+                  <span className="mt-1.5 text-[18px] leading-tight text-navy-400">
                     {formatTimeKorean(day.slots[0])} 부터
                   </span>
                 )}

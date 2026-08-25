@@ -41,7 +41,7 @@ function Group({
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-2 py-1 text-left"
       >
-        <span className="text-[19px] font-bold text-navy-900">{title}</span>
+        <span className="text-[23px] font-bold text-navy-900">{title}</span>
         <ChevronDown
           className={cx(
             "h-4 w-4 shrink-0 text-navy-400 transition-transform duration-200",
@@ -93,14 +93,14 @@ function CheckRow({
       </span>
       <span
         className={cx(
-          "min-w-0 flex-1 truncate text-[18px]",
+          "min-w-0 flex-1 truncate text-[21.5px]",
           checked ? "font-semibold text-navy-900" : "text-navy-600",
         )}
       >
         {label}
       </span>
       {hint && (
-        <span className="shrink-0 text-[16px] text-navy-300">{hint}</span>
+        <span className="shrink-0 text-[19px] text-navy-300">{hint}</span>
       )}
     </button>
   );
@@ -124,11 +124,11 @@ export function FilterPanel({
   return (
     <div>
       <div className="flex items-center justify-between border-b border-navy-100 pb-3">
-        <h2 className="text-[20px] font-bold text-navy-900">필터</h2>
+        <h2 className="text-[24px] font-bold text-navy-900">필터</h2>
         <button
           type="button"
           onClick={onReset}
-          className="rounded-lg px-1.5 py-1 text-[17.5px] font-medium text-navy-400 transition-colors hover:text-teal-700"
+          className="rounded-lg px-1.5 py-1 text-[21px] font-medium text-navy-400 transition-colors hover:text-teal-700"
         >
           초기화
         </button>
@@ -231,7 +231,7 @@ export function FilterPanel({
 
       <Group title="상담 가능 시간">
         <label className="mt-1 flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-navy-200 bg-white px-3 py-2.5 transition-colors hover:border-navy-300">
-          <span className="text-[18px] font-medium text-navy-700">
+          <span className="text-[21.5px] font-medium text-navy-700">
             이번 주 예약 가능만
           </span>
           <span className="relative inline-flex shrink-0">

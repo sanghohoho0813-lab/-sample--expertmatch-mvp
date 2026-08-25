@@ -53,12 +53,12 @@ export function Hero() {
       <div className="shell relative py-14 sm:py-20 lg:py-[92px]">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
           <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-gold-300/25 bg-gold-300/[0.08] px-3.5 py-2 text-[15px] font-semibold text-gold-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold-300/25 bg-gold-300/[0.08] px-3.5 py-2 text-[18px] font-semibold text-gold-200">
               <BadgeCheck className="h-4 w-4" strokeWidth={2.4} />
               경력·자격 검증을 마친 전문가만 등록됩니다
             </span>
 
-            <h1 className="mt-6 text-[40px] font-extrabold leading-[1.18] tracking-[-0.035em] text-white sm:text-[54px] lg:text-[62px]">
+            <h1 className="mt-6 text-[48px] font-extrabold leading-[1.18] tracking-[-0.035em] text-white sm:text-[78px] lg:text-[89px]">
               당신의 고민,
               <br />
               <span className="relative inline-block">
@@ -74,7 +74,7 @@ export function Hero() {
               <br className="sm:hidden" /> 해결하세요
             </h1>
 
-            <p className="mt-6 max-w-2xl text-[19px] leading-relaxed text-navy-200 sm:text-[21px]">
+            <p className="mt-6 max-w-2xl text-[23px] leading-relaxed text-navy-200 sm:text-[25px]">
               검증된 전문가에게 1:1 상담으로 명확한 솔루션을 만나보세요.{" "}
               <br className="hidden sm:block" />
               분야를 고르고 30초 만에 예약까지 끝납니다.
@@ -99,7 +99,7 @@ export function Hero() {
                   />
                 ))}
               </div>
-              <p className="min-w-0 flex-1 text-[16px] leading-snug text-navy-200">
+              <p className="min-w-0 flex-1 text-[19px] leading-snug text-navy-200">
                 <span className="font-bold text-white">지금 {EXPERTS.length}명</span>의
                 전문가가 상담을 기다리고 있어요
               </p>
@@ -108,7 +108,7 @@ export function Hero() {
             <div className="mt-5">
               <Link
                 href="/experts?demo=1"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3.5 text-[17px] font-semibold text-white transition-all duration-200 hover:border-gold-300/60 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3.5 text-[20.5px] font-semibold text-white transition-all duration-200 hover:border-gold-300/60 hover:bg-white/10"
               >
                 <PlayCircle className="h-5 w-5 text-gold-300" strokeWidth={2.2} />
                 데모 둘러보기
@@ -128,8 +128,8 @@ export function Hero() {
                 className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-[3px] rounded-full bg-gradient-to-b from-gold-400 to-teal-500"
                 aria-hidden
               />
-              <dt className="text-[16px] text-navy-300">{s.label}</dt>
-              <dd className="mt-1.5 text-[29px] font-extrabold tracking-tight text-white sm:text-[34px]">
+              <dt className="text-[19px] text-navy-300">{s.label}</dt>
+              <dd className="mt-1.5 text-[35px] font-extrabold tracking-tight text-white sm:text-[41px]">
                 {s.value}
               </dd>
             </div>

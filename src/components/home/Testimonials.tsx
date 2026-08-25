@@ -12,7 +12,7 @@ export function Testimonials() {
     >
       <div className="shell">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-1.5 text-[15px] font-bold uppercase tracking-[0.14em] text-gold-600">
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
             <span className="h-px w-6 bg-gold-400" aria-hidden />
             Reviews
           </span>
@@ -35,16 +35,16 @@ export function Testimonials() {
                   fill="currentColor"
                   strokeWidth={0}
                 />
-                <p className="mt-4 flex-1 text-[17px] leading-relaxed text-navy-700">
+                <p className="mt-4 flex-1 text-[20.5px] leading-relaxed text-navy-700">
                   {t.quote}
                 </p>
 
                 <div className="mt-5 border-t border-cream-200 pt-4">
                   <Stars value={t.rating} size={17} />
-                  <p className="mt-2.5 text-[17px] font-bold text-navy-900">
+                  <p className="mt-2.5 text-[20.5px] font-bold text-navy-900">
                     {t.name}
                   </p>
-                  <p className="mt-0.5 text-[15px] text-navy-400">{t.role}</p>
+                  <p className="mt-0.5 text-[18px] text-navy-400">{t.role}</p>
 
                   {expert && (
                     <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-cream-100 p-2">
@@ -57,10 +57,10 @@ export function Testimonials() {
                         className="h-10 w-10 shrink-0"
                       />
                       <div className="min-w-0">
-                        <p className="truncate text-[14.5px] font-semibold text-navy-700">
+                        <p className="truncate text-[17.5px] font-semibold text-navy-700">
                           {expert.name} 전문가
                         </p>
-                        <p className="truncate text-[13.5px] text-navy-400">
+                        <p className="truncate text-[16.5px] text-navy-400">
                           {expert.title}
                         </p>
                       </div>

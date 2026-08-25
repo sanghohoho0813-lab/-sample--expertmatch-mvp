@@ -5,6 +5,7 @@ import { FeaturedExperts } from "@/components/home/FeaturedExperts";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { Testimonials } from "@/components/home/Testimonials";
 import { CtaBand } from "@/components/home/CtaBand";
+import { MiraeBand } from "@/components/home/MiraeBand";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <HowItWorks />
       <Testimonials />
       <CtaBand />
+      <MiraeBand />
     </>
   );
 }

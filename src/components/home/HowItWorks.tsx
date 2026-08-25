@@ -40,14 +40,14 @@ export function HowItWorks() {
 
       <div className="shell relative">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-1.5 text-[15px] font-bold uppercase tracking-[0.14em] text-gold-300">
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-300">
             <span className="h-px w-6 bg-gold-400" aria-hidden />
             How it works
           </span>
-          <h2 className="mt-2.5 text-[30px] font-bold tracking-[-0.02em] text-white sm:text-[36px]">
+          <h2 className="mt-2.5 text-[36px] font-bold tracking-[-0.02em] text-white sm:text-[43px]">
             4단계로 끝나는 전문가 상담
           </h2>
-          <p className="mt-2.5 text-[19px] leading-relaxed text-navy-200 sm:text-[20px]">
+          <p className="mt-2.5 text-[23px] leading-relaxed text-navy-200 sm:text-[24px]">
             복잡한 절차 없이, 고민을 고르는 순간부터 예약까지 한 흐름으로 이어집니다.
           </p>
         </div>
@@ -61,7 +61,7 @@ export function HowItWorks() {
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm transition-colors duration-200 hover:border-gold-300/30 hover:bg-white/[0.09]"
               >
                 <span
-                  className="pointer-events-none absolute -right-2 -top-5 text-[78px] font-extrabold leading-none text-white/[0.06]"
+                  className="pointer-events-none absolute -right-2 -top-5 text-[94px] font-extrabold leading-none text-white/[0.06]"
                   aria-hidden
                 >
                   {i + 1}
@@ -69,10 +69,10 @@ export function HowItWorks() {
                 <span className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 to-teal-700 p-3 text-white shadow-[0_8px_20px_-10px_rgba(21,156,168,0.9)]">
                   <StepIcon className="h-6 w-6" strokeWidth={2} />
                 </span>
-                <h3 className="relative mt-5 text-[21px] font-bold text-white">
+                <h3 className="relative mt-5 text-[25px] font-bold text-white">
                   {step.title}
                 </h3>
-                <p className="relative mt-2 text-[16.5px] leading-relaxed text-navy-200">
+                <p className="relative mt-2 text-[20px] leading-relaxed text-navy-200">
                   {step.body}
                 </p>
               </li>

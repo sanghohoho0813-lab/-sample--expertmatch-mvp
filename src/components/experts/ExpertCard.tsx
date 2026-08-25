@@ -18,7 +18,7 @@ function WeekStrip({ expert }: { expert: Expert }) {
         <span
           key={label}
           className={cx(
-            "flex h-[26px] w-[26px] items-center justify-center rounded-full text-[14px] font-bold",
+            "flex h-[26px] w-[26px] items-center justify-center rounded-full text-[17px] font-bold",
             days[i] ? "bg-teal-600 text-white" : "bg-navy-50 text-navy-300",
           )}
         >
@@ -31,7 +31,7 @@ function WeekStrip({ expert }: { expert: Expert }) {
 
 function RatingBadge({ expert }: { expert: Expert }) {
   return (
-    <span className="inline-flex shrink-0 items-center gap-1 text-[17px]">
+    <span className="inline-flex shrink-0 items-center gap-1 text-[20.5px]">
       <Star className="h-4 w-4 text-amber-500" fill="currentColor" strokeWidth={0} />
       <span className="font-bold text-navy-900">{expert.rating.toFixed(1)}</span>
       <span className="text-navy-400">({formatCount(expert.reviewCount)})</span>
@@ -68,7 +68,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           className="aspect-square w-full"
         />
         {comparing && (
-          <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-lg bg-teal-600 px-1.5 py-1 text-[14.5px] font-bold text-white shadow-sm sm:left-2.5 sm:top-2.5">
+          <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-lg bg-teal-600 px-1.5 py-1 text-[17.5px] font-bold text-white shadow-sm sm:left-2.5 sm:top-2.5">
             <Check className="h-3 w-3" strokeWidth={3.2} />
             비교중
           </span>
@@ -99,13 +99,13 @@ export function ExpertCard({ expert }: { expert: Expert }) {
       {/* 이름 · 직함 · 태그 */}
       <div className="col-start-2 row-start-1 min-w-0 sm:col-auto sm:row-auto sm:px-4 sm:pt-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="min-w-0 truncate text-[20px] font-bold leading-tight text-navy-900 sm:text-[22px]">
+          <h3 className="min-w-0 truncate text-[24px] font-bold leading-tight text-navy-900 sm:text-[26.5px]">
             <Link
               href={`/experts/${expert.id}`}
               className="transition-colors hover:text-teal-700"
             >
               {expert.name}
-              <span className="ml-1 text-[16px] font-semibold text-navy-400">
+              <span className="ml-1 text-[19px] font-semibold text-navy-400">
                 전문가
               </span>
               <span className="absolute inset-0 z-0" aria-hidden />
@@ -117,7 +117,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           </span>
         </div>
 
-        <p className="mt-1 truncate text-[17px] text-navy-500">{expert.title}</p>
+        <p className="mt-1 truncate text-[20.5px] text-navy-500">{expert.title}</p>
 
         <span className="mt-1.5 inline-flex sm:hidden">
           <RatingBadge expert={expert} />
@@ -127,7 +127,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           {expert.categories.slice(0, 1).map((id) => (
             <span
               key={id}
-              className="inline-flex shrink-0 items-center gap-1 rounded-md bg-teal-50 px-1.5 py-1 text-[15px] font-semibold leading-none text-teal-800"
+              className="inline-flex shrink-0 items-center gap-1 rounded-md bg-teal-50 px-1.5 py-1 text-[18px] font-semibold leading-none text-teal-800"
             >
               <Icon name={CATEGORY_MAP[id].icon} className="h-3 w-3" />
               {CATEGORY_MAP[id].name}
@@ -137,7 +137,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
             <span
               key={skill}
               className={cx(
-                "shrink-0 whitespace-nowrap rounded-md bg-navy-50 px-1.5 py-1 text-[15px] font-medium leading-none text-navy-500",
+                "shrink-0 whitespace-nowrap rounded-md bg-navy-50 px-1.5 py-1 text-[18px] font-medium leading-none text-navy-500",
                 // 좁은 화면에서 잘려 보이지 않도록 두 번째 태그는 sm 이상에서만 노출
                 i === 1 && "hidden sm:inline-flex",
               )}
@@ -151,19 +151,19 @@ export function ExpertCard({ expert }: { expert: Expert }) {
       {/* 가격 · 예약가능 · 액션 */}
       <div className="col-span-2 row-start-2 min-w-0 sm:col-auto sm:row-auto sm:px-4 sm:pb-4 sm:pt-3">
         <div className="flex flex-wrap items-baseline gap-x-1.5">
-          <span className="text-[17px] text-navy-400">상담</span>
-          <span className="text-[24px] font-extrabold tracking-tight text-navy-900">
+          <span className="text-[20.5px] text-navy-400">상담</span>
+          <span className="text-[29px] font-extrabold tracking-tight text-navy-900">
             {formatPrice(lead.price)}
-            <span className="ml-0.5 text-[17px] font-bold text-navy-600">원</span>
+            <span className="ml-0.5 text-[20.5px] font-bold text-navy-600">원</span>
           </span>
-          <span className="text-[17px] font-medium text-navy-400">
+          <span className="text-[20.5px] font-medium text-navy-400">
             / {lead.minutes}분
           </span>
         </div>
 
         <div className="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
           {expert.availableThisWeek ? (
-            <span className="inline-flex items-center gap-1 text-[17px] font-bold text-teal-700">
+            <span className="inline-flex items-center gap-1 text-[20.5px] font-bold text-teal-700">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-70 animate-ring-pulse" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-teal-600" />
@@ -171,14 +171,14 @@ export function ExpertCard({ expert }: { expert: Expert }) {
               이번 주 가능
             </span>
           ) : (
-            <span className="text-[17px] font-medium text-navy-400">
+            <span className="text-[20.5px] font-medium text-navy-400">
               다음 주부터 가능
             </span>
           )}
           <WeekStrip expert={expert} />
         </div>
 
-        <div className="mt-2.5 flex items-center gap-2 truncate text-[16px] text-navy-400">
+        <div className="mt-2.5 flex items-center gap-2 truncate text-[19px] text-navy-400">
           {expert.methods.map((m) => (
             <span key={m} className="inline-flex shrink-0 items-center">
               <Icon name={METHOD_ICON[m]} className="h-3.5 w-3.5" />
@@ -198,7 +198,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
             aria-pressed={comparing}
             aria-label={comparing ? `${expert.name} 비교 해제` : `${expert.name} 비교하기`}
             className={cx(
-              "inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[18px] font-semibold transition-all duration-200 active:scale-[0.97]",
+              "inline-flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[21.5px] font-semibold transition-all duration-200 active:scale-[0.97]",
               comparing
                 ? "border-teal-600 bg-teal-600 text-white"
                 : "border-navy-200 bg-white text-navy-600 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-800",
@@ -209,7 +209,7 @@ export function ExpertCard({ expert }: { expert: Expert }) {
           </button>
           <Link
             href={`/experts/${expert.id}`}
-            className="inline-flex h-11 min-w-0 flex-1 items-center justify-center rounded-xl border border-navy-200 bg-white text-[19px] font-bold text-navy-800 transition-all duration-200 hover:border-navy-900 hover:bg-navy-900 hover:text-white active:scale-[0.98]"
+            className="inline-flex h-11 min-w-0 flex-1 items-center justify-center rounded-xl border border-navy-200 bg-white text-[23px] font-bold text-navy-800 transition-all duration-200 hover:border-navy-900 hover:bg-navy-900 hover:text-white active:scale-[0.98]"
           >
             상세보기
           </Link>

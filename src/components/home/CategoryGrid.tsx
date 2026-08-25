@@ -18,7 +18,7 @@ export function CategoryGrid() {
     <section className="shell py-16 sm:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="inline-flex items-center gap-1.5 text-[15px] font-bold uppercase tracking-[0.14em] text-gold-600">
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
             <span className="h-px w-6 bg-gold-400" aria-hidden />
             Categories
           </span>
@@ -29,7 +29,7 @@ export function CategoryGrid() {
         </div>
         <Link
           href="/experts?panel=categories"
-          className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+          className="inline-flex items-center gap-1.5 text-[20.5px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
         >
           전체 분야 보기
           <ArrowRight className="h-5 w-5" strokeWidth={2.4} />
@@ -54,7 +54,7 @@ export function CategoryGrid() {
                 >
                   <Icon name={cat.icon} className="h-7 w-7" />
                 </span>
-                <span className="text-center text-[16px] font-semibold text-navy-800">
+                <span className="text-center text-[19px] font-semibold text-navy-800">
                   {cat.name}
                 </span>
               </Link>
@@ -69,7 +69,7 @@ export function CategoryGrid() {
             <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full border border-white bg-cream-100 text-navy-500 shadow-card">
               <LayoutGrid className="h-7 w-7" strokeWidth={1.9} />
             </span>
-            <span className="text-center text-[16px] font-semibold text-navy-800">
+            <span className="text-center text-[19px] font-semibold text-navy-800">
               전체
             </span>
           </Link>
@@ -100,13 +100,13 @@ export function CategoryGrid() {
                 >
                   <Icon name={cat.icon} className="h-7 w-7" />
                 </span>
-                <span className="relative mt-4 text-[21px] font-bold text-navy-900">
+                <span className="relative mt-4 text-[25px] font-bold text-navy-900">
                   {cat.name}
                 </span>
-                <span className="relative mt-1.5 line-clamp-2 text-[16px] leading-snug text-navy-500">
+                <span className="relative mt-1.5 line-clamp-2 text-[19px] leading-snug text-navy-500">
                   {cat.tagline}
                 </span>
-                <span className="relative mt-4 inline-flex items-center gap-1 text-[15px] font-semibold text-navy-400">
+                <span className="relative mt-4 inline-flex items-center gap-1 text-[18px] font-semibold text-navy-400">
                   전문가 {count}명
                   <ArrowRight
                     className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"

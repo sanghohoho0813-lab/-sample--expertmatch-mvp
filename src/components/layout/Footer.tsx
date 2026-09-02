@@ -46,6 +46,18 @@ export function Footer() {
             <p className="mt-5 inline-flex rounded-lg bg-navy-50 px-2.5 py-1.5 text-[19px] font-medium text-navy-500">
               포트폴리오 데모 · 실제 결제와 상담은 진행되지 않습니다
             </p>
+
+            <div className="mt-7 rounded-2xl border border-navy-100 bg-canvas p-5">
+              <p className="text-[17px] font-bold uppercase tracking-[0.14em] text-navy-400">
+                Built by
+              </p>
+              <Link href="/about" className="mt-3.5 block">
+                <MiraeLogo className="h-[54px]" />
+              </Link>
+              <p className="mt-3.5 text-[19px] leading-relaxed text-navy-500">
+                기획·디자인·개발 전 과정을 미래에이아이랩이 직접 진행했습니다.
+              </p>
+            </div>
           </div>
 
           {COLUMNS.map((col) => (

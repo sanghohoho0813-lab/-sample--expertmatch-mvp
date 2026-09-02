@@ -179,8 +179,17 @@ placeholder 로 자동 대체됩니다.
 - 데모 계정 = **미래에이아이랩 김팀장** (헤더 · 마이페이지)
 - 메타데이터 `author` / `creator` / `publisher` / OpenGraph
 
-로고 원본은 `public/brand/mirae-logo.png` 에 배경을 투명 처리해 보관하며,
-글자색이 짙어 어두운 배경에서는 밝은 플레이트 위에 올려 사용합니다
+로고 에셋은 다음과 같이 관리합니다.
+
+| 파일 | 용도 |
+| --- | --- |
+| `public/brand/mirae-logo-original.png` | 전달받은 원본 (투명 배경, 828×250) |
+| `public/brand/mirae-logo.png` | 표시용 — 원본에서 투명 여백만 잘라낸 것 (755×147) |
+| `public/brand/mirae-mark.png` | 심볼 마크 — 원본에서 마크 부분만 잘라낸 것 (224×147) |
+
+원본 캔버스의 투명 여백이 위 28% / 아래 13%로 비대칭이라 그대로 쓰면 로고가
+아래로 치우쳐 보여, 아트워크 픽셀은 그대로 두고 빈 여백만 제거해 사용합니다.
+글자색이 짙어 어두운 배경에서는 밝은 플레이트 위에 올립니다
 (`src/components/brand/MiraeLogo.tsx` 의 `plate` 옵션).
 
 ## 구현 범위 밖 (의도적으로 제외)

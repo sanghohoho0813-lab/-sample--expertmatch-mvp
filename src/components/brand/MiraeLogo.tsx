@@ -21,8 +21,8 @@ export function MiraeLogo({
     <Image
       src="/brand/mirae-logo.png"
       alt="미래에이아이랩"
-      width={756}
-      height={148}
+      width={755}
+      height={147}
       priority={priority}
       className={cx("w-auto object-contain", className)}
     />
@@ -43,8 +43,8 @@ export function MiraeSymbol({ className }: { className?: string }) {
     <Image
       src="/brand/mirae-mark.png"
       alt="미래에이아이랩 심볼"
-      width={222}
-      height={148}
+      width={224}
+      height={147}
       className={cx("w-auto object-contain", className)}
     />
   );

@@ -132,6 +132,18 @@ const config: Config = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        /* CTA 버튼 위를 6.5초에 한 번, 아주 약하게 스치는 빛 */
+        sheen: {
+          "0%, 72%": { transform: "translateX(-150%) skewX(-18deg)", opacity: "0" },
+          "76%": { opacity: "0.55" },
+          "88%": { opacity: "0.55" },
+          "100%": { transform: "translateX(260%) skewX(-18deg)", opacity: "0" },
+        },
+        /* 배지 뒤에서 은은하게 숨 쉬는 광 */
+        "badge-glow": {
+          "0%, 100%": { opacity: "0.3" },
+          "50%": { opacity: "0.7" },
+        },
       },
       animation: {
         "fade-in": "fade-in 220ms ease-out both",
@@ -141,6 +153,8 @@ const config: Config = {
         "pop-in": "pop-in 420ms cubic-bezier(0.22,1,0.36,1) both",
         "draw-check": "draw-check 480ms 260ms ease-out both",
         "ring-pulse": "ring-pulse 1400ms ease-out infinite",
+        sheen: "sheen 6.5s ease-in-out infinite",
+        "badge-glow": "badge-glow 4.5s ease-in-out infinite",
       },
     },
   },

@@ -51,7 +51,7 @@ Vercel에 그대로 배포할 수 있습니다 (환경변수 불필요).
 | `/booking/complete` | 예약 완료 (체크 애니메이션 + 예약번호) |
 | `/mypage` | 예정/완료 상담, 찜한 전문가, 후기, 히스토리, 프로필 |
 | `/chat` | 채팅 안내 (데모 범위 밖 — UI만 제공) |
-| `/about` | 제작사(미래에이아이랩) 소개 |
+| `/about` | 제작사(미래AI랩) 소개 · 제작 사례(`#samples`) · 상담 문의(`#contact`) |
 
 ## 폴더 구조
 
@@ -95,6 +95,58 @@ localStorage 는 마운트 이후에만 읽어 Hydration 불일치가 발생하�
 consultation_products / availability / bookings / reviews / favorites` 테이블과
 RLS 정책을 정의해 두었습니다. Mock 데이터 구조와 1:1로 대응하므로 데이터 소스만
 교체하면 됩니다.
+
+## 샘플 브릿지 CTA
+
+샘플을 다 본 사용자를 상담·다른 샘플·홈페이지로 연결하는 공통 CTA입니다.
+푸터 바로 위에 **모든 페이지 공통**으로 노출됩니다.
+
+| 파일 | 역할 |
+| --- | --- |
+| `src/components/brand/SampleBridgeCTA.tsx` | CTA 본체 (재사용 가능한 프레젠테이션 컴포넌트) |
+| `src/components/brand/SampleBridgeSlot.tsx` | 레이아웃에 한 번만 두고 노출 페이지를 판단하는 슬롯 |
+| `src/lib/mirae.ts` | **링크·문구 상수 — 수정은 이 파일에서** |
+
+구성은 `배지 → 제작사 한 줄 → 헤드라인 → 설명 → 메인 CTA → 서브 액션` 순입니다.
+메인 CTA 라벨은 모든 샘플에서 **"우리 회사도 만들어보기"** 로 통일합니다.
+
+### 링크 수정
+
+`src/lib/mirae.ts` 의 `MIRAE_LINKS` 만 바꾸면 전 페이지에 반영됩니다.
+`https://` 로 시작하면 자동으로 새 탭으로 열립니다.
+
+```ts
+export const MIRAE_LINKS = {
+  consult: "/about#contact",  // 상담 요청 (메인 CTA)
+  samples: "/about#samples",  // 다른 샘플 보기
+  home: "/about",             // 미래AI랩 홈페이지
+};
+```
+
+### 문구 수정
+
+같은 파일의 `MIRAE_CTA_COPY` 에서 배지·헤드라인·설명·버튼 라벨을 관리합니다.
+특정 페이지에서만 다르게 쓰려면 props 로 덮어씁니다.
+
+```tsx
+<SampleBridgeCTA
+  consultHref="https://..."
+  headline={"이 샘플이 마음에 드셨다면,\n대표님 회사도 이렇게 설계해볼 수 있습니다."}
+  description="..."
+/>
+```
+
+### 노출 규칙
+
+`SampleBridgeSlot` 의 `HIDDEN_PATHS` 로 제어합니다. 기본값은 예약 진행 중
+(`/booking/[id]`)만 제외 — 하단이 단계 CTA로 고정되어 있어 경쟁하지 않도록 합니다.
+예약 완료 화면(`/booking/complete`)에는 노출됩니다.
+
+### 애니메이션
+
+메인 CTA에 6.5초 주기의 아주 약한 light sweep, 배지 뒤에 4.5초 주기의 은은한 glow만
+적용했습니다 (`tailwind.config.ts` 의 `sheen` / `badge-glow`). hover 시 살짝 떠오르며,
+`prefers-reduced-motion: reduce` 환경에서는 두 효과 모두 렌더링되지 않습니다.
 
 ## UX 상세
 

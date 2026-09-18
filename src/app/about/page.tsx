@@ -4,6 +4,8 @@ import {
   ArrowLeft,
   Cpu,
   LayoutDashboard,
+  Mail,
+  Phone,
   Sparkles,
   Workflow,
 } from "lucide-react";
@@ -45,6 +47,11 @@ const SPECS = [
   { label: "기술", value: "Next.js · TypeScript · Tailwind CSS" },
   { label: "제작", value: "미래에이아이랩 (MIRAE AI LAB)" },
 ];
+
+const CONTACTS = [
+  { icon: Mail, label: "이메일", value: "contact@mirae-ailab.kr", href: "mailto:contact@mirae-ailab.kr" },
+  { icon: Phone, label: "전화", value: "02-0000-0000", href: "tel:0200000000" },
+] as const;
 
 export default function AboutPage() {
   return (
@@ -107,7 +114,10 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="border-y border-navy-100 bg-white py-16 sm:py-20">
+      <section
+        id="samples"
+        className="border-y border-navy-100 bg-white py-16 scroll-mt-24 sm:py-20"
+      >
         <div className="shell">
           <h2 className="section-title">이 데모에 대하여</h2>
           <p className="section-sub">
@@ -142,6 +152,46 @@ export default function AboutPage() {
               전문가 둘러보기
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section id="contact" className="shell scroll-mt-24 py-16 sm:py-20">
+        <div className="max-w-3xl">
+          <h2 className="section-title">상담 문의</h2>
+          <p className="section-sub">
+            이런 샘플을 대표님 회사에 맞춰 설계해 드립니다. 편한 방법으로 남겨주시면
+            보통 1영업일 안에 회신드립니다.
+          </p>
+
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            {CONTACTS.map((c) => {
+              const ContactIcon = c.icon;
+              return (
+                <li key={c.label}>
+                  <a
+                    href={c.href}
+                    className="flex h-full items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-[#0E7C86]/40 hover:shadow-card-hover"
+                  >
+                    <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-white">
+                      <ContactIcon className="h-6 w-6" strokeWidth={1.9} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[18px] font-semibold text-navy-400">
+                        {c.label}
+                      </span>
+                      <span className="mt-0.5 block break-all text-[21px] font-bold text-navy-900">
+                        {c.value}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <p className="mt-6 text-[17px] leading-relaxed text-navy-400">
+            연락처는 예시입니다. 실제 채널로 교체해 사용하세요.
+          </p>
         </div>
       </section>
     </div>

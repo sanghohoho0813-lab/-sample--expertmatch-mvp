@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { MiraeTopBar } from "@/components/brand/MiraeTopBar";
+import { SampleBridgeSlot } from "@/components/brand/SampleBridgeSlot";
 import { Footer } from "@/components/layout/Footer";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { CompareBar } from "@/components/compare/CompareBar";
@@ -85,6 +86,7 @@ export default function RootLayout({
             <main id="main" className="flex-1">
               {children}
             </main>
+            <SampleBridgeSlot />
             <Footer />
           </div>
           <Suspense fallback={null}>

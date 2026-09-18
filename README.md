@@ -51,7 +51,7 @@ Vercel에 그대로 배포할 수 있습니다 (환경변수 불필요).
 | `/booking/complete` | 예약 완료 (체크 애니메이션 + 예약번호) |
 | `/mypage` | 예정/완료 상담, 찜한 전문가, 후기, 히스토리, 프로필 |
 | `/chat` | 채팅 안내 (데모 범위 밖 — UI만 제공) |
-| `/about` | 제작사(미래AI랩) 소개 · 제작 사례(`#samples`) · 상담 문의(`#contact`) |
+| `/about` | 제작사(미래AI랩) 소개 · 미래AI랩 홈페이지로 연결 |
 
 ## 폴더 구조
 
@@ -117,9 +117,9 @@ RLS 정책을 정의해 두었습니다. Mock 데이터 구조와 1:1로 대응�
 
 ```ts
 export const MIRAE_LINKS = {
-  consult: "/about#contact",  // 상담 요청 (메인 CTA)
-  samples: "/about#samples",  // 다른 샘플 보기
-  home: "/about",             // 미래AI랩 홈페이지
+  consult: "https://miraeailab.com/business-diagnosis", // 우리 회사도 만들어보기
+  samples: "https://miraeailab.com/business-services",  // 다른 샘플 보기
+  home: "https://miraeailab.com/",                      // 미래AI랩 홈페이지
 };
 ```
 

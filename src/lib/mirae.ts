@@ -16,16 +16,16 @@ export const MIRAE_BRAND = {
 /**
  * 이동 링크.
  *
- * TODO: 실제 운영 URL이 정해지면 아래 값만 교체하세요.
- *       외부 주소(https://...)를 넣으면 자동으로 새 탭으로 열립니다.
+ * 외부 주소(https://...)는 자동으로 새 탭에서 열립니다.
+ * 링크를 바꿀 일이 생기면 이 값만 수정하면 모든 샘플 페이지에 반영됩니다.
  */
 export const MIRAE_LINKS = {
-  /** 상담 요청 — 메인 CTA */
-  consult: "/about#contact",
+  /** 상담 요청 — 메인 CTA "우리 회사도 만들어보기" */
+  consult: "https://miraeailab.com/business-diagnosis",
   /** 다른 샘플 모아보기 */
-  samples: "/about#samples",
+  samples: "https://miraeailab.com/business-services",
   /** 미래AI랩 홈페이지 */
-  home: "/about",
+  home: "https://miraeailab.com/",
 } as const;
 
 /**

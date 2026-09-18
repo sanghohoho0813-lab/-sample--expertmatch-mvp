@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowUpRight,
+  ClipboardCheck,
   Cpu,
   LayoutDashboard,
-  Mail,
-  Phone,
+  LayoutGrid,
   Sparkles,
   Workflow,
 } from "lucide-react";
+import { MIRAE_LINKS } from "@/lib/mirae";
 import { MiraeLogo } from "@/components/brand/MiraeLogo";
 
 export const metadata: Metadata = {
@@ -48,9 +50,19 @@ const SPECS = [
   { label: "제작", value: "미래에이아이랩 (MIRAE AI LAB)" },
 ];
 
-const CONTACTS = [
-  { icon: Mail, label: "이메일", value: "contact@mirae-ailab.kr", href: "mailto:contact@mirae-ailab.kr" },
-  { icon: Phone, label: "전화", value: "02-0000-0000", href: "tel:0200000000" },
+const SITE_LINKS = [
+  {
+    icon: ClipboardCheck,
+    label: "우리 회사도 만들어보기",
+    desc: "무료 비즈니스 진단 신청",
+    href: MIRAE_LINKS.consult,
+  },
+  {
+    icon: LayoutGrid,
+    label: "다른 샘플 보기",
+    desc: "미래AI랩이 만든 작업들",
+    href: MIRAE_LINKS.samples,
+  },
 ] as const;
 
 export default function AboutPage() {
@@ -114,10 +126,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section
-        id="samples"
-        className="border-y border-navy-100 bg-white py-16 scroll-mt-24 sm:py-20"
-      >
+      <section className="border-y border-navy-100 bg-white py-16 sm:py-20">
         <div className="shell">
           <h2 className="section-title">이 데모에 대하여</h2>
           <p className="section-sub">
@@ -151,47 +160,54 @@ export default function AboutPage() {
             >
               전문가 둘러보기
             </Link>
+            <a
+              href={MIRAE_LINKS.home}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-7 py-4 text-[19px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+            >
+              미래AI랩 홈페이지
+              <ArrowUpRight className="h-5 w-5 text-navy-400" strokeWidth={2.2} />
+            </a>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="shell scroll-mt-24 py-16 sm:py-20">
+      <section className="shell py-16 sm:py-20">
         <div className="max-w-3xl">
-          <h2 className="section-title">상담 문의</h2>
+          <h2 className="section-title">더 알아보기</h2>
           <p className="section-sub">
-            이런 샘플을 대표님 회사에 맞춰 설계해 드립니다. 편한 방법으로 남겨주시면
-            보통 1영업일 안에 회신드립니다.
+            미래AI랩이 진행한 다른 작업과 진단 프로그램을 홈페이지에서 확인하실 수 있습니다.
           </p>
 
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {CONTACTS.map((c) => {
-              const ContactIcon = c.icon;
+            {SITE_LINKS.map((l) => {
+              const LinkIcon = l.icon;
               return (
-                <li key={c.label}>
+                <li key={l.label}>
                   <a
-                    href={c.href}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex h-full items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-[#0E7C86]/40 hover:shadow-card-hover"
                   >
                     <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-white">
-                      <ContactIcon className="h-6 w-6" strokeWidth={1.9} />
+                      <LinkIcon className="h-6 w-6" strokeWidth={1.9} />
                     </span>
-                    <span className="min-w-0">
-                      <span className="block text-[18px] font-semibold text-navy-400">
-                        {c.label}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[21px] font-bold text-navy-900">
+                        {l.label}
                       </span>
-                      <span className="mt-0.5 block break-all text-[21px] font-bold text-navy-900">
-                        {c.value}
+                      <span className="mt-0.5 block text-[17px] text-navy-400">
+                        {l.desc}
                       </span>
                     </span>
+                    <ArrowUpRight className="h-5 w-5 shrink-0 text-navy-300" strokeWidth={2.2} />
                   </a>
                 </li>
               );
             })}
           </ul>
-
-          <p className="mt-6 text-[17px] leading-relaxed text-navy-400">
-            연락처는 예시입니다. 실제 채널로 교체해 사용하세요.
-          </p>
         </div>
       </section>
     </div>

@@ -10,6 +10,7 @@ import { CompareBar } from "@/components/compare/CompareBar";
 import { Toaster } from "@/components/ui/Toaster";
 import { ScrollTop } from "@/components/ui/ScrollTop";
 import { AppStoreProvider } from "@/lib/store/AppStore";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -73,6 +74,8 @@ export default function RootLayout({
         </noscript>
       </head>
       <body>
+        {/* 미래AI랩 데모 공용 뒤로·앞으로 버튼 */}
+        <Script src="/mirae-history-nav.js" strategy="beforeInteractive" />
         <AppStoreProvider>
           <a
             href="#main"

@@ -69,3 +69,30 @@ export function responseLabel(minutes: number): string {
 export function cx(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
+
+/**
+ * 예약 시간을 사람이 읽기 쉽게: 오늘 오후 3:00 / 내일 오전 10:00 / 10월 2일 (목) 오후 2:00
+ */
+export function formatSlotLabel(
+  dateKey: string,
+  time: string,
+  now: Date,
+): string {
+  const today = toDateKey(now);
+  const t = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const tomorrow = toDateKey(t);
+  const clock = formatTimeKorean(time);
+  if (dateKey === today) return `오늘 ${clock}`;
+  if (dateKey === tomorrow) return `내일 ${clock}`;
+  return `${formatDateKorean(dateKey)} ${clock}`;
+}
+
+/** 상담일까지 남은 날짜: D-DAY / D-3 */
+export function dDay(dateKey: string, now: Date): string {
+  const base = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const diff = Math.round(
+    (parseDateKey(dateKey).getTime() - base.getTime()) / 86400000,
+  );
+  if (diff <= 0) return "D-DAY";
+  return `D-${diff}`;
+}

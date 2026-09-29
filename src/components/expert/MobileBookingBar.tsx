@@ -1,56 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { Heart } from "lucide-react";
-import { useAppStore } from "@/lib/store/AppStore";
-import { Stars } from "@/components/ui/Stars";
-import { cx, formatPrice } from "@/lib/format";
+import { useExpertAvailability } from "@/lib/useAvailability";
+import { formatPrice, formatSlotLabel } from "@/lib/format";
 import type { Expert } from "@/lib/types";
 
+/** 모바일 상세 하단 고정 — 가격 · 가장 빠른 예약 · 상담 예약하기 하나만 */
 export function MobileBookingBar({ expert }: { expert: Expert }) {
-  const { isFavorite, toggleFavorite, ready } = useAppStore();
-  const favorite = ready && isFavorite(expert.id);
+  const avail = useExpertAvailability(expert);
+  const lowest = expert.products.reduce((a, b) => (b.price < a.price ? b : a));
 
   return (
-    <div className="fixed inset-x-0 bottom-[56px] z-30 border-t border-navy-100 bg-white/97 px-4 py-3 pb-safe shadow-bar backdrop-blur-md lg:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-navy-100 bg-white px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] shadow-bar lg:hidden">
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => toggleFavorite(expert.id, expert.name)}
-          aria-label={favorite ? "찜 해제" : "찜하기"}
-          aria-pressed={favorite}
-          className={cx(
-            "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border transition-colors",
-            favorite
-              ? "border-danger-500 bg-danger-50 text-danger-500"
-              : "border-navy-200 bg-white text-navy-400",
-          )}
-        >
-          <Heart
-            className="h-5 w-5"
-            fill={favorite ? "currentColor" : "none"}
-            strokeWidth={2}
-          />
-        </button>
-
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
-            <Stars value={expert.rating} size={12} />
-            <span className="text-[19px] font-semibold text-navy-600">
-              {expert.rating.toFixed(1)}
-            </span>
-          </div>
-          <p className="mt-0.5 text-[27.5px] font-extrabold leading-none text-navy-900">
-            {formatPrice(expert.priceFrom)}
-            <span className="ml-0.5 text-[20.5px] font-semibold text-navy-500">
-              원~
-            </span>
+          <p className="text-[23px] font-extrabold leading-tight text-navy-900">
+            {formatPrice(lowest.price)}
+            <span className="text-[18.5px] font-semibold text-navy-500">원~</span>
+          </p>
+          <p className="mt-0.5 text-[18px] font-semibold leading-tight text-teal-700">
+            {!avail
+              ? " "
+              : avail.earliest
+                ? `${formatSlotLabel(avail.earliest.dateKey, avail.earliest.time, avail.now)} 가능`
+                : "예약 가능 시간 없음"}
           </p>
         </div>
-
         <Link
           href={`/booking/${expert.id}`}
-          className="inline-flex h-12 shrink-0 items-center justify-center rounded-xl bg-teal-600 px-6 text-[25px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
+          className="inline-flex h-[52px] shrink-0 items-center justify-center rounded-xl bg-teal-600 px-4 text-[21px] xs:px-5 xs:text-[22px] font-bold text-white transition-colors duration-200 hover:bg-teal-700"
         >
           상담 예약하기
         </Link>

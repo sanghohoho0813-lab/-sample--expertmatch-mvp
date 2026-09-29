@@ -16,18 +16,30 @@ export function StepIndicator({
 }) {
   return (
     <>
-      {/* 모바일: 진행 바 */}
+      {/* 모바일: 지금 단계 · 다음 단계 · 남은 단계 */}
       <div className="lg:hidden">
-        <div className="flex items-baseline justify-between">
-          <p className="text-[21px] font-bold text-teal-700">
-            STEP {current + 1}
-            <span className="ml-1 font-medium text-navy-400">/ {steps.length}</span>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="min-w-0 truncate text-[23.5px] font-bold text-navy-900">
+            <span className="mr-1.5 text-[19.5px] font-bold text-teal-700">
+              {current + 1}/{steps.length}
+            </span>
+            {steps[current]}
           </p>
-          <p className="text-[23.5px] font-bold text-navy-900">{steps[current]}</p>
+          {/* 다음 단계 이름은 하단 CTA('다음 · OOO')가 알려준다 */}
+          <p className="shrink-0 text-[19px] text-navy-400">
+            {current < steps.length - 1 ? `${steps.length - 1 - current}단계 남음` : "마지막 단계"}
+          </p>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-navy-100">
+        <div
+          className="mt-2 h-1.5 overflow-hidden rounded-full bg-navy-100"
+          role="progressbar"
+          aria-valuemin={1}
+          aria-valuemax={steps.length}
+          aria-valuenow={current + 1}
+          aria-label="예약 진행 단계"
+        >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-teal-600 to-teal-400 transition-all duration-300 ease-out"
+            className="h-full rounded-full bg-teal-600 transition-all duration-300 ease-out"
             style={{ width: `${((current + 1) / steps.length) * 100}%` }}
           />
         </div>

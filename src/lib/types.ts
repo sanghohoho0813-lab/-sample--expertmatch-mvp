@@ -54,9 +54,8 @@ export interface Expert {
   priceFrom: number;
   methods: ConsultMethod[];
   languages: string[];
+  /** false면 오늘부터 7일간은 예약을 받지 않는다 (availability.ts 에서 반영) */
   availableThisWeek: boolean;
-  /** 이번 주 남은 상담 가능 슬롯 수 */
-  openSlots: number;
   responseMinutes: number;
   headline: string;
   intro: string;
@@ -103,7 +102,22 @@ export interface Booking {
   time: string; // HH:mm
   note: string;
   createdAt: string;
-  status: "upcoming" | "done";
+  status: BookingStatus;
+  cancelledAt?: string;
+  completedAt?: string;
+}
+
+export type BookingStatus = "upcoming" | "done" | "cancelled";
+
+/** 사용자가 완료된 상담에 남긴 후기 (데모) */
+export interface MyReview {
+  id: string;
+  bookingId: string;
+  expertId: string;
+  rating: number;
+  body: string;
+  productName: string;
+  createdAt: string;
 }
 
 export interface SortOption {

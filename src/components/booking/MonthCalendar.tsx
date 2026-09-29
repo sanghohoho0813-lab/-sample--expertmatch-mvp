@@ -2,23 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { bookableSlots } from "@/lib/availability";
 import { cx, toDateKey } from "@/lib/format";
 
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 
 export function MonthCalendar({
-  expertId,
+  getSlots,
   today,
-  now,
   value,
   onChange,
   /** 예약 가능 기간 (오늘부터 n일) */
-  horizon = 60,
+  horizon = 42,
 }: {
-  expertId: string;
+  /** 저장된 예약까지 반영한 날짜별 예약 가능 시간 */
+  getSlots: (dateKey: string) => string[];
   today: Date;
-  now: Date;
   value: string | null;
   onChange: (dateKey: string) => void;
   horizon?: number;
@@ -104,7 +102,7 @@ export function MonthCalendar({
           const dateKey = toDateKey(cell.date);
           const isPast = cell.date.getTime() < today.getTime();
           const isBeyond = cell.date.getTime() > last.getTime();
-          const slots = isPast || isBeyond ? [] : bookableSlots(expertId, dateKey, now);
+          const slots = isPast || isBeyond ? [] : getSlots(dateKey);
           const disabled = isPast || isBeyond || slots.length === 0;
           const selected = value === dateKey;
           const isToday = dateKey === toDateKey(today);

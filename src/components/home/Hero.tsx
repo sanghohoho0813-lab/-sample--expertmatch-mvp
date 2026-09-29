@@ -7,9 +7,6 @@ import { EXPERTS } from "@/lib/data/experts";
 import { REVIEWS } from "@/lib/data/reviews";
 import { formatCount } from "@/lib/format";
 
-const NOISE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E";
-
 const STATS = [
   { value: `${EXPERTS.length}명`, label: "검증된 전문가" },
   {
@@ -26,30 +23,10 @@ const STATS = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-navy-950">
-      {/* 깊이감 있는 배경 레이어 */}
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(125%_110%_at_12%_-15%,#2A4E86_0%,#1A3059_38%,#101F3C_68%,#0A1730_100%)]"
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full bg-teal-400/12 blur-[120px]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -right-20 -top-20 h-[560px] w-[560px] rounded-full bg-gold-400/[0.09] blur-[130px]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(75%_60%_at_38%_0%,black,transparent)]"
-        aria-hidden
-      />
-      {/* 미세한 노이즈 질감 */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
-        style={{ backgroundImage: `url("${NOISE}")` }}
-        aria-hidden
-      />
-
       <div className="shell relative py-14 sm:py-20 lg:py-[92px]">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-14">
           <div className="animate-fade-up">
@@ -63,15 +40,7 @@ export function Hero() {
               <br />
               {/* '전문가의 경험으로'가 좁은 화면에서 끊기지 않도록 한 덩어리로 묶는다 */}
               <span className="whitespace-nowrap">
-                <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-teal-200 via-teal-300 to-sky-300 bg-clip-text text-transparent">
-                    전문가의 경험
-                  </span>
-                  <span
-                    className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-gradient-to-r from-gold-400/80 to-transparent"
-                    aria-hidden
-                  />
-                </span>
+                <span className="text-teal-300">전문가의 경험</span>
                 으로
               </span>
               <br />
@@ -89,7 +58,7 @@ export function Hero() {
             </div>
 
             {/* 모바일: 전문가 얼굴을 먼저 보여줘 신뢰감을 준다 */}
-            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-3.5 backdrop-blur-sm lg:hidden">
+            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.06] p-3.5 lg:hidden">
               <div className="flex -space-x-3.5">
                 {EXPERTS.slice(0, 4).map((e) => (
                   <Portrait
@@ -112,9 +81,9 @@ export function Hero() {
             <div className="mt-5">
               <Link
                 href="/experts?demo=1"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3.5 text-[20.5px] font-semibold text-white transition-all duration-200 hover:border-gold-300/60 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3.5 text-[20.5px] font-semibold text-white transition-all duration-200 hover:border-white/40 hover:bg-white/10"
               >
-                <PlayCircle className="h-5 w-5 text-gold-300" strokeWidth={2.2} />
+                <PlayCircle className="h-5 w-5 text-teal-300" strokeWidth={2.2} />
                 데모 둘러보기
               </Link>
             </div>
@@ -129,7 +98,7 @@ export function Hero() {
           {STATS.map((s) => (
             <div key={s.label} className="relative pl-4">
               <span
-                className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-[3px] rounded-full bg-gradient-to-b from-gold-400 to-teal-500"
+                className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-[3px] rounded-full bg-white/15"
                 aria-hidden
               />
               <dt className="text-[19px] text-navy-300">{s.label}</dt>

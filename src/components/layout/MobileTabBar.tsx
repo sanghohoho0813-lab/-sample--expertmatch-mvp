@@ -6,6 +6,9 @@ import { CalendarCheck, Home, MessageCircle, Search, User } from "lucide-react";
 import { useAppStore } from "@/lib/store/AppStore";
 import { cx } from "@/lib/format";
 
+/** '마이' 탭에 속하는 마이페이지 하위 탭 — 나머지는 '예약' */
+const MY_TABS = ["favorites", "recent", "profile"];
+
 const TABS = [
   { href: "/", label: "홈", icon: Home, match: (p: string) => p === "/" },
   {
@@ -18,14 +21,15 @@ const TABS = [
     href: "/mypage?tab=upcoming",
     label: "예약",
     icon: CalendarCheck,
-    match: (p: string, t: string | null) => p === "/mypage" && t !== "favorites" && t !== "profile",
+    match: (p: string, t: string | null) =>
+      p === "/booking/complete" || (p === "/mypage" && !MY_TABS.includes(t ?? "")),
   },
   { href: "/chat", label: "채팅", icon: MessageCircle, match: (p: string) => p === "/chat" },
   {
     href: "/mypage?tab=profile",
     label: "마이",
     icon: User,
-    match: (p: string, t: string | null) => p === "/mypage" && t === "profile",
+    match: (p: string, t: string | null) => p === "/mypage" && MY_TABS.includes(t ?? ""),
   },
 ];
 
@@ -34,9 +38,12 @@ export function MobileTabBar() {
   const params = useSearchParams();
   const tab = params.get("tab");
   const { bookings, ready } = useAppStore();
+  const upcomingCount = bookings.filter((b) => b.status === "upcoming").length;
 
-  // 예약 플로우에서는 하단 CTA와 겹치지 않도록 숨김
-  if (pathname.startsWith("/booking")) return null;
+  // 예약 진행 중에는 하단 예약 CTA와 겹치지 않도록 숨김 (완료 화면에서는 다시 보인다)
+  if (pathname.startsWith("/booking") && pathname !== "/booking/complete") return null;
+  // 전문가 상세는 하단 '상담 예약하기' 바가 대신한다 (두 바가 겹쳐 경쟁하지 않도록)
+  if (/^\/experts\/[^/]+$/.test(pathname)) return null;
 
   return (
     <nav
@@ -63,9 +70,9 @@ export function MobileTabBar() {
                     className="h-[22px] w-[22px]"
                     strokeWidth={active ? 2.4 : 1.9}
                   />
-                  {t.label === "예약" && ready && bookings.length > 0 && (
+                  {t.label === "예약" && ready && upcomingCount > 0 && (
                     <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[15.5px] font-bold text-white">
-                      {bookings.length}
+                      {upcomingCount}
                     </span>
                   )}
                 </span>

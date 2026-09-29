@@ -12,8 +12,8 @@ export function Testimonials() {
     >
       <div className="shell">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
-            <span className="h-px w-6 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-700">
+            <span className="h-px w-6 bg-teal-500" aria-hidden />
             Reviews
           </span>
           <h2 className="section-title mt-2.5">상담을 받은 분들의 이야기</h2>
@@ -22,7 +22,7 @@ export function Testimonials() {
           </p>
         </div>
 
-        <ul className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {TESTIMONIALS.map((t) => {
             const expert = EXPERT_MAP[t.expertId];
             return (

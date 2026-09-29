@@ -2,17 +2,30 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CalendarPlus, Copy, Home, Ticket } from "lucide-react";
+import { useState } from "react";
+import {
+  CalendarCheck,
+  CalendarPlus,
+  Check,
+  ChevronDown,
+  ClipboardList,
+  Copy,
+  Home,
+  Ticket,
+  UserRound,
+} from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { useAppStore } from "@/lib/store/AppStore";
-import { formatDateFull, formatPrice, formatTimeKorean } from "@/lib/format";
+import { cx, dDay, formatDateFull, formatPrice, formatTimeKorean } from "@/lib/format";
+import { downloadIcs, PREP_CHECKLIST, PREP_COMMON } from "@/lib/prep";
+import { useNow } from "@/lib/useAvailability";
 
 function SuccessMark() {
   return (
     <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
       <span
-        className="absolute inset-0 rounded-full bg-teal-500/25 animate-ring-pulse"
+        className="absolute inset-0 rounded-full bg-teal-500/25 animate-ring-pulse [animation-iteration-count:2]"
         aria-hidden
       />
       <span className="relative flex h-20 w-20 animate-pop-in items-center justify-center rounded-full bg-teal-600 shadow-[0_12px_30px_-12px_rgba(5,144,137,1)]">
@@ -36,6 +49,8 @@ export function BookingComplete() {
   const params = useSearchParams();
   const code = params.get("code");
   const { bookings, ready, pushToast } = useAppStore();
+  const now = useNow();
+  const [prepOpen, setPrepOpen] = useState(true);
 
   const booking =
     bookings.find((b) => b.code === code) ?? (ready ? bookings[0] : undefined);
@@ -78,11 +93,6 @@ export function BookingComplete() {
 
   return (
     <div className="relative overflow-hidden pb-28 lg:pb-16">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-teal-50 to-transparent"
-        aria-hidden
-      />
-
       <div className="shell relative py-12 sm:py-16">
         <div className="mx-auto max-w-lg">
           <SuccessMark />
@@ -93,8 +103,12 @@ export function BookingComplete() {
             </h1>
             <p className="mt-3 text-[24px] leading-relaxed text-navy-500">
               {booking.expertName} 전문가에게 예약이 전달되었어요.
-              <br />
-              상담 시작 전에 알림으로 다시 안내해 드릴게요.
+              {now && (
+                <span className="mt-1 block font-semibold text-teal-700">
+                  {dDay(booking.date, now)} · {formatDateFull(booking.date)}{" "}
+                  {formatTimeKorean(booking.time)}
+                </span>
+              )}
             </p>
           </div>
 
@@ -151,7 +165,7 @@ export function BookingComplete() {
                   <Ticket className="h-3.5 w-3.5" strokeWidth={2.2} />
                   예약번호
                 </p>
-                <p className="mt-0.5 truncate font-mono text-[25px] font-bold tracking-tight text-navy-900">
+                <p className="mt-0.5 break-all font-mono text-[20px] font-bold tracking-tight text-navy-900 sm:text-[25px]">
                   {booking.code}
                 </p>
               </div>
@@ -177,22 +191,73 @@ export function BookingComplete() {
             </div>
           )}
 
-          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row animate-fade-up [animation-delay:260ms]">
+          {/* 다음 행동 */}
+          <div className="mt-6 animate-fade-up [animation-delay:260ms]">
             <Link
               href="/mypage?tab=upcoming"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal-600 py-3.5 text-[25px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98]"
+              className="flex h-[60px] w-full items-center justify-center gap-2 rounded-xl bg-navy-900 text-[25px] font-bold text-white transition-colors hover:bg-navy-800"
             >
-              <CalendarPlus className="h-4 w-4" strokeWidth={2.4} />
+              <CalendarCheck className="h-5 w-5" strokeWidth={2.4} />
               내 예약 확인
             </Link>
-            <Link
-              href="/"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-navy-200 bg-white py-3.5 text-[25px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
-            >
-              <Home className="h-4 w-4" strokeWidth={2.2} />
-              홈으로
-            </Link>
+            <div className="mt-2.5 grid grid-cols-1 gap-2.5 min-[400px]:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => {
+                  downloadIcs(booking);
+                  pushToast({ message: "캘린더 파일을 내려받았어요", tone: "success" });
+                }}
+                className="inline-flex min-h-[56px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-[21px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+              >
+                <CalendarPlus className="h-4 w-4 shrink-0" strokeWidth={2.2} />
+                캘린더에 추가
+              </button>
+              <Link
+                href={`/experts/${booking.expertId}`}
+                className="inline-flex min-h-[56px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-[21px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+              >
+                <UserRound className="h-4 w-4 shrink-0" strokeWidth={2.2} />
+                프로필 다시 보기
+              </Link>
+            </div>
           </div>
+
+          {/* 상담 전 준비사항 */}
+          <section className="mt-4 rounded-2xl border border-navy-100 bg-white animate-fade-up [animation-delay:320ms]">
+            <button
+              type="button"
+              onClick={() => setPrepOpen((v) => !v)}
+              aria-expanded={prepOpen}
+              className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
+            >
+              <span className="flex items-center gap-2 text-[23.5px] font-bold text-navy-900">
+                <ClipboardList className="h-5 w-5 text-teal-600" strokeWidth={2.2} />
+                상담 전 준비사항
+              </span>
+              <ChevronDown
+                className={cx("h-5 w-5 text-navy-400 transition-transform", prepOpen && "rotate-180")}
+                strokeWidth={2.2}
+              />
+            </button>
+            {prepOpen && (
+              <ul className="space-y-2.5 border-t border-navy-100 px-5 py-4">
+                {[...PREP_CHECKLIST[booking.method], ...PREP_COMMON].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-[21px] leading-snug text-navy-700">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-teal-600" strokeWidth={3} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <Link
+            href="/"
+            className="mt-4 flex min-h-[48px] items-center justify-center gap-1.5 text-[21px] font-semibold text-navy-500 hover:text-navy-800"
+          >
+            <Home className="h-4 w-4" strokeWidth={2.2} />
+            홈으로
+          </Link>
 
           <p className="mt-5 text-center text-[20.5px] leading-relaxed text-navy-400">
             데모 예약입니다. 실제 결제는 발생하지 않았으며 예약 내역은 이

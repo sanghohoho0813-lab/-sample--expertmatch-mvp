@@ -18,7 +18,7 @@ export function CompareBar() {
   const experts = compare.map((id) => EXPERT_MAP[id]).filter(Boolean);
   const hidden = !ready || experts.length === 0 || pathname.startsWith("/booking");
 
-  // 전문가 상세에는 모바일 하단에 예약 CTA가 고정되어 있으므로 그 위로 띄운다
+  // 전문가 상세는 탭바 대신 예약 CTA가 하단에 고정되므로 그 위로 띄운다
   const stacked = /^\/experts\/[^/]+/.test(pathname);
 
   if (hidden) return null;
@@ -28,7 +28,7 @@ export function CompareBar() {
       <div
         className={cx(
           "fixed inset-x-0 z-40 px-3 pb-3 pb-safe lg:bottom-0 lg:px-6 lg:pb-6",
-          stacked ? "bottom-[128px]" : "bottom-[56px]",
+          stacked ? "bottom-[78px]" : "bottom-[56px]",
         )}
       >
         <div className="mx-auto flex w-full max-w-shell animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 p-3 shadow-pop sm:gap-4 sm:px-4">
@@ -89,7 +89,7 @@ export function CompareBar() {
         open={open}
         onClose={() => setOpen(false)}
         title={`전문가 ${experts.length}명 비교`}
-        description="항목별로 가장 좋은 조건에는 BEST 표시가 붙습니다."
+        description="경력·가격·예약 가능일처럼 수치로 비교되는 항목만 표시해 드려요."
         width="max-w-5xl"
         footer={
           <div className="flex items-center justify-between gap-3">

@@ -13,8 +13,8 @@ export function FeaturedExperts() {
       <div className="shell">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
-              <span className="h-px w-6 bg-gold-400" aria-hidden />
+            <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-700">
+              <span className="h-px w-6 bg-teal-500" aria-hidden />
               Featured
             </span>
             <h2 className="section-title mt-2.5">이번 주 추천 전문가</h2>

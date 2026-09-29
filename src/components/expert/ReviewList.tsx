@@ -2,21 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { Stars } from "@/components/ui/Stars";
+import { useAppStore } from "@/lib/store/AppStore";
+import { DEMO_USER } from "@/lib/data/demoUser";
 import { relativeDay } from "@/lib/format";
 import type { Review } from "@/lib/types";
 
 const PAGE = 4;
 
 export function ReviewList({
+  expertId,
   reviews,
   rating,
   reviewCount,
 }: {
+  expertId: string;
   reviews: Review[];
   rating: number;
   reviewCount: number;
 }) {
   const [shown, setShown] = useState(PAGE);
+  const { myReviews, ready } = useAppStore();
+  const mine = ready ? myReviews.filter((r) => r.expertId === expertId) : [];
   const [today, setToday] = useState<Date | null>(null);
 
   useEffect(() => setToday(new Date()), []);
@@ -65,6 +71,34 @@ export function ReviewList({
           ))}
         </div>
       </div>
+
+      {/* 내가 완료된 상담에 남긴 후기 — 마이페이지에서 작성한 내용이 바로 반영된다 */}
+      {mine.length > 0 && (
+        <ul className="mt-4 space-y-3" aria-label="내가 남긴 후기">
+          {mine.map((r) => (
+            <li
+              key={r.id}
+              className="rounded-2xl border border-teal-200 bg-teal-50/50 p-5"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="rounded-md bg-teal-600 px-2 py-1 text-[17.5px] font-bold text-white">
+                    내 후기
+                  </span>
+                  <p className="text-[23px] font-bold text-navy-900">
+                    {DEMO_USER.displayName}
+                  </p>
+                </div>
+                <Stars value={r.rating} size={16} />
+              </div>
+              <p className="mt-1 text-[20px] text-navy-400">{r.productName}</p>
+              <p className="mt-3 whitespace-pre-line text-[23.5px] leading-relaxed text-navy-700">
+                {r.body}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ul className="mt-4 space-y-3">
         {reviews.slice(0, shown).map((r) => (

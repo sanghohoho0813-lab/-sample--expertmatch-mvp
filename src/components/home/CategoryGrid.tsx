@@ -18,8 +18,8 @@ export function CategoryGrid() {
     <section className="shell py-16 sm:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-600">
-            <span className="h-px w-6 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-700">
+            <span className="h-px w-6 bg-teal-500" aria-hidden />
             Categories
           </span>
           <h2 className="section-title mt-2.5">어떤 분야가 필요하신가요?</h2>
@@ -85,10 +85,10 @@ export function CategoryGrid() {
             <li key={cat.id}>
               <Link
                 href={`/experts?category=${cat.id}`}
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 ease-out hover:-translate-y-1.5 hover:border-navy-200 hover:shadow-card-hover"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-card-hover"
               >
                 <span
-                  className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-gold-400 to-teal-500 transition-transform duration-300 group-hover:scale-x-100"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-teal-600 transition-transform duration-300 group-hover:scale-x-100"
                   aria-hidden
                 />
                 <span

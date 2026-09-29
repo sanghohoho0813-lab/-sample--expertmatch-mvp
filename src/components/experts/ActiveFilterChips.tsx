@@ -76,7 +76,7 @@ export function ActiveFilterChips({
   if (filters.availableOnly) {
     chips.push({
       key: "available",
-      label: "이번 주 예약 가능",
+      label: "7일 이내 예약 가능",
       clear: () => ({ ...filters, availableOnly: false }),
     });
   }

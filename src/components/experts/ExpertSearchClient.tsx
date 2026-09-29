@@ -10,6 +10,7 @@ import {
 } from "@/components/experts/SearchSuggest";
 import { hasSuggestions, suggestFor } from "@/lib/suggest";
 import { ExpertCard } from "@/components/experts/ExpertCard";
+import { matchReasons } from "@/lib/matchReasons";
 import { FilterPanel } from "@/components/experts/FilterPanel";
 import { ActiveFilterChips } from "@/components/experts/ActiveFilterChips";
 import { RecentExperts } from "@/components/experts/RecentExperts";
@@ -336,7 +337,11 @@ export function ExpertSearchClient() {
           {results.length > 0 ? (
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {results.map((expert) => (
-                <ExpertCard key={expert.id} expert={expert} />
+                <ExpertCard
+                  key={expert.id}
+                  expert={expert}
+                  reasons={matchReasons(expert, { query, filters, sort })}
+                />
               ))}
             </div>
           ) : (

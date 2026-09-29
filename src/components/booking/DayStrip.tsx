@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { bookableSlots } from "@/lib/availability";
 import { cx, toDateKey } from "@/lib/format";
 
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
@@ -10,16 +9,15 @@ const PAGE = 7;
 
 /** 참고 디자인의 가로 날짜 선택 UI (6/3 월 · 6/4 화 …) */
 export function DayStrip({
-  expertId,
+  getSlots,
   today,
-  now,
   value,
   onChange,
   horizon = 28,
 }: {
-  expertId: string;
+  /** 저장된 예약까지 반영한 날짜별 예약 가능 시간 */
+  getSlots: (dateKey: string) => string[];
   today: Date;
-  now: Date;
   value: string | null;
   onChange: (dateKey: string) => void;
   horizon?: number;
@@ -34,10 +32,10 @@ export function DayStrip({
         today.getDate() + i,
       );
       const dateKey = toDateKey(d);
-      const slots = bookableSlots(expertId, dateKey, now);
+      const slots = getSlots(dateKey);
       return { d, dateKey, count: slots.length };
     });
-  }, [expertId, today, now, horizon]);
+  }, [getSlots, today, horizon]);
 
   const page = days.slice(offset, offset + PAGE);
   const canPrev = offset > 0;

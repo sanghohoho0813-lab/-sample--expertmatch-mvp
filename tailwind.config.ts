@@ -70,6 +70,7 @@ const config: Config = {
           100: "#FEE3E2",
           500: "#E5534B",
           600: "#CE3F37",
+          700: "#B0332C",
         },
         canvas: "#F5F7FA",
       },

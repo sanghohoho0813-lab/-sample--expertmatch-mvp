@@ -5,6 +5,7 @@ import { useAppStore } from "@/lib/store/AppStore";
 import { cx } from "@/lib/format";
 import type { Expert } from "@/lib/types";
 
+/** 찜 · 비교 · 공유 — 예약 CTA보다 한 단계 낮은 보조 액션 */
 export function ExpertActions({ expert }: { expert: Expert }) {
   const { isFavorite, toggleFavorite, isComparing, toggleCompare, ready, pushToast } =
     useAppStore();
@@ -25,49 +26,42 @@ export function ExpertActions({ expert }: { expert: Expert }) {
     }
   };
 
+  const base =
+    "inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-[20px] font-medium transition-colors duration-200";
+
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="-ml-3 flex flex-wrap items-center gap-1">
       <button
         type="button"
         onClick={() => toggleFavorite(expert.id, expert.name)}
         aria-pressed={favorite}
         className={cx(
-          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[23px] font-semibold transition-all duration-200 active:scale-[0.97]",
-          favorite
-            ? "border-danger-500 bg-danger-50 text-danger-600"
-            : "border-white/25 text-white hover:bg-white/10",
+          base,
+          favorite ? "text-danger-500 hover:bg-white/10" : "text-navy-200 hover:bg-white/10 hover:text-white",
         )}
       >
-        <Heart
-          className="h-4 w-4"
-          fill={favorite ? "currentColor" : "none"}
-          strokeWidth={2.2}
-        />
+        <Heart className="h-4 w-4" fill={favorite ? "currentColor" : "none"} strokeWidth={2.2} />
         {favorite ? "찜함" : "찜하기"}
       </button>
-
       <button
         type="button"
         onClick={() => toggleCompare(expert.id, expert.name)}
         aria-pressed={comparing}
         className={cx(
-          "inline-flex h-11 items-center gap-1.5 rounded-xl border px-3.5 text-[23px] font-semibold transition-all duration-200 active:scale-[0.97]",
-          comparing
-            ? "border-teal-400 bg-teal-500 text-navy-950"
-            : "border-white/25 text-white hover:bg-white/10",
+          base,
+          comparing ? "text-teal-300 hover:bg-white/10" : "text-navy-200 hover:bg-white/10 hover:text-white",
         )}
       >
         <GitCompareArrows className="h-4 w-4" strokeWidth={2.2} />
-        {comparing ? "비교중" : "비교하기"}
+        {comparing ? "비교중" : "비교에 담기"}
       </button>
-
       <button
         type="button"
         onClick={share}
-        aria-label="전문가 프로필 공유"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/25 text-white transition-all duration-200 hover:bg-white/10 active:scale-[0.97]"
+        className={cx(base, "text-navy-200 hover:bg-white/10 hover:text-white")}
       >
         <Share2 className="h-4 w-4" strokeWidth={2.2} />
+        공유
       </button>
     </div>
   );

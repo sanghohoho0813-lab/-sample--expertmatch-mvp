@@ -37,7 +37,7 @@ export function ScrollTop() {
         shown
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0",
-        raised ? "bottom-[168px] lg:bottom-28" : "bottom-[80px] lg:bottom-8",
+        raised ? "bottom-[168px] lg:bottom-28" : "bottom-[96px] lg:bottom-8",
       )}
     >
       <ArrowUp className="h-5 w-5" strokeWidth={2.4} />

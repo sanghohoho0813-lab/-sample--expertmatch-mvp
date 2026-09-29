@@ -33,15 +33,11 @@ export function HowItWorks() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(110%_100%_at_80%_0%,#22406E_0%,#16294B_55%,#0C1B36_100%)]"
         aria-hidden
       />
-      <div
-        className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-gold-400/10 blur-[100px]"
-        aria-hidden
-      />
 
       <div className="shell relative">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-gold-300">
-            <span className="h-px w-6 bg-gold-400" aria-hidden />
+          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-300">
+            <span className="h-px w-6 bg-teal-400" aria-hidden />
             How it works
           </span>
           <h2 className="mt-2.5 text-[36px] font-bold tracking-[-0.02em] text-white sm:text-[43px]">
@@ -58,7 +54,7 @@ export function HowItWorks() {
             return (
               <li
                 key={step.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm transition-colors duration-200 hover:border-gold-300/30 hover:bg-white/[0.09]"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-colors duration-200 hover:bg-white/[0.08]"
               >
                 <span
                   className="pointer-events-none absolute -right-2 -top-5 text-[94px] font-extrabold leading-none text-white/[0.06]"
@@ -66,7 +62,7 @@ export function HowItWorks() {
                 >
                   {i + 1}
                 </span>
-                <span className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 to-teal-700 p-3 text-white shadow-[0_8px_20px_-10px_rgba(21,156,168,0.9)]">
+                <span className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-teal-600 p-3 text-white">
                   <StepIcon className="h-6 w-6" strokeWidth={2} />
                 </span>
                 <h3 className="relative mt-5 text-[25px] font-bold text-white">

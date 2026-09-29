@@ -16,7 +16,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone", "chat"],
     languages: ["한국어", "영어"],
     availableThisWeek: true,
-    openSlots: 9,
     responseMinutes: 12,
     headline: "막연한 아이디어를 '검증 가능한 사업'으로 정리해 드립니다",
     intro:
@@ -59,7 +58,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "chat"],
     languages: ["한국어", "영어"],
     availableThisWeek: true,
-    openSlots: 6,
     responseMinutes: 25,
     headline: "예산이 작을수록 '무엇을 안 할지'가 성과를 만듭니다",
     intro:
@@ -100,7 +98,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone"],
     languages: ["한국어", "영어"],
     availableThisWeek: true,
-    openSlots: 4,
     responseMinutes: 40,
     headline: "투자자가 실제로 보는 순서대로 IR을 다시 씁니다",
     intro:
@@ -142,7 +139,6 @@ export const EXPERTS: Expert[] = [
     methods: ["phone", "chat", "video"],
     languages: ["한국어"],
     availableThisWeek: true,
-    openSlots: 11,
     responseMinutes: 18,
     headline: "지금 결정이 내년 세금에 얼마로 돌아오는지 계산해 드립니다",
     intro:
@@ -183,7 +179,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "chat"],
     languages: ["한국어", "영어"],
     availableThisWeek: false,
-    openSlots: 0,
     responseMinutes: 60,
     headline: "10명 전후 조직에서 가장 먼저 만들어야 할 규칙을 정합니다",
     intro:
@@ -223,7 +218,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone"],
     languages: ["한국어"],
     availableThisWeek: true,
-    openSlots: 5,
     responseMinutes: 35,
     headline: "분쟁이 생기기 전에 계약서 한 줄로 막을 수 있습니다",
     intro:
@@ -264,7 +258,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone", "chat"],
     languages: ["한국어", "영어"],
     availableThisWeek: true,
-    openSlots: 14,
     responseMinutes: 10,
     headline: "이력서는 경력의 나열이 아니라 다음 자리를 위한 제안서입니다",
     intro:
@@ -306,7 +299,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "chat"],
     languages: ["한국어", "영어"],
     availableThisWeek: true,
-    openSlots: 7,
     responseMinutes: 30,
     headline: "화면을 예쁘게 만들기 전에, 흐름부터 정리합니다",
     intro:
@@ -346,7 +338,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone"],
     languages: ["한국어", "영어"],
     availableThisWeek: false,
-    openSlots: 0,
     responseMinutes: 90,
     headline: "외주를 맡기기 전에 무엇을 정해야 하는지 알려드립니다",
     intro:
@@ -387,7 +378,6 @@ export const EXPERTS: Expert[] = [
     methods: ["phone", "video", "chat"],
     languages: ["한국어"],
     availableThisWeek: true,
-    openSlots: 8,
     responseMinutes: 20,
     headline: "노무 문제는 대응 순서를 틀리면 되돌리기 어렵습니다",
     intro:
@@ -428,7 +418,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "phone"],
     languages: ["한국어", "영어", "중국어"],
     availableThisWeek: true,
-    openSlots: 3,
     responseMinutes: 55,
     headline: "매출을 늘리기 전에 새는 이익부터 찾습니다",
     intro:
@@ -468,7 +457,6 @@ export const EXPERTS: Expert[] = [
     methods: ["video", "chat", "phone"],
     languages: ["한국어"],
     availableThisWeek: true,
-    openSlots: 12,
     responseMinutes: 15,
     headline: "광고 계정을 함께 열어보고 바로 손볼 곳을 찾습니다",
     intro:

@@ -87,8 +87,8 @@ src/
 │  ├─ experts/              # ExpertCard, FilterPanel, ExpertSearchClient
 │  ├─ expert/               # 상세 페이지 구성요소 (BookingPanel, ProductList, ReviewList, ...)
 │  ├─ compare/              # CompareBar, CompareView
-│  ├─ booking/              # BookingFlow, DayStrip, MonthCalendar, StepIndicator, BookingComplete
-│  ├─ mypage/               # MyPageClient
+│  ├─ booking/              # BookingFlow(상태·단계 전환) + steps(단계별 화면), DayStrip, MonthCalendar, BookingComplete
+│  ├─ mypage/               # MyPageClient, BookingRow, ReviewDialog, EmptyState
 │  └─ ui/                   # Portrait, Stars, Overlay(포커스 트랩), Toaster, Skeleton, Icon
 └─ lib/
    ├─ data/                 # experts(12명), reviews(30개), categories(10개)

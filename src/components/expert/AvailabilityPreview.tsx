@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { shortestMinutes, useSlotPicker } from "@/lib/useAvailability";
-import { cx, parseDateKey, toDateKey } from "@/lib/format";
+import { WEEKDAY, cx, parseDateKey, toDateKey } from "@/lib/format";
 import type { Expert } from "@/lib/types";
 
-const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 
 /**
  * 앞으로 7일 예약 가능 현황 — 예약 달력과 같은 계산(저장된 예약 반영)을 쓴다.

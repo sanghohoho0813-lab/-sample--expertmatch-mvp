@@ -54,11 +54,6 @@ export function slotsFor(expertId: string, dateKey: string): string[] {
   return slots;
 }
 
-export function startOfToday(): Date {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-}
-
 export function toMinutes(time: string): number {
   const [h, m] = time.split(":").map(Number);
   return h * 60 + m;
@@ -99,7 +94,8 @@ function activeBookings(bookings: Booking[]): Booking[] {
   return bookings.filter((b) => b.status !== "cancelled");
 }
 
-function overlaps(
+/** [startA, startA+lenA) 와 [startB, startB+lenB) 가 겹치는가 (분 단위, 맞닿으면 겹치지 않음) */
+export function intervalsOverlap(
   startA: number,
   lenA: number,
   startB: number,
@@ -128,11 +124,11 @@ export function slotStates(
     const expertBusy = active.some(
       (b) =>
         b.expertId === expertId &&
-        overlaps(start, minutes, toMinutes(b.time), b.minutes),
+        intervalsOverlap(start, minutes, toMinutes(b.time), b.minutes),
     );
     if (expertBusy) return { time, state: "taken" as const };
     const mine = active.some((b) =>
-      overlaps(start, minutes, toMinutes(b.time), b.minutes),
+      intervalsOverlap(start, minutes, toMinutes(b.time), b.minutes),
     );
     return { time, state: mine ? ("mine" as const) : ("open" as const) };
   });

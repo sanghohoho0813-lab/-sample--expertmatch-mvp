@@ -2,9 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cx, toDateKey } from "@/lib/format";
+import { WEEKDAY, cx, toDateKey } from "@/lib/format";
 
-const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 const PAGE = 7;
 
 /**

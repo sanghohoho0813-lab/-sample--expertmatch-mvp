@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cx } from "@/lib/format";
@@ -25,6 +25,45 @@ function useEscape(open: boolean, onClose: () => void) {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
+}
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea, input:not([type="hidden"]):not([disabled]), select, [tabindex]:not([tabindex="-1"])';
+
+/**
+ * 열릴 때 대화상자 안으로 포커스를 옮기고, Tab 이 밖으로 새지 않게 가두며,
+ * 닫히면 열기 전에 있던 요소로 포커스를 돌려준다.
+ */
+function useFocusTrap(active: boolean, ref: React.RefObject<HTMLElement>) {
+  useEffect(() => {
+    if (!active || !ref.current) return;
+    const root = ref.current;
+    const previous = document.activeElement as HTMLElement | null;
+    const items = () => Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE));
+    // 닫기 버튼보다 본문 첫 요소에 먼저 닿도록 (없으면 대화상자 자체)
+    const first = items().find((el) => el.getAttribute("aria-label") !== "닫기") ?? root;
+    first.focus({ preventScroll: true });
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const list = items();
+      if (list.length === 0) return;
+      const head = list[0];
+      const tail = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === head) {
+        e.preventDefault();
+        tail.focus();
+      } else if (!e.shiftKey && document.activeElement === tail) {
+        e.preventDefault();
+        head.focus();
+      }
+    };
+    root.addEventListener("keydown", onKey);
+    return () => {
+      root.removeEventListener("keydown", onKey);
+      previous?.focus?.({ preventScroll: true });
+    };
+  }, [active, ref]);
 }
 
 interface OverlayProps {
@@ -52,9 +91,11 @@ export function Overlay({
   width = "max-w-4xl",
 }: OverlayProps) {
   const [mounted, setMounted] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => setMounted(true), []);
   useLockedBody(open);
   useEscape(open, onClose);
+  useFocusTrap(open && mounted, dialogRef);
 
   if (!mounted || !open) return null;
 
@@ -66,11 +107,13 @@ export function Overlay({
         aria-hidden
       />
       <div
+        ref={dialogRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         className={cx(
-          "relative flex max-h-[92dvh] w-full animate-slide-up flex-col overflow-hidden rounded-t-3xl bg-white shadow-pop sm:max-h-[86vh] sm:animate-scale-in sm:rounded-3xl",
+          "relative flex max-h-[92dvh] w-full animate-slide-up flex-col outline-none overflow-hidden rounded-t-3xl bg-white shadow-pop sm:max-h-[86vh] sm:animate-scale-in sm:rounded-3xl",
           width,
         )}
       >

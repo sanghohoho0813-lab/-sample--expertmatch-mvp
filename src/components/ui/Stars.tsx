@@ -42,25 +42,3 @@ export function Stars({
     </span>
   );
 }
-
-export function RatingInline({
-  rating,
-  reviewCount,
-  className,
-  size = 14,
-}: {
-  rating: number;
-  reviewCount: number;
-  className?: string;
-  size?: number;
-}) {
-  return (
-    <span className={cx("inline-flex items-center gap-1.5", className)}>
-      <Stars value={rating} size={size} />
-      <span className="text-[21px] font-semibold text-navy-900">
-        {rating.toFixed(1)}
-      </span>
-      <span className="text-[21px] text-navy-400">({reviewCount})</span>
-    </span>
-  );
-}

@@ -33,7 +33,7 @@ export function Logo({
         <span
           className={cx(
             "mt-0.5 whitespace-nowrap text-[12.5px] font-semibold uppercase tracking-[0.14em]",
-            tone === "dark" ? "text-navy-300" : "text-teal-300",
+            tone === "dark" ? "text-navy-400" : "text-teal-300",
           )}
         >
           sample

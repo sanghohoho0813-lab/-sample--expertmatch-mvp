@@ -54,7 +54,7 @@ export function ExpertMiniCard({ expert, className }: { expert: Expert; classNam
           <p
             className={cx(
               "mt-0.5 text-[18.5px] font-semibold",
-              label ? "text-teal-700" : "text-navy-300",
+              label ? "text-teal-700" : "text-navy-400",
             )}
           >
             {!avail ? "예약 가능 시간 확인 중" : label ? `${label} 가능` : "이번 주 예약 마감"}

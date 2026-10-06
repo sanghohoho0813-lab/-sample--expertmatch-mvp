@@ -10,8 +10,10 @@ import { CompareBar } from "@/components/compare/CompareBar";
 import { Toaster } from "@/components/ui/Toaster";
 import { AppStoreProvider } from "@/lib/store/AppStore";
 import Script from "next/script";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "(sample) ExpertMatch — 전문가 상담·매칭 플랫폼 | 미래에이아이랩",
     template: "%s | (sample) ExpertMatch · 미래에이아이랩",
@@ -29,6 +31,7 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     type: "website",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 const PRETENDARD_HREF =

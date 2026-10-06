@@ -2,15 +2,12 @@ export function formatPrice(value: number): string {
   return value.toLocaleString("ko-KR");
 }
 
-export function formatPriceWon(value: number): string {
-  return `${formatPrice(value)}원`;
-}
-
 export function formatCount(value: number): string {
   return value.toLocaleString("ko-KR");
 }
 
-const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
+/** 요일 표기 (Date#getDay 순서) */
+export const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"] as const;
 
 export function toDateKey(date: Date): string {
   const y = date.getFullYear();
@@ -22,10 +19,6 @@ export function toDateKey(date: Date): string {
 export function parseDateKey(key: string): Date {
   const [y, m, d] = key.split("-").map(Number);
   return new Date(y, m - 1, d);
-}
-
-export function weekdayOf(key: string): string {
-  return WEEKDAY[parseDateKey(key).getDay()];
 }
 
 /** 2026-08-24 → 8월 24일 (월) */

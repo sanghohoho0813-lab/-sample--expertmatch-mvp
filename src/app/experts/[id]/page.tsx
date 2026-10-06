@@ -35,9 +35,13 @@ export function generateMetadata({
 }): Metadata {
   const expert = getExpert(params.id);
   if (!expert) return { title: "전문가를 찾을 수 없습니다" };
+  const title = `${expert.name} · ${expert.title}`;
   return {
-    title: `${expert.name} · ${expert.title}`,
+    title,
     description: expert.headline,
+    alternates: { canonical: `/experts/${expert.id}` },
+    // 공유 시 전문가 사진이 미리보기로 보이도록
+    openGraph: { title, description: expert.headline, images: expert.photo ? [expert.photo] : undefined },
   };
 }
 
@@ -58,8 +62,7 @@ export default function ExpertDetailPage({
   if (!expert) notFound();
 
   const reviews = reviewsForExpert(expert.id);
-  const [primaryId, ...otherIds] = expert.categories;
-  const primary = CATEGORY_MAP[primaryId];
+  const primary = CATEGORY_MAP[expert.categories[0]];
 
   return (
     <div className="pb-32 lg:pb-0">

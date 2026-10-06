@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cx, toDateKey } from "@/lib/format";
+import { WEEKDAY, cx, toDateKey } from "@/lib/format";
 
-const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 
 export function MonthCalendar({
   getSlots,

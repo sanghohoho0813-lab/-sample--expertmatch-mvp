@@ -114,7 +114,7 @@ const ROWS: Row[] = [
     label: "가장 빠른 예약",
     render: (e, ctx) => {
       const s = ctx.earliest[e.id];
-      if (s === undefined || !ctx.now) return <span className="text-navy-300">확인 중</span>;
+      if (s === undefined || !ctx.now) return <span className="text-navy-400">확인 중</span>;
       if (s === null) return <span className="text-navy-400">예약 가능 시간 없음</span>;
       return <>{formatSlotLabel(s.dateKey, s.time, ctx.now)}</>;
     },

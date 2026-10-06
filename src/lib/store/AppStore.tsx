@@ -10,29 +10,17 @@ import {
   useState,
 } from "react";
 import type { Booking, MyReview } from "@/lib/types";
+import { clashMessage, findClash } from "@/lib/bookingRules";
+import {
+  INITIAL_STATE,
+  MAX_COMPARE,
+  MAX_RECENT,
+  STORAGE_KEY,
+  parsePersisted,
+  type PersistedState,
+} from "@/lib/store/persist";
 
-const STORAGE_KEY = "expertmatch:v1";
-export const MAX_COMPARE = 3;
-const MAX_RECENT = 8;
-
-interface PersistedState {
-  favorites: string[];
-  compare: string[];
-  bookings: Booking[];
-  /** 최근 본 전문가 id (최신순) */
-  recent: string[];
-  /** 내가 남긴 후기 (데모) */
-  myReviews: MyReview[];
-}
-
-const INITIAL: PersistedState = {
-  favorites: [],
-  compare: [],
-  bookings: [],
-  recent: [],
-  myReviews: [],
-};
-
+export { MAX_COMPARE } from "@/lib/store/persist";
 export interface Toast {
   id: number;
   message: string;
@@ -67,42 +55,20 @@ interface AppStoreValue extends PersistedState {
 
 const AppStoreContext = createContext<AppStoreValue | null>(null);
 
-function arr<T>(v: unknown): T[] {
-  return Array.isArray(v) ? (v as T[]) : [];
-}
-
 function readStorage(): PersistedState {
-  if (typeof window === "undefined") return INITIAL;
+  if (typeof window === "undefined") return INITIAL_STATE;
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return INITIAL;
-    const parsed = JSON.parse(raw) as Partial<PersistedState>;
-    return {
-      favorites: arr<string>(parsed.favorites),
-      compare: arr<string>(parsed.compare).slice(0, MAX_COMPARE),
-      // 이전 버전 데이터(status 없음)는 예정 상담으로 본다
-      bookings: arr<Booking>(parsed.bookings).map((b) =>
-        b.status === "upcoming" || b.status === "done" || b.status === "cancelled"
-          ? b
-          : { ...b, status: "upcoming" },
-      ),
-      recent: arr<string>(parsed.recent).slice(0, MAX_RECENT),
-      myReviews: arr<MyReview>(parsed.myReviews),
-    };
+    return parsePersisted(window.localStorage.getItem(STORAGE_KEY));
   } catch {
-    return INITIAL;
+    // 사파리 개인정보 보호 모드 등 저장소 접근 자체가 막힌 경우
+    return INITIAL_STATE;
   }
-}
-
-function toMin(time: string) {
-  const [h, m] = time.split(":").map(Number);
-  return h * 60 + m;
 }
 
 let toastSeq = 0;
 
 export function AppStoreProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<PersistedState>(INITIAL);
+  const [state, setState] = useState<PersistedState>(INITIAL_STATE);
   const [ready, setReady] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -118,12 +84,32 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     setReady(true);
   }, []);
 
+  // 다른 탭에서 예약·찜을 바꾸면 이 탭에도 반영한다 (같은 시간 중복 예약 방지)
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== STORAGE_KEY) return;
+      const next = parsePersisted(e.newValue);
+      stateRef.current = next;
+      setState(next);
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const warnedRef = useRef(false);
   useEffect(() => {
     if (!ready) return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
-      /* 저장 실패는 데모 동작에 영향 없음 */
+      // 저장 공간이 없거나 막힌 경우 — 이 탭에서는 계속 동작하지만 새로고침하면 사라짐을 한 번 알린다
+      if (!warnedRef.current) {
+        warnedRef.current = true;
+        pushToastRef.current?.({
+          message: "브라우저 저장소를 쓸 수 없어 새로고침하면 기록이 사라져요",
+          tone: "warn",
+        });
+      }
     }
   }, [state, ready]);
 
@@ -145,6 +131,9 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     },
     [dismissToast],
   );
+
+  const pushToastRef = useRef(pushToast);
+  pushToastRef.current = pushToast;
 
   const toggleFavorite = useCallback(
     (id: string, name: string) => {
@@ -218,23 +207,8 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
   const addBooking = useCallback(
     (booking: Booking): AddBookingResult => {
       const prev = stateRef.current;
-      const start = toMin(booking.time);
-      const clash = prev.bookings.find(
-        (b) =>
-          b.status !== "cancelled" &&
-          b.date === booking.date &&
-          start < toMin(b.time) + b.minutes &&
-          toMin(b.time) < start + booking.minutes,
-      );
-      if (clash) {
-        return {
-          ok: false,
-          reason:
-            clash.expertId === booking.expertId
-              ? "방금 다른 예약이 들어온 시간이에요. 다른 시간을 선택해 주세요."
-              : `같은 시간에 ${clash.expertName} 전문가 상담이 예약되어 있어요.`,
-        };
-      }
+      const clash = findClash(prev.bookings, booking);
+      if (clash) return { ok: false, reason: clashMessage(clash, booking) };
       commit({ ...prev, bookings: [booking, ...prev.bookings] });
       return { ok: true };
     },

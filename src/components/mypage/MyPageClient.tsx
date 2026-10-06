@@ -75,7 +75,7 @@ function EmptyState({
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-navy-50">
         <EmptyIcon className="h-6 w-6 text-navy-300" strokeWidth={2} />
       </div>
-      <h3 className="mt-4 text-[25px] font-bold text-navy-900">{title}</h3>
+      <h2 className="mt-4 text-[25px] font-bold text-navy-900">{title}</h2>
       <p className="mt-1.5 text-[20.5px] leading-relaxed text-navy-500">{body}</p>
       <Link
         href={actionHref}
@@ -356,7 +356,6 @@ export function MyPageClient() {
     };
   }, [bookings, now]);
 
-  const next = groups.upcoming[0]?.b;
   const favoriteExperts = favorites.map((id) => EXPERT_MAP[id]).filter(Boolean);
   const recentExperts = recent.map((id) => EXPERT_MAP[id]).filter(Boolean);
   const reviewOf = (id: string) => myReviews.find((r) => r.bookingId === id);
@@ -381,7 +380,7 @@ export function MyPageClient() {
 
   return (
     <div className="shell py-6 pb-32 lg:py-10 lg:pb-20">
-      {/* 누구의 상담인지 + 지금 챙길 것 하나 (상태별 개수는 아래 탭에 표시) */}
+      {/* 누구의 상담인지 — 상태별 개수는 아래 탭에, 다음 상담은 '예정' 목록 맨 위에 (D-day 표시) */}
       <section>
         <div className="flex items-center gap-3.5">
           <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-[26px] font-extrabold text-white">
@@ -395,54 +394,26 @@ export function MyPageClient() {
           </div>
         </div>
 
-        {ready && next && (
-          <Link
-            href={`/booking/complete?code=${next.code}`}
-            className="mt-5 flex items-center gap-3.5 rounded-2xl bg-navy-900 p-4 text-white transition-colors hover:bg-navy-800 sm:p-5"
-          >
-            <Portrait
-              name={next.expertName}
-              accent={next.expertAccent}
-              photo={next.expertPhoto}
-              rounded="rounded-xl"
-              sizes="52px"
-              className="h-[52px] w-[52px] shrink-0"
-            />
-            <span className="min-w-0 flex-1">
-              <span className="block text-[18px] font-bold text-teal-300">
-                다음 상담
-                {now && <span className="whitespace-nowrap"> · {dDay(next.date, now)}</span>}
-              </span>
-              <span className="block text-[22px] font-bold leading-snug">
-                {formatDateKorean(next.date)} {formatTimeKorean(next.time)}
-              </span>
-              <span className="block text-[19px] text-navy-200">
-                {next.expertName} 전문가 · {METHOD_LABEL[next.method]}
-              </span>
-            </span>
-            <span className="hidden shrink-0 text-[19px] font-semibold text-navy-200 sm:block">준비사항 보기</span>
-            <ChevronRight className="h-5 w-5 shrink-0 text-navy-300" strokeWidth={2.2} />
-          </Link>
-        )}
-
-        {ready && pendingReviews > 0 && (
-          <button
-            type="button"
-            onClick={() => setTab("done")}
-            className="mt-3 flex min-h-[52px] w-full items-center justify-between gap-3 rounded-2xl border border-gold-200 bg-cream-50 px-4 text-left text-[20px] text-navy-700 hover:bg-cream-100"
-          >
-            <span>
-              후기를 기다리는 상담 <b className="text-navy-900">{pendingReviews}건</b>
-            </span>
-            <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.2} />
-          </button>
-        )}
       </section>
 
       <div
         className="scroll-slim mt-6 flex gap-1 overflow-x-auto border-b border-navy-100 pb-px"
         role="tablist"
         aria-label="마이페이지"
+        onKeyDown={(e) => {
+          // 탭 사이 이동: ←/→, 처음·끝: Home/End (WAI-ARIA Tabs 패턴)
+          const i = TABS.findIndex((t) => t.id === tab);
+          const nextIndex =
+            e.key === "ArrowRight" ? (i + 1) % TABS.length
+            : e.key === "ArrowLeft" ? (i - 1 + TABS.length) % TABS.length
+            : e.key === "Home" ? 0
+            : e.key === "End" ? TABS.length - 1
+            : -1;
+          if (nextIndex < 0) return;
+          e.preventDefault();
+          setTab(TABS[nextIndex].id);
+          document.getElementById(`mypage-tab-${TABS[nextIndex].id}`)?.focus();
+        }}
       >
         {TABS.map((t) => {
           const TabIcon = t.icon;
@@ -453,7 +424,10 @@ export function MyPageClient() {
               key={t.id}
               type="button"
               role="tab"
+              id={`mypage-tab-${t.id}`}
               aria-selected={active}
+              aria-controls="mypage-panel"
+              tabIndex={active ? 0 : -1}
               onClick={() => setTab(t.id)}
               className={cx(
                 "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-2.5 text-[21px] font-semibold transition-colors duration-200 sm:px-3 sm:text-[22px]",
@@ -463,7 +437,7 @@ export function MyPageClient() {
               <TabIcon className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
               {t.label}
               {ready && count !== null && count > 0 && (
-                <span className={cx("text-[18px] font-bold", active ? "text-teal-700" : "text-navy-300")}>
+                <span className={cx("text-[18px] font-bold", active ? "text-teal-700" : "text-navy-400")}>
                   {count}
                 </span>
               )}
@@ -473,7 +447,7 @@ export function MyPageClient() {
         })}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6" id="mypage-panel" role="tabpanel" aria-labelledby={`mypage-tab-${tab}`}>
         {!ready ? (
           <div className="space-y-3">
             {Array.from({ length: 2 }).map((_, i) => (
@@ -499,11 +473,19 @@ export function MyPageClient() {
 
             {tab === "done" &&
               (groups.done.length > 0 ? (
+                <>
+                {pendingReviews > 0 && (
+                  <p className="mb-3 rounded-xl border border-gold-200 bg-cream-50 px-4 py-3 text-[20px] text-navy-700">
+                    후기를 기다리는 상담이 <b className="text-navy-900">{pendingReviews}건</b> 있어요.
+                    남겨 주신 후기는 전문가 프로필에 바로 반영돼요.
+                  </p>
+                )}
                 <ul className="space-y-3">
                   {groups.done.map(({ b, s }) => (
                     <BookingRow key={b.id} booking={b} status={s} review={reviewOf(b.id)} {...rowProps} />
                   ))}
                 </ul>
+                </>
               ) : (
                 <EmptyState
                   icon={CalendarCheck}
@@ -571,7 +553,7 @@ export function MyPageClient() {
             {tab === "profile" && (
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h3 className="text-[25px] font-bold text-navy-900">기본 정보</h3>
+                  <h2 className="text-[25px] font-bold text-navy-900">기본 정보</h2>
                   <dl className="mt-4 space-y-3 text-[23px]">
                     {[
                       { label: "소속", value: DEMO_USER.org },
@@ -594,7 +576,7 @@ export function MyPageClient() {
                 </div>
 
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h3 className="text-[25px] font-bold text-navy-900">이용 요약</h3>
+                  <h2 className="text-[25px] font-bold text-navy-900">이용 요약</h2>
                   <dl className="mt-4 space-y-3 text-[23px]">
                     {[
                       {

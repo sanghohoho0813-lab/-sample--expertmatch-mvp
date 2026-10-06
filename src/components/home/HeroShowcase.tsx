@@ -38,7 +38,6 @@ export function HeroShowcase() {
           accent={main.accent}
           photo={main.photo}
           rounded="rounded-[18px]"
-          priority
           sizes="(min-width: 1024px) 380px, 100vw"
           className="aspect-[5/5.4] w-full"
         />

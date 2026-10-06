@@ -74,7 +74,7 @@ function CheckRow({
       >
         {label}
       </span>
-      {hint && <span className="shrink-0 text-[18.5px] text-navy-300">{hint}</span>}
+      {hint && <span className="shrink-0 text-[18.5px] text-navy-400">{hint}</span>}
     </button>
   );
 }

@@ -6,7 +6,7 @@ import {
   METHOD_LABEL,
   PRICE_STEPS,
 } from "@/lib/data/categories";
-import type { CategoryId, ConsultMethod, Filters } from "@/lib/types";
+import type { ConsultMethod, Filters } from "@/lib/types";
 
 interface Chip {
   key: string;

@@ -165,6 +165,7 @@ export function ExpertSearchClient() {
 
   return (
     <div className="shell py-6 pb-40 lg:py-10 lg:pb-32">
+      <h1 className="sr-only">전문가 찾기</h1>
       {/* 검색 바 */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
         <div className="relative min-w-0 flex-1">
@@ -344,6 +345,7 @@ export function ExpertSearchClient() {
             onReset={() => setFilters(EMPTY_FILTERS)}
           />
 
+          <h2 className="sr-only">검색 결과</h2>
           {results.length > 0 ? (
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
               {results.map((expert) => (

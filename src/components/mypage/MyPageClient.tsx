@@ -19,6 +19,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
+import { ListSkeleton } from "@/components/ui/Skeleton";
 import { Stars } from "@/components/ui/Stars";
 import { Overlay } from "@/components/ui/Overlay";
 import { ExpertCard } from "@/components/experts/ExpertCard";
@@ -449,11 +450,7 @@ export function MyPageClient() {
 
       <div className="mt-6" id="mypage-panel" role="tabpanel" aria-labelledby={`mypage-tab-${tab}`}>
         {!ready ? (
-          <div className="space-y-3">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div key={i} className="h-40 animate-pulse rounded-2xl bg-navy-100/70" />
-            ))}
-          </div>
+          <ListSkeleton />
         ) : (
           <>
             {tab === "upcoming" &&

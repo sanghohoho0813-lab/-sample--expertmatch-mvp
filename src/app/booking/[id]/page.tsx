@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { BookingFlow } from "@/components/booking/BookingFlow";
+import { BookingSkeleton } from "@/components/ui/Skeleton";
 import { EXPERTS, getExpert } from "@/lib/data/experts";
+
+/** 목록에 없는 전문가 주소는 빌드된 404 로 */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return EXPERTS.map((e) => ({ id: e.id }));
@@ -25,11 +29,7 @@ export default function BookingPage({ params }: { params: { id: string } }) {
 
   return (
     <Suspense
-      fallback={
-        <div className="shell py-16">
-          <div className="h-96 animate-pulse rounded-2xl bg-navy-100/70" />
-        </div>
-      }
+      fallback={<BookingSkeleton />}
     >
       <BookingFlow expert={expert} />
     </Suspense>

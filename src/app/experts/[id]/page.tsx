@@ -24,6 +24,9 @@ import { EXPERTS, getExpert } from "@/lib/data/experts";
 import { reviewsForExpert } from "@/lib/data/reviews";
 import { formatCount } from "@/lib/format";
 
+/** 목록에 없는 전문가 주소는 빌드된 404 로 */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return EXPERTS.map((e) => ({ id: e.id }));
 }

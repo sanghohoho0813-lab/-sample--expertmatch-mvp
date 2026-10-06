@@ -1,5 +1,7 @@
 # (sample) ExpertMatch — 전문가 상담·매칭 플랫폼 MVP
 
+[![CI](https://github.com/sanghohoho0813-lab/-sample--expertmatch-mvp/actions/workflows/ci.yml/badge.svg)](https://github.com/sanghohoho0813-lab/-sample--expertmatch-mvp/actions/workflows/ci.yml)
+
 사용자가 자신의 고민에 맞는 전문가를 **탐색 → 비교 → 상세 확인 → 상담 예약 완료**까지
 실제로 체험할 수 있는 반응형 웹앱 MVP입니다.
 
@@ -9,13 +11,34 @@
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # 프로덕션 빌드
-npm run typecheck
-npm run lint
+npm run dev        # http://localhost:3000
+npm run build      # 프로덕션 빌드
+npm run check      # typecheck + lint + 단위 테스트
+npm run test:e2e   # 빌드 후 실행 — Playwright (데스크톱 + 모바일)
 ```
 
-Vercel에 그대로 배포할 수 있습니다 (환경변수 불필요).
+Vercel에 그대로 배포할 수 있습니다. 선택 환경변수 `NEXT_PUBLIC_SITE_URL` 은
+OG 이미지·사이트맵의 절대 주소에 쓰이며, 없으면 Vercel 배포 주소를 사용합니다.
+
+## 품질 관리
+
+| 구분 | 내용 |
+| --- | --- |
+| 정적 검사 | TypeScript strict + `noUnusedLocals/Parameters`, ESLint (`next/core-web-vitals`) |
+| 단위 테스트 (Vitest) | 예약 가능 시간 계산, 중복 예약 판정, 저장 데이터 검증·복구, 별점 분포, 검색·필터, 날짜 표기 |
+| E2E (Playwright) | 예약 완료→마이페이지, 같은 시간 재예약 차단·취소 후 재오픈, 단계 간 뒤로가기, 날짜 미리 선택, 후기 반영, 비교 규칙, 포커스 트랩, 탭 간 동기화, 가로 스크롤·콘솔 오류, 404 |
+| CI (GitHub Actions) | push/PR 마다 위 전부 + 프로덕션 빌드, 실패 시 Playwright trace 업로드 |
+| 접근성 | Lighthouse 접근성 100 (주요 화면), 대화상자 포커스 트랩·복귀, WAI-ARIA 탭 키보드 조작, 본문 바로가기, 명도 대비 AA |
+| 레이아웃 안정성 | 로딩 자리표시를 실제 화면과 같은 크기로 — CLS ≈ 0 |
+
+### 설계 메모
+
+- **예약 가능 시간은 한 곳에서** (`lib/availability.ts`) — 카드·상세·비교·달력이 같은 함수를 써서
+  숫자가 어긋나지 않습니다. 겹침 판정은 순수 함수(`lib/bookingRules.ts`)로 분리해 테스트합니다.
+- **저장소는 신뢰하지 않는다** (`lib/store/persist.ts`) — localStorage 값은 항목 단위로 검증하고,
+  손상·구버전 데이터는 고치거나 버립니다. 다른 탭의 변경은 `storage` 이벤트로 즉시 반영합니다.
+- **시간에 의존하는 값은 마운트 후 계산** (`useNow`) — 서버/클라이언트 렌더 불일치를 막습니다.
+- **예약 단계는 주소에 기록** (`?step=`) — 브라우저 뒤로가기가 이전 단계로 동작합니다.
 
 ## 기술 스택
 
@@ -48,9 +71,9 @@ Vercel에 그대로 배포할 수 있습니다 (환경변수 불필요).
 | `/experts` | 전문가 검색 — 데스크톱 좌측 필터 사이드바 / 모바일 필터 바텀시트, 정렬 |
 | `/experts/[id]` | 전문가 상세 — 소개·전문분야·경력 타임라인·상담상품·상담가능시간·리뷰 |
 | `/booking/[id]` | 6단계 상담 예약 플로우 |
-| `/booking/complete` | 예약 완료 (체크 애니메이션 + 예약번호) |
-| `/mypage` | 예정/완료 상담, 찜한 전문가, 후기, 히스토리, 프로필 |
-| `/chat` | 채팅 안내 (데모 범위 밖 — UI만 제공) |
+| `/booking/complete` | 예약 완료 (방금 예약) · 예약 상세 (마이페이지에서 다시 열 때) |
+| `/mypage` | 예정 · 완료 · 취소 상담, 찜, 최근 본 전문가, 프로필 |
+| `/chat` | 예약한 상담의 채팅방 목록 (실제 채팅은 데모 범위 밖) |
 | `/about` | 제작사(미래AI랩) 소개 · 미래AI랩 홈페이지로 연결 |
 
 ## 폴더 구조
@@ -62,18 +85,21 @@ src/
 │  ├─ layout/               # Header, Footer, MobileTabBar, Logo
 │  ├─ home/                 # Hero, CategoryGrid, FeaturedExperts, HowItWorks, ...
 │  ├─ experts/              # ExpertCard, FilterPanel, ExpertSearchClient
-│  ├─ expert/               # 상세 페이지 구성요소 (BookingCard, ReviewList, ...)
+│  ├─ expert/               # 상세 페이지 구성요소 (BookingPanel, ProductList, ReviewList, ...)
 │  ├─ compare/              # CompareBar, CompareView
 │  ├─ booking/              # BookingFlow, DayStrip, MonthCalendar, StepIndicator, BookingComplete
 │  ├─ mypage/               # MyPageClient
-│  └─ ui/                   # Portrait, Button, Stars, Overlay, Toaster, Icon
+│  └─ ui/                   # Portrait, Stars, Overlay(포커스 트랩), Toaster, Skeleton, Icon
 └─ lib/
    ├─ data/                 # experts(12명), reviews(30개), categories(10개)
-   ├─ store/AppStore.tsx    # 찜 / 비교 / 예약 상태 + Toast (localStorage 영속)
-   ├─ availability.ts       # 전문가·날짜 기반 결정적 예약 슬롯 생성
+   ├─ store/AppStore.tsx    # 찜 / 비교 / 예약 상태 + Toast (localStorage 영속, 탭 간 동기화)
+   ├─ store/persist.ts      # 저장 데이터 검증·복구
+   ├─ availability.ts       # 전문가·날짜 기반 결정적 예약 슬롯 + 예약 반영
+   ├─ bookingRules.ts       # 예약 겹침 판정
    ├─ search.ts             # 검색 · 필터 · 정렬 로직
    ├─ format.ts             # 날짜·가격·시간 포맷 유틸
    └─ types.ts
+e2e/                        # Playwright 시나리오
 ```
 
 ## 데이터

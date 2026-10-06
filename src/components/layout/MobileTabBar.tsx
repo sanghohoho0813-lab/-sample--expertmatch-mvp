@@ -54,7 +54,6 @@ export function MobileTabBar() {
         {TABS.map((t) => {
           const active = t.match(pathname, tab);
           const TabIcon = t.icon;
-          const isChat = t.href === "/chat";
           return (
             <li key={t.label} className="flex-1">
               <Link
@@ -62,7 +61,7 @@ export function MobileTabBar() {
                 aria-current={active ? "page" : undefined}
                 className={cx(
                   "relative flex min-h-[56px] flex-col items-center justify-center gap-1 pt-1.5 transition-colors duration-200",
-                  active ? "text-teal-700" : isChat ? "text-navy-300" : "text-navy-400",
+                  active ? "text-teal-700" : "text-navy-400",
                 )}
               >
                 <span className="relative">

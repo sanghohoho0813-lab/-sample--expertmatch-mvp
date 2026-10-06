@@ -2,12 +2,11 @@ import Image from "next/image";
 import { cx } from "@/lib/format";
 
 /**
- * 전문가 프로필 이미지 자리에 사용하는 일관된 professional placeholder.
+ * 전문가 프로필 이미지.
  *
- * 외부 이미지에 의존하지 않아 어떤 환경에서도 깨지지 않고, 어떤 비율의
- * 프레임에서도 인물이 중앙에 유지된다(preserveAspectRatio slice).
- * 실제 사진이 준비되면 Expert 데이터에 photoUrl 을 추가하고
- * 이 컴포넌트만 교체하면 된다.
+ * 사진(photo)이 있으면 next/image 로 정사각 프레임에 맞춰 보여 주고,
+ * 사진이 없거나 불러오기 전에는 같은 비율의 일러스트 placeholder 를 그린다.
+ * 어떤 프레임 비율에서도 인물이 중앙에 유지된다(preserveAspectRatio slice).
  */
 
 interface Palette {

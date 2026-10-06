@@ -16,6 +16,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
+import { CardSkeleton } from "@/components/ui/Skeleton";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { useAppStore } from "@/lib/store/AppStore";
 import { cx, dDay, formatDateFull, formatPrice, formatTimeKorean } from "@/lib/format";
@@ -65,11 +66,7 @@ export function BookingComplete() {
     !!booking && Date.now() - new Date(booking.createdAt).getTime() < 5 * 60_000;
 
   if (!ready) {
-    return (
-      <div className="shell py-20">
-        <div className="mx-auto h-96 max-w-lg animate-pulse rounded-3xl bg-navy-100/70" />
-      </div>
-    );
+    return <CardSkeleton />;
   }
 
   if (!booking || booking.status === "cancelled") {

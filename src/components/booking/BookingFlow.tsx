@@ -64,18 +64,25 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const { addBooking, pushToast } = useAppStore();
   const noteRef = useRef<HTMLTextAreaElement>(null);
 
-  const [step, setStep] = useState(0);
-  const [maxReached, setMaxReached] = useState(0);
-  const [productId, setProductId] = useState(() => {
-    const fromQuery = params.get("product");
-    return expert.products.some((p) => p.id === fromQuery)
-      ? (fromQuery as string)
-      : (expert.products.find((p) => p.recommended)?.id ?? expert.products[0].id);
-  });
+  // 상세에서 상품을 고르고 들어오면 상품 단계는 건너뛴다 (언제든 되돌아가 바꿀 수 있음)
+  const productFromQuery = params.get("product");
+  const hasProduct = expert.products.some((p) => p.id === productFromQuery);
+  // 상세의 '상담 가능 시간'에서 날짜를 누르고 들어오면 그 날짜를 미리 선택해 둔다
+  const dateFromQuery = params.get("date");
+  const presetDate = dateFromQuery && /^\d{4}-\d{2}-\d{2}$/.test(dateFromQuery) ? dateFromQuery : null;
+
+  const [step, setStep] = useState(hasProduct ? 1 : 0);
+  const [maxReached, setMaxReached] = useState(hasProduct ? 1 : 0);
+  const [productId, setProductId] = useState(() =>
+    hasProduct
+      ? (productFromQuery as string)
+      : (expert.products.find((p) => p.recommended)?.id ?? expert.products[0].id),
+  );
   const [method, setMethod] = useState<ConsultMethod | null>(
     expert.methods.length === 1 ? expert.methods[0] : null,
   );
-  const [dateKey, setDateKey] = useState<string | null>(null);
+  // 미리 선택한 날짜가 예약 불가면 아래 effect가 비운다
+  const [dateKey, setDateKey] = useState<string | null>(presetDate);
   const [time, setTime] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);

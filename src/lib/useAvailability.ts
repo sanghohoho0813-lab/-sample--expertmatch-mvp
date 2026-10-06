@@ -34,7 +34,11 @@ export function shortestMinutes(expert: Expert): number {
  * 한 전문가의 예약 가능 요약 (저장된 예약을 반영).
  * 저장소 로딩 전이나 서버 렌더 중에는 null 을 돌려준다.
  */
-export function useExpertAvailability(expert: Expert): {
+export function useExpertAvailability(
+  expert: Expert,
+  /** 특정 상품 길이 기준으로 볼 때 (기본: 가장 짧은 상품) */
+  minutes?: number,
+): {
   earliest: EarliestSlot | null;
   weekCount: number;
   now: Date;
@@ -43,13 +47,13 @@ export function useExpertAvailability(expert: Expert): {
   const { bookings, ready } = useAppStore();
   return useMemo(() => {
     if (!now || !ready) return null;
-    const minutes = shortestMinutes(expert);
+    const m = minutes ?? shortestMinutes(expert);
     return {
-      earliest: earliestSlot(expert.id, now, bookings, minutes),
-      weekCount: openSlotCount(expert.id, now, bookings, minutes, 7),
+      earliest: earliestSlot(expert.id, now, bookings, m),
+      weekCount: openSlotCount(expert.id, now, bookings, m, 7),
       now,
     };
-  }, [expert, now, ready, bookings]);
+  }, [expert, minutes, now, ready, bookings]);
 }
 
 /** 예약 플로우용 — 선택한 상품 길이 기준으로 날짜·시간 가능 여부를 계산 */

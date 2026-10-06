@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
-import { MiraeLogo } from "@/components/brand/MiraeLogo";
+import { MIRAE_LINKS } from "@/lib/mirae";
 
 const COLUMNS = [
   {
@@ -9,7 +13,7 @@ const COLUMNS = [
       { label: "전문가 찾기", href: "/experts" },
       { label: "상담 분야", href: "/experts?panel=categories" },
       { label: "이용방법", href: "/#how-it-works" },
-      { label: "내 예약", href: "/mypage" },
+      { label: "내 예약", href: "/mypage?tab=upcoming" },
     ],
   },
   {
@@ -21,71 +25,66 @@ const COLUMNS = [
       { label: "세무 상담", href: "/experts?category=tax" },
     ],
   },
-  {
-    title: "고객지원",
-    links: [
-      { label: "자주 묻는 질문", href: "/#how-it-works" },
-      { label: "이용약관", href: "/#" },
-      { label: "개인정보처리방침", href: "/#" },
-      { label: "전문가 지원하기", href: "/#" },
-    ],
-  },
 ];
 
+/** 예약 진행 중에는 단계에 집중하도록 푸터를 숨긴다 (완료 화면에는 노출) */
+const HIDDEN = /^\/booking\/(?!complete)[^/]+$/;
+
 export function Footer() {
+  const pathname = usePathname();
+  if (HIDDEN.test(pathname)) return null;
+
   return (
-    <footer className="mt-20 border-t border-navy-100 bg-white pb-24 lg:pb-0">
-      <div className="shell py-12 lg:py-14">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+    <footer className="mt-12 border-t border-navy-100 bg-white pb-24 lg:mt-16 lg:pb-0">
+      <div className="shell py-10 lg:py-12">
+        <div className="grid gap-8 sm:grid-cols-[1.3fr_1fr_1fr] lg:gap-12">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-[23px] leading-relaxed text-navy-500">
-              검증된 전문가와 필요한 순간을 연결합니다. 창업부터 세무·법률까지,
-              고민에 맞는 전문가를 찾아 바로 상담을 예약하세요.
+            <p className="mt-3 max-w-xs text-[20px] leading-relaxed text-navy-500">
+              검증된 전문가를 찾아 바로 상담을 예약하세요.
             </p>
-            <p className="mt-5 inline-flex rounded-lg bg-navy-50 px-2.5 py-1.5 text-[19px] font-medium text-navy-500">
-              포트폴리오 데모 · 실제 결제와 상담은 진행되지 않습니다
-            </p>
-
-            <div className="mt-7 rounded-2xl border border-navy-100 bg-canvas p-5">
-              <p className="text-[17px] font-bold uppercase tracking-[0.14em] text-navy-400">
-                Built by
-              </p>
-              <Link href="/about" className="mt-3.5 block">
-                <MiraeLogo className="h-[54px]" />
-              </Link>
-              <p className="mt-3.5 text-[19px] leading-relaxed text-navy-500">
-                기획·디자인·개발 전 과정을 미래에이아이랩이 직접 진행했습니다.
-              </p>
-            </div>
           </div>
 
-          {COLUMNS.map((col) => (
-            <div key={col.title}>
-              <h3 className="text-[23px] font-bold text-navy-900">{col.title}</h3>
-              <ul className="mt-4 space-y-2.5">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-[23px] text-navy-500 transition-colors duration-200 hover:text-navy-900"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-6 sm:contents">
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <h3 className="text-[20px] font-bold text-navy-900">{col.title}</h3>
+                <ul className="mt-3 space-y-1">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="inline-flex min-h-[40px] items-center text-[20px] text-navy-500 transition-colors duration-200 hover:text-navy-900"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-navy-100 pt-6 text-[21px] text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-navy-100 pt-6 text-[18px] text-navy-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © 2026{" "}
-            <span className="font-semibold text-navy-600">미래에이아이랩</span> ·
-            (sample) ExpertMatch. 데모 목적으로 제작된 샘플 서비스입니다.
+            © 2026 <span className="font-semibold text-navy-600">미래에이아이랩</span> · (sample)
+            ExpertMatch · 전문가 정보와 후기는 예시 데이터입니다.
           </p>
-          <p>모든 전문가 정보와 후기는 예시 데이터입니다.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/about" className="inline-flex min-h-[40px] items-center font-semibold text-navy-600 hover:text-navy-900">
+              제작사 소개
+            </Link>
+            <a
+              href={MIRAE_LINKS.home}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[40px] items-center gap-1 font-semibold text-navy-600 hover:text-navy-900"
+            >
+              미래에이아이랩
+              <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

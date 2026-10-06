@@ -545,7 +545,7 @@ export function MyPageClient() {
 
             {tab === "favorites" &&
               (favoriteExperts.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {favoriteExperts.map((e) => (
                     <ExpertCard key={e.id} expert={e} />
                   ))}
@@ -569,7 +569,7 @@ export function MyPageClient() {
                       기록 지우기
                     </button>
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {recentExperts.map((e) => (
                       <ExpertCard key={e.id} expert={e} />
                     ))}

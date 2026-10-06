@@ -15,21 +15,15 @@ export function CategoryGrid() {
   );
 
   return (
-    <section className="shell py-16 sm:py-20">
+    <section className="shell py-12 sm:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-700">
-            <span className="h-px w-6 bg-teal-500" aria-hidden />
-            Categories
-          </span>
-          <h2 className="section-title mt-2.5">어떤 분야가 필요하신가요?</h2>
-          <p className="section-sub">
-            분야를 고르면 해당 전문가만 모아서 보여드려요.
-          </p>
+          <h2 className="section-title">어떤 분야가 필요하세요?</h2>
+          <p className="section-sub">분야를 고르면 맞는 전문가만 보여드려요.</p>
         </div>
         <Link
           href="/experts?panel=categories"
-          className="inline-flex items-center gap-1.5 text-[20.5px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+          className="hidden min-h-[44px] items-center gap-1.5 text-[20px] font-semibold text-teal-700 transition-colors hover:text-teal-800 sm:inline-flex"
         >
           전체 분야 보기
           <ArrowRight className="h-5 w-5" strokeWidth={2.4} />
@@ -37,8 +31,9 @@ export function CategoryGrid() {
       </div>
 
       {/* 모바일: 원형 아이콘 그리드 */}
-      <ul className="mt-8 grid grid-cols-4 gap-x-2 gap-y-6 sm:hidden">
-        {items.map((cat) => {
+      <ul className="mt-7 grid grid-cols-4 gap-x-2 gap-y-5 sm:hidden">
+        {/* 7개 분야 + 전체 = 4×2 로 딱 맞춘다 */}
+        {items.slice(0, 7).map((cat) => {
           const tone = CATEGORY_TONE[cat.id];
           return (
             <li key={cat.id}>

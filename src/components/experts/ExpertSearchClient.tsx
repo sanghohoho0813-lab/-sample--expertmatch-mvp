@@ -57,7 +57,19 @@ export function ExpertSearchClient() {
       ...prev,
       categories: cat ? [cat] : prev.categories,
     }));
+    // 이미 이 페이지에 있을 때 헤더의 '상담 분야'를 눌러도 열리도록
+    if (params.get("panel") === "categories") setCategoryOpen(true);
   }, [params]);
+
+  /** 분야 모달을 닫으면 주소의 panel 표시도 지워, 같은 링크를 다시 눌러도 열린다 */
+  const closeCategory = useCallback(() => {
+    setCategoryOpen(false);
+    if (params.get("panel")) {
+      const next = new URLSearchParams(params.toString());
+      next.delete("panel");
+      router.replace(next.toString() ? `/experts?${next}` : "/experts", { scroll: false });
+    }
+  }, [params, router]);
 
   const suggestedCategories = useMemo(() => categoriesForQuery(query), [query]);
 
@@ -177,8 +189,8 @@ export function ExpertSearchClient() {
             aria-expanded={showSuggest}
             aria-controls="search-suggest"
             aria-autocomplete="list"
-            placeholder="분야·고민·전문가 검색"
-            className="h-12 w-full min-w-0 bg-transparent text-[25px] outline-none"
+            placeholder="분야·고민·이름 검색"
+            className="h-12 w-full min-w-0 bg-transparent text-[22px] outline-none placeholder:text-navy-300 sm:text-[24px]"
             autoComplete="off"
           />
           {input && (
@@ -289,7 +301,7 @@ export function ExpertSearchClient() {
 
       <div className="mt-6 flex gap-6 xl:gap-8">
         {/* 데스크톱 필터 사이드바 */}
-        <aside className="hidden w-[232px] shrink-0 lg:block">
+        <aside className="hidden w-[272px] shrink-0 lg:block">
           <div className="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto rounded-2xl border border-navy-100 bg-white p-4 shadow-card scroll-slim">
             <FilterPanel
               filters={filters}
@@ -335,7 +347,7 @@ export function ExpertSearchClient() {
           />
 
           {results.length > 0 ? (
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
               {results.map((expert) => (
                 <ExpertCard
                   key={expert.id}
@@ -410,12 +422,13 @@ export function ExpertSearchClient() {
           </div>
         }
       >
-        <div className="px-5 py-4">
+        <div className="px-5 pb-4">
           <FilterPanel
             filters={filters}
             onChange={setFilters}
             onReset={() => setFilters(EMPTY_FILTERS)}
             counts={categoryCounts}
+            showHeader={false}
           />
         </div>
       </Overlay>
@@ -423,7 +436,7 @@ export function ExpertSearchClient() {
       {/* 상담 분야 바로가기 (헤더 '상담 분야' 진입) */}
       <Overlay
         open={categoryOpen}
-        onClose={() => setCategoryOpen(false)}
+        onClose={closeCategory}
         title="상담 분야"
         description="분야를 선택하면 해당 전문가만 모아 보여드려요."
         width="max-w-2xl"
@@ -435,7 +448,7 @@ export function ExpertSearchClient() {
               type="button"
               onClick={() => {
                 setFilters({ ...EMPTY_FILTERS, categories: [c.id] });
-                setCategoryOpen(false);
+                closeCategory();
               }}
               className="flex flex-col items-start gap-2 rounded-2xl border border-navy-100 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-card"
             >

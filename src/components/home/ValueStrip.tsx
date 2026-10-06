@@ -1,44 +1,27 @@
-import { CalendarCheck, ShieldCheck, Sparkles, UserCheck } from "lucide-react";
+import { CalendarCheck, GitCompareArrows, MessageSquareText, UserCheck } from "lucide-react";
 
+/** 히어로 바로 아래 신뢰 요소 — 짧은 한 줄로만 */
 const VALUES = [
-  {
-    icon: UserCheck,
-    title: "검증된 전문가",
-    body: "전문 경력과 실사용자 리뷰를 통해 신뢰할 수 있는 전문가만 엄선했습니다.",
-  },
-  {
-    icon: Sparkles,
-    title: "정확한 매칭",
-    body: "분야·경력·상담 스타일을 고려한 추천으로 최적의 전문가를 만나보세요.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "간편한 예약",
-    body: "원하는 시간과 방식으로 쉽게 예약하고, 일정 관리까지 한 번에.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "안전한 상담",
-    body: "안전한 결제와 개인정보 보호로 안심하고 상담을 진행할 수 있습니다.",
-  },
+  { icon: UserCheck, title: "검증 전문가", body: "경력·자격·후기를 확인했어요" },
+  { icon: GitCompareArrows, title: "한눈에 비교", body: "경력·가격·예약일을 나란히" },
+  { icon: CalendarCheck, title: "바로 예약", body: "원하는 시간에 30초면 끝" },
+  { icon: MessageSquareText, title: "사전 질문", body: "궁금한 점을 미리 전달" },
 ];
 
 export function ValueStrip() {
   return (
     <section className="border-b border-cream-200 bg-cream-50">
-      <ul className="shell grid gap-x-8 gap-y-7 py-11 sm:grid-cols-2 lg:grid-cols-4 lg:py-12">
+      <ul className="shell grid grid-cols-2 gap-x-3 gap-y-4 py-6 lg:grid-cols-4 lg:gap-x-8 lg:py-10">
         {VALUES.map((v) => {
           const ValueIcon = v.icon;
           return (
-            <li key={v.title} className="flex gap-4">
-              <span className="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-2xl border border-gold-200 bg-white p-3 text-gold-600 shadow-[0_4px_14px_-8px_rgba(191,144,51,0.55)]">
-                <ValueIcon className="h-6 w-6" strokeWidth={1.9} />
+            <li key={v.title} className="flex min-w-0 items-center gap-2.5 lg:gap-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold-200 bg-white text-gold-600 lg:h-[52px] lg:w-[52px] lg:rounded-2xl">
+                <ValueIcon className="h-5 w-5 lg:h-6 lg:w-6" strokeWidth={1.9} />
               </span>
               <div className="min-w-0">
-                <h3 className="text-[23px] font-bold text-navy-900">{v.title}</h3>
-                <p className="mt-1.5 text-[19px] leading-relaxed text-navy-500">
-                  {v.body}
-                </p>
+                <h3 className="whitespace-nowrap text-[19.5px] font-bold leading-tight text-navy-900 lg:text-[23px]">{v.title}</h3>
+                <p className="mt-0.5 hidden text-[19px] leading-snug text-navy-500 lg:block">{v.body}</p>
               </div>
             </li>
           );

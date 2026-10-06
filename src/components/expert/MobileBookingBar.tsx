@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CalendarClock } from "lucide-react";
 import { useExpertAvailability } from "@/lib/useAvailability";
 import { formatPrice, formatSlotLabel } from "@/lib/format";
 import type { Expert } from "@/lib/types";
@@ -18,17 +19,20 @@ export function MobileBookingBar({ expert }: { expert: Expert }) {
             {formatPrice(lowest.price)}
             <span className="text-[18.5px] font-semibold text-navy-500">원~</span>
           </p>
-          <p className="mt-0.5 text-[18px] font-semibold leading-tight text-teal-700">
-            {!avail
-              ? " "
-              : avail.earliest
-                ? `${formatSlotLabel(avail.earliest.dateKey, avail.earliest.time, avail.now)} 가능`
-                : "예약 가능 시간 없음"}
+          <p className="mt-0.5 flex min-h-[24px] items-center gap-1 whitespace-nowrap text-[16.5px] font-semibold leading-tight text-teal-700 min-[390px]:text-[18px]">
+            {avail && (
+              <>
+                <CalendarClock className="h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
+                {avail.earliest
+                  ? formatSlotLabel(avail.earliest.dateKey, avail.earliest.time, avail.now)
+                  : "예약 가능 시간 없음"}
+              </>
+            )}
           </p>
         </div>
         <Link
           href={`/booking/${expert.id}`}
-          className="inline-flex h-[52px] shrink-0 items-center justify-center rounded-xl bg-teal-600 px-4 text-[21px] xs:px-5 xs:text-[22px] font-bold text-white transition-colors duration-200 hover:bg-teal-700"
+          className="inline-flex h-[52px] shrink-0 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-4 text-[20px] font-bold text-white min-[390px]:px-5 min-[390px]:text-[22px] transition-colors duration-200 hover:bg-teal-700"
         >
           상담 예약하기
         </Link>

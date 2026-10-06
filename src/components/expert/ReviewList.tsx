@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { Stars } from "@/components/ui/Stars";
 import { useAppStore } from "@/lib/store/AppStore";
 import { DEMO_USER } from "@/lib/data/demoUser";
-import { relativeDay } from "@/lib/format";
+import { formatCount, relativeDay } from "@/lib/format";
+import { ratingDistribution } from "@/lib/ratings";
 import type { Review } from "@/lib/types";
 
 const PAGE = 4;
@@ -27,16 +28,13 @@ export function ReviewList({
 
   useEffect(() => setToday(new Date()), []);
 
-  const distribution = [5, 4, 3, 2, 1].map((star) => ({
-    star,
-    count: reviews.filter((r) => Math.round(r.rating) === star).length,
-  }));
-  const total = reviews.length || 1;
+  const distribution = ratingDistribution(rating, reviewCount);
+  const total = reviewCount || 1;
 
   return (
     <section id="reviews" className="scroll-mt-24">
       <h2 className="text-[30px] font-bold text-navy-900 sm:text-[34px]">
-        리뷰 <span className="text-teal-700">{reviewCount}</span>
+        후기 <span className="text-teal-700">{formatCount(reviewCount)}</span>
       </h2>
 
       <div className="mt-4 flex flex-col gap-5 rounded-2xl border border-navy-100 bg-white p-5 sm:flex-row sm:items-center sm:gap-8">
@@ -48,7 +46,7 @@ export function ReviewList({
             <Stars value={rating} size={16} className="mt-2" />
           </div>
           <p className="text-[21px] text-navy-400 sm:mt-1">
-            전체 {reviewCount}개의 평가
+            전체 {formatCount(reviewCount)}개 평가
           </p>
         </div>
 
@@ -64,8 +62,8 @@ export function ReviewList({
                   style={{ width: `${(d.count / total) * 100}%` }}
                 />
               </span>
-              <span className="w-6 shrink-0 text-right text-[20.5px] text-navy-400">
-                {d.count}
+              <span className="w-12 shrink-0 text-right text-[19px] tabular-nums text-navy-400">
+                {formatCount(d.count)}
               </span>
             </div>
           ))}
@@ -100,7 +98,8 @@ export function ReviewList({
         </ul>
       )}
 
-      <ul className="mt-4 space-y-3">
+      <p className="mt-6 text-[20px] font-bold text-navy-700">최근 후기</p>
+      <ul className="mt-3 space-y-3">
         {reviews.slice(0, shown).map((r) => (
           <li
             key={r.id}
@@ -144,7 +143,7 @@ export function ReviewList({
           onClick={() => setShown((s) => s + PAGE)}
           className="mt-4 h-12 w-full rounded-xl border border-navy-200 bg-white text-[24px] font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
         >
-          리뷰 더보기 ({reviews.length - shown}개)
+          후기 더보기
         </button>
       )}
     </section>

@@ -9,20 +9,22 @@ import { MiraeSymbol } from "@/components/brand/MiraeLogo";
 export function MiraeTopBar() {
   return (
     <div className="relative z-[60] bg-[#071a22] text-white">
-      <div className="shell flex min-h-[46px] flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
-        <p className="flex min-w-0 items-center gap-2.5 text-[16.5px] font-medium text-[#c9d6dc]">
-          <MiraeSymbol className="h-7 shrink-0" />
-          <span>
+      {/* 모바일에서도 한 줄로 유지 — 본문이 최대한 빨리 보이도록 */}
+      <div className="shell flex h-10 items-center justify-between gap-3 sm:h-[46px]">
+        <p className="flex min-w-0 items-center gap-2 text-[15.5px] font-medium text-[#c9d6dc] sm:gap-2.5 sm:text-[16.5px]">
+          <MiraeSymbol className="h-6 shrink-0 sm:h-7" />
+          <span className="truncate">
             <span className="font-bold text-white">미래에이아이랩</span>
             <span className="hidden sm:inline">이 제작한 서비스 레퍼런스 데모입니다</span>
-            <span className="sm:hidden"> 제작 레퍼런스 데모</span>
+            <span className="sm:hidden"> 제작 샘플</span>
           </span>
         </p>
         <Link
           href="/about"
-          className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[16px] font-semibold text-[#19c6f4] transition-colors hover:bg-white/10"
+          className="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg px-2 text-[15.5px] font-semibold text-teal-300 transition-colors hover:bg-white/10 sm:text-[16px]"
         >
-          제작사 소개
+          <span className="sm:hidden">소개</span>
+          <span className="hidden sm:inline">제작사 소개</span>
           <ArrowUpRight className="h-4 w-4" strokeWidth={2.4} />
         </Link>
       </div>

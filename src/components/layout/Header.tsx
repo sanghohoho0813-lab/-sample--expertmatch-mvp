@@ -10,10 +10,14 @@ import { DEMO_USER } from "@/lib/data/demoUser";
 import { cx } from "@/lib/format";
 
 const NAV = [
-  { href: "/experts", label: "전문가 찾기" },
-  { href: "/experts?panel=categories", label: "상담 분야" },
-  { href: "/#how-it-works", label: "이용방법" },
-  { href: "/#reviews", label: "커뮤니티" },
+  { href: "/experts", label: "전문가 찾기", match: (p: string) => p.startsWith("/experts") },
+  { href: "/experts?panel=categories", label: "상담 분야", match: () => false },
+  { href: "/#how-it-works", label: "이용방법", match: () => false },
+  {
+    href: "/mypage?tab=upcoming",
+    label: "내 예약",
+    match: (p: string) => p.startsWith("/mypage") || p.startsWith("/booking"),
+  },
 ];
 
 export function Header() {
@@ -50,16 +54,26 @@ export function Header() {
       <div className="shell flex h-16 items-center gap-3 lg:h-[72px]">
         <Logo />
 
-        <nav className="ml-8 hidden items-center gap-1 lg:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="rounded-lg px-3 py-2 text-[24px] font-medium text-navy-600 transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="ml-4 hidden items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
+          {NAV.map((item) => {
+            const active = item.match(pathname);
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cx(
+                  "relative whitespace-nowrap rounded-lg px-2.5 py-2 text-[20px] transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900 xl:px-3 xl:text-[22px]",
+                  active ? "font-bold text-navy-900" : "font-medium text-navy-500",
+                )}
+              >
+                {item.label}
+                {active && (
+                  <span className="absolute inset-x-2.5 -bottom-[13px] h-[3px] rounded-full bg-teal-600 xl:inset-x-3" aria-hidden />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5">
@@ -86,13 +100,14 @@ export function Header() {
 
           <Link
             href="/mypage?tab=profile"
-            className="hidden items-center gap-2.5 rounded-xl border border-navy-100 py-1.5 pl-1.5 pr-3.5 transition-colors hover:border-navy-200 hover:bg-navy-50 lg:inline-flex"
+            aria-label={`${DEMO_USER.displayName}님 프로필`}
+            className="hidden items-center gap-2.5 rounded-xl border border-navy-100 p-1.5 transition-colors hover:border-navy-200 hover:bg-navy-50 lg:inline-flex xl:pr-3.5"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-[19px] font-extrabold text-white">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-[19px] font-extrabold text-white">
               {DEMO_USER.initials}
             </span>
-            <span className="leading-tight">
-              <span className="block text-[15px] font-semibold text-[#0e7f92]">
+            <span className="hidden leading-tight xl:block">
+              <span className="block text-[15px] font-semibold text-teal-700">
                 {DEMO_USER.org}
               </span>
               <span className="block text-[18px] font-bold text-navy-800">
@@ -130,11 +145,11 @@ export function Header() {
               href="/mypage?tab=profile"
               className="mb-3 mt-1 flex items-center gap-3 rounded-xl border border-navy-100 bg-canvas p-3"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-[19px] font-extrabold text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-[19px] font-extrabold text-white">
                 {DEMO_USER.initials}
               </span>
               <span className="min-w-0 leading-tight">
-                <span className="block text-[15.5px] font-semibold text-[#0e7f92]">
+                <span className="block text-[15.5px] font-semibold text-teal-700">
                   {DEMO_USER.org}
                 </span>
                 <span className="block text-[19px] font-bold text-navy-900">

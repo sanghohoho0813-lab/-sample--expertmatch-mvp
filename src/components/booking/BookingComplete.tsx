@@ -52,8 +52,11 @@ export function BookingComplete() {
   const now = useNow();
   const [prepOpen, setPrepOpen] = useState(true);
 
-  const booking =
-    bookings.find((b) => b.code === code) ?? (ready ? bookings[0] : undefined);
+  // 예약번호가 있으면 그 예약만 보여 준다(다른 예약으로 대체하지 않음).
+  // 번호 없이 들어오면 가장 최근에 만든 예정 상담을 보여 준다.
+  const booking = code
+    ? bookings.find((b) => b.code === code)
+    : bookings.find((b) => b.status === "upcoming");
 
   if (!ready) {
     return (
@@ -63,21 +66,32 @@ export function BookingComplete() {
     );
   }
 
-  if (!booking) {
+  if (!booking || booking.status === "cancelled") {
+    const cancelled = booking?.status === "cancelled";
     return (
-      <div className="shell py-20 text-center">
-        <h1 className="text-[35px] font-bold text-navy-900">
-          예약 정보를 찾을 수 없습니다
+      <div className="shell py-16 text-center sm:py-20">
+        <h1 className="text-[32px] font-bold text-navy-900 sm:text-[36px]">
+          {cancelled ? "취소된 예약이에요" : "예약 정보를 찾을 수 없어요"}
         </h1>
-        <p className="mt-2 text-[24px] text-navy-500">
-          예약 내역은 브라우저에 저장됩니다. 다시 예약을 진행해 주세요.
+        <p className="mt-2 text-[21px] leading-relaxed text-navy-500">
+          {cancelled
+            ? "같은 전문가에게 다시 예약하거나 다른 전문가를 찾아보세요."
+            : "예약 내역은 이 브라우저에 저장돼요. 내 예약에서 확인해 보세요."}
         </p>
-        <Link
-          href="/experts"
-          className="mt-6 inline-flex h-12 items-center rounded-xl bg-teal-600 px-6 text-[24px] font-bold text-white transition-colors hover:bg-teal-700"
-        >
-          전문가 찾아보기
-        </Link>
+        <div className="mt-7 flex flex-col justify-center gap-2.5 sm:flex-row">
+          <Link
+            href={cancelled && booking ? `/booking/${booking.expertId}` : "/mypage?tab=upcoming"}
+            className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-[22px] font-bold text-white transition-colors hover:bg-navy-800"
+          >
+            {cancelled ? "다시 예약하기" : "내 예약 보기"}
+          </Link>
+          <Link
+            href="/experts"
+            className="inline-flex h-14 items-center justify-center rounded-xl border border-navy-200 bg-white px-6 text-[22px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+          >
+            전문가 찾아보기
+          </Link>
+        </div>
       </div>
     );
   }

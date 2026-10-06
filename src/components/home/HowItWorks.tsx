@@ -27,7 +27,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative scroll-mt-24 overflow-hidden bg-navy-900 py-16 sm:py-20"
+      className="relative scroll-mt-24 overflow-hidden bg-navy-900 py-12 sm:py-20"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(110%_100%_at_80%_0%,#22406E_0%,#16294B_55%,#0C1B36_100%)]"
@@ -36,41 +36,40 @@ export function HowItWorks() {
 
       <div className="shell relative">
         <div className="max-w-xl">
-          <span className="inline-flex items-center gap-1.5 text-[18px] font-bold uppercase tracking-[0.14em] text-teal-300">
-            <span className="h-px w-6 bg-teal-400" aria-hidden />
-            How it works
-          </span>
-          <h2 className="mt-2.5 text-[36px] font-bold tracking-[-0.02em] text-white sm:text-[43px]">
+          <h2 className="text-[33px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[42px]">
             4단계로 끝나는 전문가 상담
           </h2>
-          <p className="mt-2.5 text-[23px] leading-relaxed text-navy-200 sm:text-[24px]">
-            복잡한 절차 없이, 고민을 고르는 순간부터 예약까지 한 흐름으로 이어집니다.
+          <p className="mt-2 text-[21px] leading-relaxed text-navy-200 sm:text-[23px]">
+            고민을 고르는 순간부터 예약까지 한 흐름이에요.
           </p>
         </div>
 
-        <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-7 grid sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
           {STEPS.map((step, i) => {
             const StepIcon = step.icon;
             return (
               <li
                 key={step.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-colors duration-200 hover:bg-white/[0.08]"
+                className="relative flex gap-4 border-b border-white/10 py-4 last:border-0 sm:block sm:overflow-hidden sm:rounded-2xl sm:border sm:bg-white/[0.05] sm:p-6 sm:last:border"
               >
                 <span
-                  className="pointer-events-none absolute -right-2 -top-5 text-[94px] font-extrabold leading-none text-white/[0.06]"
+                  className="pointer-events-none absolute -right-2 -top-5 hidden text-[94px] font-extrabold leading-none text-white/[0.06] sm:block"
                   aria-hidden
                 >
                   {i + 1}
                 </span>
-                <span className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-teal-600 p-3 text-white">
-                  <StepIcon className="h-6 w-6" strokeWidth={2} />
+                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white sm:h-[52px] sm:w-[52px]">
+                  <StepIcon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2} />
                 </span>
-                <h3 className="relative mt-5 text-[25px] font-bold text-white">
-                  {step.title}
-                </h3>
-                <p className="relative mt-2 text-[20px] leading-relaxed text-navy-200">
-                  {step.body}
-                </p>
+                <div className="relative min-w-0 sm:mt-5">
+                  <h3 className="text-[22px] font-bold text-white sm:text-[25px]">
+                    <span className="mr-1.5 text-teal-300 sm:hidden">{i + 1}.</span>
+                    {step.title}
+                  </h3>
+                  <p className="mt-1 text-[19px] leading-relaxed text-navy-200 sm:mt-2 sm:text-[20px]">
+                    {step.body}
+                  </p>
+                </div>
               </li>
             );
           })}

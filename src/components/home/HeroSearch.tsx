@@ -86,7 +86,7 @@ export function HeroSearch() {
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               onKeyDown={onKeyDown}
-              placeholder="어떤 분야의 전문가가 필요하신가요?"
+              placeholder="분야·고민을 검색해 보세요"
               className="h-14 w-full min-w-0 bg-transparent text-[21px] text-navy-900 outline-none placeholder:text-navy-300 sm:h-[60px]"
               autoComplete="off"
               role="combobox"
@@ -113,8 +113,9 @@ export function HeroSearch() {
         )}
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2.5">
-        <span className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-teal-300">
+      {/* 모바일은 한 줄 가로 스크롤로 — 히어로 높이를 줄인다 */}
+      <div className="no-scrollbar -mx-5 mt-4 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
+        <span className="inline-flex shrink-0 items-center gap-1.5 text-[17px] font-semibold text-teal-300">
           <Sparkles className="h-4 w-4" strokeWidth={2.4} />
           인기 검색어
         </span>
@@ -126,7 +127,7 @@ export function HeroSearch() {
               setValue(k);
               submit(k);
             }}
-            className="rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[17px] font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:border-teal-400/60 hover:bg-white/20 hover:text-white"
+            className="min-h-[40px] shrink-0 whitespace-nowrap rounded-full border border-white/20 bg-white/10 px-3.5 text-[17px] font-medium text-white/90 transition-colors duration-200 hover:border-teal-400/60 hover:bg-white/20 hover:text-white"
           >
             {k}
           </button>

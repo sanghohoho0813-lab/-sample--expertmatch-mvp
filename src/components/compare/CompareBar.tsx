@@ -89,24 +89,24 @@ export function CompareBar() {
         open={open}
         onClose={() => setOpen(false)}
         title={`전문가 ${experts.length}명 비교`}
-        description="경력·가격·예약 가능일처럼 수치로 비교되는 항목만 표시해 드려요."
+        description="수치로 비교할 수 있는 항목만 모았어요."
         width="max-w-5xl"
         footer={
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
             <button
               type="button"
               onClick={() => {
                 clearCompare();
                 setOpen(false);
               }}
-              className="inline-flex h-12 items-center rounded-xl px-3 text-[23px] font-medium text-navy-500 transition-colors hover:bg-navy-50 hover:text-navy-900"
+              className="inline-flex h-12 shrink-0 items-center whitespace-nowrap rounded-xl border border-navy-200 px-4 text-[20px] font-semibold text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900"
             >
-              비교 목록 비우기
+              비우기
             </button>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-[24px] font-semibold text-white transition-colors hover:bg-navy-800"
+              className="inline-flex h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-navy-900 px-5 text-[21px] font-semibold text-white transition-colors hover:bg-navy-800 sm:ml-auto sm:flex-none"
             >
               계속 둘러보기
             </button>

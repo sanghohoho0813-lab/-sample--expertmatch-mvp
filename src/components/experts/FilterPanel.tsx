@@ -122,12 +122,15 @@ export function FilterPanel({
   onChange,
   onReset,
   counts,
+  showHeader = true,
 }: {
   filters: Filters;
   onChange: (next: Filters) => void;
   onReset: () => void;
   /** 분야별 전문가 수 */
   counts?: Record<string, number>;
+  /** 바텀시트처럼 바깥에 제목·초기화가 이미 있으면 false */
+  showHeader?: boolean;
 }) {
   const [showAllCats, setShowAllCats] = useState(false);
   const [showDetail, setShowDetail] = useState(filters.languages.length > 0);
@@ -150,16 +153,18 @@ export function FilterPanel({
 
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-navy-100 pb-3">
-        <h2 className="text-[24.5px] font-bold text-navy-900">필터</h2>
-        <button
-          type="button"
-          onClick={onReset}
-          className="rounded-lg px-1.5 py-1 text-[19.5px] font-medium text-navy-400 transition-colors hover:text-teal-700"
-        >
-          초기화
-        </button>
-      </div>
+      {showHeader && (
+        <div className="flex items-center justify-between border-b border-navy-100 pb-3">
+          <h2 className="text-[24.5px] font-bold text-navy-900">필터</h2>
+          <button
+            type="button"
+            onClick={onReset}
+            className="min-h-[40px] rounded-lg px-1.5 text-[19.5px] font-medium text-navy-400 transition-colors hover:text-teal-700"
+          >
+            초기화
+          </button>
+        </div>
+      )}
 
       {/* 가장 결정적인 조건을 맨 위에 — 한 번에 켜고 끄기 */}
       <div className="border-b border-navy-100 py-4">

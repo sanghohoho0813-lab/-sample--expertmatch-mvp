@@ -112,10 +112,28 @@ export function BookingFlow({ expert }: { expert: Expert }) {
 
   const goTo = (next: number) => {
     const clamped = Math.max(0, Math.min(STEPS.length - 1, next));
+    if (clamped === step) return;
     setStep(clamped);
     setMaxReached((m) => Math.max(m, clamped));
+    // 단계를 주소에 남겨, 휴대폰 '뒤로'가 예약을 벗어나지 않고 이전 단계로 가게 한다
+    const url = new URL(window.location.href);
+    url.searchParams.set("step", String(clamped + 1));
+    window.history.pushState(null, "", url.toString());
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // 뒤로·앞으로 이동으로 주소의 단계가 바뀌면 화면도 맞춘다 (가 본 단계까지만)
+  const stepRef = useRef(step);
+  stepRef.current = step;
+  const maxRef = useRef(maxReached);
+  maxRef.current = maxReached;
+  const initialStep = hasProduct ? 1 : 0;
+  const stepParam = params.get("step");
+  useEffect(() => {
+    const target = stepParam ? Number(stepParam) - 1 : initialStep;
+    if (!Number.isInteger(target) || target < 0 || target > maxRef.current) return;
+    if (target !== stepRef.current) setStep(target);
+  }, [stepParam, initialStep]);
 
   const addTemplate = (text: string) => {
     setNote((prev) => {
@@ -327,23 +345,21 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                 </h1>
 
                 <ul className="mt-6 space-y-2.5">
-                  {(["video", "phone", "chat"] as ConsultMethod[]).map((m) => {
-                    const available = expert.methods.includes(m);
+                  {(["video", "phone", "chat"] as ConsultMethod[])
+                    .filter((m) => expert.methods.includes(m))
+                    .map((m) => {
                     const active = method === m;
                     return (
                       <li key={m}>
                         <button
                           type="button"
-                          disabled={!available}
                           onClick={() => setMethod(m)}
                           aria-pressed={active}
                           className={cx(
                             "flex w-full items-center gap-4 rounded-2xl border p-5 text-left transition-colors duration-200",
-                            !available
-                              ? "cursor-not-allowed border-navy-100 bg-navy-50/60 opacity-60"
-                              : active
-                                ? "border-teal-600 bg-teal-50/60 ring-1 ring-teal-600"
-                                : "border-navy-200 bg-white hover:border-navy-300",
+                            active
+                              ? "border-teal-600 bg-teal-50/60 ring-1 ring-teal-600"
+                              : "border-navy-200 bg-white hover:border-navy-300",
                           )}
                         >
                           <span
@@ -359,7 +375,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                               {METHOD_LABEL[m]}
                             </span>
                             <span className="mt-0.5 block text-[20.5px] leading-snug text-navy-500">
-                              {available ? METHOD_HINT[m] : "이 전문가는 제공하지 않는 방식이에요"}
+                              {METHOD_HINT[m]}
                             </span>
                           </span>
                           <span

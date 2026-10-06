@@ -9,6 +9,7 @@ import { CompareView } from "@/components/compare/CompareView";
 import { EXPERT_MAP } from "@/lib/data/experts";
 import { MAX_COMPARE, useAppStore } from "@/lib/store/AppStore";
 import { cx } from "@/lib/format";
+import { useBottomLayerChange } from "@/lib/useBottomLayerChange";
 
 export function CompareBar() {
   const pathname = usePathname();
@@ -16,10 +17,14 @@ export function CompareBar() {
   const [open, setOpen] = useState(false);
 
   const experts = compare.map((id) => EXPERT_MAP[id]).filter(Boolean);
-  const hidden = !ready || experts.length === 0 || pathname.startsWith("/booking");
+  // 비교는 전문가를 둘러보는 화면(홈·검색·상세)에서만 띄운다
+  const browsing = pathname === "/" || pathname.startsWith("/experts");
+  const hidden = !ready || experts.length === 0 || !browsing;
+  // 모바일 상세는 하단 예약 바가 우선 — 비교 바는 데스크톱에서만
+  const onDetail = /^\/experts\/[^/]+/.test(pathname);
+  const canCompare = experts.length >= 2;
 
-  // 전문가 상세는 탭바 대신 예약 CTA가 하단에 고정되므로 그 위로 띄운다
-  const stacked = /^\/experts\/[^/]+/.test(pathname);
+  useBottomLayerChange(hidden, experts.length, pathname);
 
   if (hidden) return null;
 
@@ -27,11 +32,12 @@ export function CompareBar() {
     <>
       <div
         className={cx(
-          "fixed inset-x-0 z-40 px-3 pb-3 pb-safe lg:bottom-0 lg:px-6 lg:pb-6",
-          stacked ? "bottom-[78px]" : "bottom-[56px]",
+          // 데스크톱은 가운데 정렬한 폭으로 — 오른쪽 아래 공용 이동 버튼 자리를 비워 둔다
+          "fixed inset-x-0 bottom-[56px] z-40 px-3 pb-2 lg:inset-x-auto lg:bottom-0 lg:left-1/2 lg:w-[min(860px,calc(100vw-260px))] lg:-translate-x-1/2 lg:px-0 lg:pb-6",
+          onDetail && "hidden lg:block",
         )}
       >
-        <div className="mx-auto flex w-full max-w-shell animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 p-3 shadow-pop sm:gap-4 sm:px-4">
+        <div className="mx-auto flex w-full max-w-shell animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 px-3 py-2.5 shadow-pop sm:gap-4 sm:px-4">
           <div className="hidden shrink-0 items-center gap-2 pl-1 text-white sm:flex">
             <GitCompareArrows className="h-5 w-5 text-teal-400" strokeWidth={2.2} />
             <span className="text-[23px] font-bold">전문가 비교</span>
@@ -74,12 +80,11 @@ export function CompareBar() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-teal-500 px-4 text-[23px] font-bold text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.97]"
+              disabled={!canCompare}
+              className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-[21px] font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400 disabled:cursor-default disabled:bg-white/10 disabled:text-navy-200"
             >
-              <span className="sm:hidden">
-                <GitCompareArrows className="h-4 w-4" strokeWidth={2.4} />
-              </span>
-              전문가 {experts.length}명 비교하기
+              <GitCompareArrows className="h-4 w-4 sm:hidden" strokeWidth={2.4} />
+              {canCompare ? `${experts.length}명 비교하기` : "1명 더 담아 주세요"}
             </button>
           </div>
         </div>

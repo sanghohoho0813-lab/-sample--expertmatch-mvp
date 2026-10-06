@@ -47,7 +47,7 @@ export function Header() {
   return (
     <header
       className={cx(
-        "sticky top-0 z-50 border-b bg-white/92 backdrop-blur-md transition-shadow duration-200",
+        "sticky top-0 z-50 border-b bg-white transition-shadow duration-200",
         scrolled ? "border-navy-100 shadow-[0_1px_16px_-8px_rgba(11,26,51,0.25)]" : "border-transparent",
       )}
     >
@@ -78,7 +78,7 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-1.5">
           <Link
-            href="/experts"
+            href="/experts?focus=search"
             aria-label="전문가 검색"
             className="flex h-11 w-11 items-center justify-center rounded-xl text-navy-500 transition-colors hover:bg-navy-50 hover:text-navy-900 lg:hidden"
           >

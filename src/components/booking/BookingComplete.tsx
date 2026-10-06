@@ -8,6 +8,7 @@ import {
   CalendarPlus,
   Check,
   ChevronDown,
+  ChevronLeft,
   ClipboardList,
   Copy,
   Home,
@@ -50,6 +51,7 @@ export function BookingComplete() {
   const code = params.get("code");
   const { bookings, ready, pushToast } = useAppStore();
   const now = useNow();
+
   const [prepOpen, setPrepOpen] = useState(true);
 
   // 예약번호가 있으면 그 예약만 보여 준다(다른 예약으로 대체하지 않음).
@@ -57,6 +59,10 @@ export function BookingComplete() {
   const booking = code
     ? bookings.find((b) => b.code === code)
     : bookings.find((b) => b.status === "upcoming");
+  // 방금 만든 예약(5분 이내)만 '완료' 축하 화면으로, 그 외엔 예약 상세로 보여 준다.
+  // (저장소를 읽은 뒤에만 그려지므로 서버/클라이언트 불일치 없음)
+  const justBooked =
+    !!booking && Date.now() - new Date(booking.createdAt).getTime() < 5 * 60_000;
 
   if (!ready) {
     return (
@@ -107,33 +113,54 @@ export function BookingComplete() {
 
   return (
     <div className="relative overflow-hidden pb-28 lg:pb-16">
-      <div className="shell relative py-12 sm:py-16">
+      <div className={cx("shell relative", justBooked ? "py-12 sm:py-16" : "py-6 sm:py-10")}>
         <div className="mx-auto max-w-lg">
-          <SuccessMark />
-
-          <div className="mt-6 text-center animate-fade-up">
-            <h1 className="text-[41px] font-extrabold tracking-[-0.03em] text-navy-900 sm:text-[47px]">
-              상담 예약이 완료되었습니다
-            </h1>
-            <p className="mt-3 text-[24px] leading-relaxed text-navy-500">
-              {booking.expertName} 전문가에게 예약이 전달되었어요.
+          {justBooked ? (
+            <>
+              <SuccessMark />
+              <div className="mt-6 text-center animate-fade-up">
+                <h1 className="text-[36px] font-extrabold tracking-[-0.03em] text-navy-900 sm:text-[44px]">
+                  상담 예약이 완료되었습니다
+                </h1>
+                <p className="mt-3 text-[21px] leading-relaxed text-navy-500">
+                  {booking.expertName} 전문가에게 예약이 전달되었어요.
+                  {now && (
+                    <span className="mt-1 block font-semibold text-teal-700">
+                      {dDay(booking.date, now)} · {formatDateFull(booking.date)}{" "}
+                      {formatTimeKorean(booking.time)}
+                    </span>
+                  )}
+                </p>
+              </div>
+            </>
+          ) : (
+            // 마이페이지에서 다시 열었을 때는 축하 대신 '예약 상세'로
+            <div>
+              <Link
+                href="/mypage?tab=upcoming"
+                className="-ml-2 inline-flex min-h-[44px] items-center gap-1 rounded-lg px-2 text-[19px] font-semibold text-navy-500 hover:text-navy-900"
+              >
+                <ChevronLeft className="h-4 w-4" strokeWidth={2.4} />내 예약
+              </Link>
+              <h1 className="mt-2 text-[32px] font-extrabold tracking-tight text-navy-900 sm:text-[38px]">
+                예약 상세
+              </h1>
               {now && (
-                <span className="mt-1 block font-semibold text-teal-700">
-                  {dDay(booking.date, now)} · {formatDateFull(booking.date)}{" "}
-                  {formatTimeKorean(booking.time)}
-                </span>
+                <p className="mt-1 text-[21px] font-semibold text-teal-700">
+                  {dDay(booking.date, now)} · {formatDateFull(booking.date)} {formatTimeKorean(booking.time)}
+                </p>
               )}
-            </p>
-          </div>
+            </div>
+          )}
 
           <div className="mt-8 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up [animation-delay:120ms]">
             <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
               <Portrait name={booking.expertName} accent={booking.expertAccent} photo={booking.expertPhoto} rounded="rounded-2xl" className="h-14 w-14" />
               <div className="min-w-0 flex-1">
-                <p className="text-[27.5px] font-bold text-navy-900">
+                <p className="text-[24px] font-bold text-navy-900">
                   {booking.expertName}
                 </p>
-                <p className="truncate text-[21.5px] text-navy-500">
+                <p className="truncate text-[19px] text-navy-500">
                   {booking.expertTitle}
                 </p>
               </div>
@@ -156,8 +183,8 @@ export function BookingComplete() {
                   key={row.label}
                   className="flex items-start justify-between gap-4 px-5 py-3.5"
                 >
-                  <dt className="shrink-0 text-[23px] text-navy-500">{row.label}</dt>
-                  <dd className="text-right text-[23.5px] font-semibold text-navy-900">
+                  <dt className="shrink-0 text-[20px] text-navy-500">{row.label}</dt>
+                  <dd className="text-right text-[21px] font-semibold text-navy-900">
                     {row.value}
                   </dd>
                 </div>

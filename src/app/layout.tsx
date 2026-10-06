@@ -8,7 +8,6 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { CompareBar } from "@/components/compare/CompareBar";
 import { Toaster } from "@/components/ui/Toaster";
-import { ScrollTop } from "@/components/ui/ScrollTop";
 import { AppStoreProvider } from "@/lib/store/AppStore";
 import Script from "next/script";
 
@@ -96,7 +95,6 @@ export default function RootLayout({
             <MobileTabBar />
           </Suspense>
           <CompareBar />
-          <ScrollTop />
           <Toaster />
         </AppStoreProvider>
       </body>

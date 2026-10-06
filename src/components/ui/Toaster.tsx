@@ -16,7 +16,7 @@ export function Toaster() {
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-[86px] z-[70] flex flex-col items-center gap-2 px-4 lg:bottom-8"
+      className="pointer-events-none fixed inset-x-0 top-[calc(10px+env(safe-area-inset-top))] z-[70] flex flex-col items-center gap-2 px-4 lg:bottom-8 lg:top-auto"
       role="status"
       aria-live="polite"
     >
@@ -26,7 +26,7 @@ export function Toaster() {
         return (
           <div
             key={t.id}
-            className="pointer-events-auto flex w-full max-w-[420px] animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 px-4 py-3 text-white shadow-pop"
+            className="pointer-events-auto flex w-full max-w-[420px] animate-fade-in items-center gap-3 rounded-2xl bg-navy-900 px-4 py-3 text-white shadow-pop lg:animate-fade-up"
           >
             <span
               className={cx(
@@ -36,7 +36,7 @@ export function Toaster() {
             >
               <ToneIcon className="h-3.5 w-3.5" strokeWidth={3} />
             </span>
-            <p className="min-w-0 flex-1 text-[23px] leading-snug">{t.message}</p>
+            <p className="min-w-0 flex-1 text-[20px] leading-snug">{t.message}</p>
             {t.action && (
               <Link
                 href={t.action.href}

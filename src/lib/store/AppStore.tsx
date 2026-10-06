@@ -140,7 +140,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     (toast: Omit<Toast, "id">) => {
       toastSeq += 1;
       const id = toastSeq;
-      setToasts((prev) => [...prev.slice(-2), { ...toast, id }]);
+      setToasts([{ ...toast, id }]);
       window.setTimeout(() => dismissToast(id), 2800);
     },
     [dismissToast],

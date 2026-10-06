@@ -30,7 +30,7 @@ export function ChatClient() {
       <div className="mx-auto max-w-xl">
         <h1 className="text-[32px] font-bold text-navy-900 sm:text-[38px]">상담 채팅</h1>
         <p className="mt-2 text-[20px] leading-relaxed text-navy-500">
-          채팅방은 상담 시작 10분 전에 열려요. 데모에서는 채팅이 제공되지 않아요.
+          예약한 상담의 채팅방이에요. 데모에서는 채팅이 제공되지 않아요.
         </p>
         <ul className="mt-6 space-y-3">
           {upcoming.map((b) => (
@@ -48,16 +48,20 @@ export function ChatClient() {
                   className="h-14 w-14 shrink-0"
                 />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[22px] font-bold text-navy-900">{b.expertName} 전문가</span>
+                  <span className="flex flex-wrap items-center gap-x-2">
+                    <span className="text-[22px] font-bold text-navy-900">{b.expertName} 전문가</span>
+                    {now && (
+                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-[17px] font-bold text-teal-800">
+                        {dDay(b.date, now)}
+                      </span>
+                    )}
+                  </span>
                   <span className="block text-[19px] text-navy-500">
                     {formatDateKorean(b.date)} {formatTimeKorean(b.time)} · {METHOD_LABEL[b.method]}
                   </span>
-                </span>
-                <span className="flex shrink-0 flex-col items-end gap-1">
-                  {now && <span className="text-[18px] font-bold text-teal-700">{dDay(b.date, now)}</span>}
-                  <span className="inline-flex items-center gap-1 text-[16.5px] text-navy-400">
+                  <span className="mt-0.5 inline-flex items-center gap-1 text-[17px] text-navy-400">
                     <Lock className="h-3.5 w-3.5" strokeWidth={2.4} />
-                    대기 중
+                    상담 시작 10분 전에 열려요
                   </span>
                 </span>
                 <ChevronRight className="h-5 w-5 shrink-0 text-navy-300" strokeWidth={2.2} />

@@ -8,6 +8,7 @@ import {
   CalendarClock,
   CalendarX2,
   ChevronRight,
+  ClipboardList,
   Clock3,
   Heart,
   History,
@@ -37,11 +38,11 @@ import {
 import type { Booking, BookingStatus, MyReview } from "@/lib/types";
 
 const TABS = [
-  { id: "upcoming", label: "다가오는 상담", icon: CalendarClock },
-  { id: "done", label: "완료된 상담", icon: CalendarCheck },
-  { id: "cancelled", label: "취소된 상담", icon: CalendarX2 },
-  { id: "favorites", label: "찜한 전문가", icon: Heart },
-  { id: "recent", label: "최근 본 전문가", icon: History },
+  { id: "upcoming", label: "예정", icon: CalendarClock },
+  { id: "done", label: "완료", icon: CalendarCheck },
+  { id: "cancelled", label: "취소", icon: CalendarX2 },
+  { id: "favorites", label: "찜", icon: Heart },
+  { id: "recent", label: "최근 본", icon: History },
   { id: "profile", label: "프로필", icon: UserRound },
 ] as const;
 
@@ -61,22 +62,24 @@ function EmptyState({
   body,
   actionLabel = "전문가 찾아보기",
   actionHref = "/experts",
+  icon: EmptyIcon = Search,
 }: {
   title: string;
   body: string;
+  icon?: typeof Search;
   actionLabel?: string;
   actionHref?: string;
 }) {
   return (
     <div className="rounded-2xl border border-dashed border-navy-200 bg-white px-6 py-14 text-center">
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-navy-50">
-        <Search className="h-6 w-6 text-navy-300" strokeWidth={2} />
+        <EmptyIcon className="h-6 w-6 text-navy-300" strokeWidth={2} />
       </div>
-      <h3 className="mt-4 text-[27.5px] font-bold text-navy-900">{title}</h3>
-      <p className="mt-1.5 text-[23.5px] leading-relaxed text-navy-500">{body}</p>
+      <h3 className="mt-4 text-[25px] font-bold text-navy-900">{title}</h3>
+      <p className="mt-1.5 text-[20.5px] leading-relaxed text-navy-500">{body}</p>
       <Link
         href={actionHref}
-        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-[23.5px] font-bold text-white transition-colors hover:bg-navy-800"
+        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-[21px] font-bold text-white transition-colors hover:bg-navy-800"
       >
         {actionLabel}
       </Link>
@@ -85,7 +88,7 @@ function EmptyState({
 }
 
 const ghostBtn =
-  "inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[21px] font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50";
+  "inline-flex min-h-[44px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-navy-200 bg-white px-3 text-[20px] sm:min-w-[150px] sm:px-4 font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50";
 
 function BookingRow({
   booking,
@@ -107,134 +110,140 @@ function BookingRow({
   const [confirming, setConfirming] = useState(false);
   const badge = STATUS_BADGE[status];
 
+  const cancelled = status === "cancelled";
+
   return (
     <li
-      className={cx(
-        "rounded-2xl border bg-white p-4 sm:p-5",
-        status === "cancelled" ? "border-navy-100 opacity-80" : "border-navy-100",
-      )}
+      className="rounded-2xl border border-navy-100 bg-white p-4 sm:p-5"
       data-status={status}
     >
-      <div className="flex items-start gap-3.5">
+      {/* 누구와 */}
+      <div className="flex items-center gap-3">
         <Portrait
           name={booking.expertName}
           accent={booking.expertAccent}
           photo={booking.expertPhoto}
-          rounded="rounded-2xl"
-          sizes="56px"
-          className="h-14 w-14 shrink-0"
+          rounded="rounded-xl"
+          sizes="48px"
+          className={cx("h-12 w-12 shrink-0", cancelled && "opacity-60")}
         />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
             <Link
               href={`/experts/${booking.expertId}`}
-              className="text-[25px] font-bold text-navy-900 transition-colors hover:text-teal-700"
+              className="text-[23px] font-bold text-navy-900 transition-colors hover:text-teal-700"
             >
               {booking.expertName}
             </Link>
-            <span className={cx("rounded-md px-1.5 py-0.5 text-[18px] font-bold", badge.className)}>
+            <span className={cx("rounded-md px-1.5 py-0.5 text-[17px] font-bold", badge.className)}>
               {badge.label}
             </span>
-            {status === "upcoming" && now && (
-              <span className="text-[19px] font-bold text-teal-700">{dDay(booking.date, now)}</span>
-            )}
-          </div>
-          <p className="mt-0.5 truncate text-[21px] text-navy-500">{booking.expertTitle}</p>
-
-          <p
-            className={cx(
-              "mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[21.5px]",
-              status === "cancelled" ? "text-navy-400 line-through" : "text-navy-600",
-            )}
-          >
-            <span className="inline-flex items-center gap-1.5 font-semibold text-navy-900">
-              <Clock3 className="h-4 w-4 text-teal-600" strokeWidth={2.2} />
-              {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
-            </span>
-            <span className="text-navy-200" aria-hidden>|</span>
-            <span>{METHOD_LABEL[booking.method]}</span>
-            <span className="text-navy-200" aria-hidden>|</span>
-            <span>
-              {booking.productName} · {formatPrice(booking.price)}원
-            </span>
           </p>
+          <p className="truncate text-[19px] text-navy-500">{booking.expertTitle}</p>
+        </div>
+        {status === "upcoming" && now && (
+          <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1 text-[19px] font-bold text-teal-800">
+            {dDay(booking.date, now)}
+          </span>
+        )}
+      </div>
 
-          {review && (
-            <div className="mt-3 rounded-xl bg-canvas px-3.5 py-3">
-              <p className="flex items-center gap-2 text-[19px] font-bold text-navy-700">
-                내 후기 <Stars value={review.rating} size={14} />
-              </p>
-              <p className="mt-1 line-clamp-2 text-[20.5px] leading-relaxed text-navy-600">
-                {review.body}
-              </p>
-            </div>
+      {/* 언제 · 무엇을 */}
+      <div className={cx("mt-3.5 rounded-xl bg-canvas px-4 py-3", cancelled && "opacity-70")}>
+        <p
+          className={cx(
+            "flex items-center gap-1.5 text-[22px] font-bold",
+            cancelled ? "text-navy-400 line-through" : "text-navy-900",
           )}
+        >
+          <Clock3 className="h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
+          {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
+        </p>
+        <p className="mt-0.5 text-[19px] leading-snug text-navy-500">
+          {METHOD_LABEL[booking.method]} · {booking.productName} · {formatPrice(booking.price)}원
+        </p>
+        <p className="mt-1 font-mono text-[16.5px] text-navy-400">예약번호 {booking.code}</p>
+      </div>
 
-          {confirming ? (
-            <div
-              className="mt-3.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-danger-100 bg-danger-50 px-3.5 py-3"
-              role="alertdialog"
-              aria-label="예약 취소 확인"
+      {review && (
+        <div className="mt-3 rounded-xl border border-navy-100 px-4 py-3">
+          <p className="flex items-center gap-2 text-[19px] font-bold text-navy-700">
+            내 후기 <Stars value={review.rating} size={14} />
+          </p>
+          <p className="mt-1 line-clamp-2 text-[20px] leading-relaxed text-navy-600">{review.body}</p>
+        </div>
+      )}
+
+      {/* 다음 행동 */}
+      {confirming ? (
+        <div
+          className="mt-3.5 rounded-xl border border-danger-100 bg-danger-50 px-4 py-3"
+          role="alertdialog"
+          aria-label="예약 취소 확인"
+        >
+          <p className="text-[20.5px] font-semibold text-danger-700">
+            이 예약을 취소할까요? 취소한 시간은 다른 분이 예약할 수 있어요.
+          </p>
+          <div className="mt-2.5 grid grid-cols-2 gap-2">
+            <button type="button" onClick={() => setConfirming(false)} className={ghostBtn}>
+              유지하기
+            </button>
+            <button
+              type="button"
+              onClick={() => onCancel(booking.id)}
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-danger-600 px-3.5 text-[20px] font-bold text-white transition-colors hover:bg-danger-700"
             >
-              <p className="text-[20.5px] font-semibold text-danger-700">이 예약을 취소할까요?</p>
-              <div className="flex gap-2">
-                <button type="button" onClick={() => setConfirming(false)} className={ghostBtn}>
-                  유지
+              예약 취소
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-3.5">
+          {status === "upcoming" && (
+            <>
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
+                <Link href={`/booking/complete?code=${booking.code}`} className={ghostBtn}>
+                  <ClipboardList className="h-4 w-4" strokeWidth={2.2} />
+                  일정·준비사항
+                </Link>
+                <button type="button" onClick={() => setConfirming(true)} className={ghostBtn}>
+                  예약 취소
                 </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => onComplete(booking.id)}
+                className="mt-1.5 inline-flex min-h-[40px] items-center gap-1.5 px-1 text-[18px] font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
+              >
+                <CalendarCheck className="h-4 w-4" strokeWidth={2.2} />
+                데모: 상담 완료로 표시
+              </button>
+            </>
+          )}
+          {status !== "upcoming" && (
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
+              {status === "done" && !review ? (
                 <button
                   type="button"
-                  onClick={() => onCancel(booking.id)}
-                  className="inline-flex min-h-[44px] items-center rounded-xl bg-danger-600 px-3.5 text-[21px] font-bold text-white transition-colors hover:bg-danger-700"
+                  onClick={() => onReview(booking)}
+                  className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-3.5 text-[20px] font-bold text-white transition-colors hover:bg-navy-800 sm:min-w-[150px]"
                 >
-                  취소하기
+                  <PenLine className="h-4 w-4" strokeWidth={2.2} />
+                  후기 작성
                 </button>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 border-t border-dashed border-navy-100 pt-3">
-              <span className="font-mono text-[19px] font-semibold text-navy-400">{booking.code}</span>
-              <div className="flex flex-wrap items-center gap-2">
-                {status === "upcoming" && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => setConfirming(true)}
-                      className="inline-flex min-h-[44px] items-center px-2.5 text-[21px] font-semibold text-navy-400 transition-colors hover:text-danger-600"
-                    >
-                      예약 취소
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => onComplete(booking.id)}
-                      className={ghostBtn}
-                      title="데모: 상담이 끝난 상태로 바꿔 후기 작성을 체험할 수 있어요"
-                    >
-                      <CalendarCheck className="h-4 w-4" strokeWidth={2.2} />
-                      완료 처리 (데모)
-                    </button>
-                  </>
-                )}
-                {status === "done" && !review && (
-                  <button
-                    type="button"
-                    onClick={() => onReview(booking)}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl bg-navy-900 px-3.5 text-[21px] font-bold text-white transition-colors hover:bg-navy-800"
-                  >
-                    <PenLine className="h-4 w-4" strokeWidth={2.2} />
-                    후기 작성
-                  </button>
-                )}
-                {status !== "upcoming" && (
-                  <Link href={`/booking/${booking.expertId}`} className={ghostBtn}>
-                    <RotateCcw className="h-4 w-4" strokeWidth={2.2} />
-                    다시 예약
-                  </Link>
-                )}
-              </div>
+              ) : (
+                <Link href={`/experts/${booking.expertId}`} className={ghostBtn}>
+                  프로필 보기
+                </Link>
+              )}
+              <Link href={`/booking/${booking.expertId}?product=${booking.productId}`} className={ghostBtn}>
+                <RotateCcw className="h-4 w-4" strokeWidth={2.2} />
+                다시 예약
+              </Link>
             </div>
           )}
         </div>
-      </div>
+      )}
     </li>
   );
 }
@@ -362,11 +371,6 @@ export function MyPageClient() {
     profile: null,
   };
 
-  const statusCards = [
-    { id: "upcoming" as const, label: "다가오는", value: counts.upcoming },
-    { id: "done" as const, label: "완료", value: counts.done },
-    { id: "cancelled" as const, label: "취소", value: counts.cancelled },
-  ];
 
   const rowProps = {
     now,
@@ -377,69 +381,46 @@ export function MyPageClient() {
 
   return (
     <div className="shell py-6 pb-32 lg:py-10 lg:pb-20">
-      {/* 상담 현황 */}
-      <section className="rounded-3xl bg-navy-900 p-5 sm:p-7">
+      {/* 누구의 상담인지 + 지금 챙길 것 하나 (상태별 개수는 아래 탭에 표시) */}
+      <section>
         <div className="flex items-center gap-3.5">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-[27px] font-extrabold text-white">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-[26px] font-extrabold text-white">
             {DEMO_USER.initials}
           </span>
           <div className="min-w-0">
-            <p className="text-[18px] font-bold text-teal-300">{DEMO_USER.org}</p>
-            <h1 className="truncate text-[29px] font-extrabold tracking-tight text-white">
+            <p className="text-[18px] font-semibold text-teal-700">{DEMO_USER.org}</p>
+            <h1 className="truncate text-[30px] font-extrabold tracking-tight text-navy-900 sm:text-[34px]">
               {DEMO_USER.name}님의 상담
             </h1>
           </div>
         </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
-          {statusCards.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => setTab(c.id)}
-              aria-pressed={tab === c.id}
-              className={cx(
-                "rounded-2xl px-3 py-3 text-left transition-colors sm:px-4",
-                tab === c.id ? "bg-white/15 ring-1 ring-white/30" : "bg-white/5 hover:bg-white/10",
-              )}
-            >
-              <span className="block text-[17px] leading-tight text-navy-200 sm:text-[19px]">{c.label}</span>
-              <span className="mt-1 block text-[31px] font-extrabold text-white">
-                {ready ? c.value : "–"}
-              </span>
-            </button>
-          ))}
-        </div>
-
         {ready && next && (
           <Link
-            href="/mypage?tab=upcoming"
-            onClick={(e) => {
-              e.preventDefault();
-              setTab("upcoming");
-            }}
-            className="mt-3 flex items-center gap-3.5 rounded-2xl bg-white p-4 transition-colors hover:bg-canvas"
+            href={`/booking/complete?code=${next.code}`}
+            className="mt-5 flex items-center gap-3.5 rounded-2xl bg-navy-900 p-4 text-white transition-colors hover:bg-navy-800 sm:p-5"
           >
             <Portrait
               name={next.expertName}
               accent={next.expertAccent}
               photo={next.expertPhoto}
               rounded="rounded-xl"
-              sizes="48px"
-              className="h-12 w-12 shrink-0"
+              sizes="52px"
+              className="h-[52px] w-[52px] shrink-0"
             />
             <span className="min-w-0 flex-1">
-              <span className="block text-[18px] font-bold text-teal-700">
+              <span className="block text-[18px] font-bold text-teal-300">
                 다음 상담
                 {now && <span className="whitespace-nowrap"> · {dDay(next.date, now)}</span>}
               </span>
-              <span className="block text-[22px] font-bold leading-snug text-navy-900">
+              <span className="block text-[22px] font-bold leading-snug">
                 {formatDateKorean(next.date)} {formatTimeKorean(next.time)}
               </span>
-              <span className="block text-[19px] text-navy-500">
+              <span className="block text-[19px] text-navy-200">
                 {next.expertName} 전문가 · {METHOD_LABEL[next.method]}
               </span>
             </span>
+            <span className="hidden shrink-0 text-[19px] font-semibold text-navy-200 sm:block">준비사항 보기</span>
             <ChevronRight className="h-5 w-5 shrink-0 text-navy-300" strokeWidth={2.2} />
           </Link>
         )}
@@ -448,10 +429,10 @@ export function MyPageClient() {
           <button
             type="button"
             onClick={() => setTab("done")}
-            className="mt-3 flex w-full items-center justify-between gap-3 rounded-2xl bg-white/5 px-4 py-3 text-left text-[20px] text-navy-100 hover:bg-white/10"
+            className="mt-3 flex min-h-[52px] w-full items-center justify-between gap-3 rounded-2xl border border-gold-200 bg-cream-50 px-4 text-left text-[20px] text-navy-700 hover:bg-cream-100"
           >
             <span>
-              후기를 기다리는 상담 <b className="text-white">{pendingReviews}건</b>
+              후기를 기다리는 상담 <b className="text-navy-900">{pendingReviews}건</b>
             </span>
             <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.2} />
           </button>
@@ -475,11 +456,11 @@ export function MyPageClient() {
               aria-selected={active}
               onClick={() => setTab(t.id)}
               className={cx(
-                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-3 text-[22px] font-semibold transition-colors duration-200",
+                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-2.5 text-[21px] font-semibold transition-colors duration-200 sm:px-3 sm:text-[22px]",
                 active ? "text-navy-900" : "text-navy-400 hover:text-navy-700",
               )}
             >
-              <TabIcon className="h-4 w-4" strokeWidth={2.2} />
+              <TabIcon className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
               {t.label}
               {ready && count !== null && count > 0 && (
                 <span className={cx("text-[18px] font-bold", active ? "text-teal-700" : "text-navy-300")}>
@@ -510,7 +491,8 @@ export function MyPageClient() {
                 </ul>
               ) : (
                 <EmptyState
-                  title="다가오는 상담이 없습니다"
+                  icon={CalendarClock}
+                  title="예정된 상담이 없어요"
                   body="고민에 맞는 전문가를 찾아 상담을 예약해 보세요."
                 />
               ))}
@@ -524,7 +506,8 @@ export function MyPageClient() {
                 </ul>
               ) : (
                 <EmptyState
-                  title="완료된 상담이 없습니다"
+                  icon={CalendarCheck}
+                  title="완료된 상담이 없어요"
                   body="상담을 마치면 이곳에서 후기를 남길 수 있어요."
                 />
               ))}
@@ -538,7 +521,8 @@ export function MyPageClient() {
                 </ul>
               ) : (
                 <EmptyState
-                  title="취소된 상담이 없습니다"
+                  icon={CalendarX2}
+                  title="취소한 상담이 없어요"
                   body="취소한 예약은 이곳에 기록으로 남아요."
                 />
               ))}
@@ -552,7 +536,8 @@ export function MyPageClient() {
                 </div>
               ) : (
                 <EmptyState
-                  title="찜한 전문가가 없습니다"
+                  icon={Heart}
+                  title="찜한 전문가가 없어요"
                   body="마음에 드는 전문가의 하트를 눌러 저장해 두세요."
                 />
               ))}
@@ -577,7 +562,8 @@ export function MyPageClient() {
                 </>
               ) : (
                 <EmptyState
-                  title="최근 본 전문가가 없습니다"
+                  icon={History}
+                  title="최근 본 전문가가 없어요"
                   body="전문가 프로필을 보면 이곳에 자동으로 저장돼요."
                 />
               ))}

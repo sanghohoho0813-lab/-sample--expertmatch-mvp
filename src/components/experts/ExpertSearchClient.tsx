@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, SlidersHorizontal, Search, X } from "lucide-react";
 import {
   SearchSuggest,
@@ -46,6 +46,12 @@ export function ExpertSearchClient() {
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [activeSuggest, setActiveSuggest] = useState(-1);
   const [categoryOpen, setCategoryOpen] = useState(panel === "categories");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // 헤더의 검색 아이콘으로 들어오면 바로 입력할 수 있게
+  useEffect(() => {
+    if (params.get("focus") === "search") searchRef.current?.focus();
+  }, [params]);
 
   // URL이 바뀌면(홈에서 진입 등) 상태를 다시 맞춘다
   useEffect(() => {
@@ -177,6 +183,7 @@ export function ExpertSearchClient() {
           </label>
           <input
             id="expert-search"
+            ref={searchRef}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
@@ -329,15 +336,6 @@ export function ExpertSearchClient() {
                 </span>
               )}
             </p>
-            {filterCount > 0 && (
-              <button
-                type="button"
-                onClick={() => setFilters(EMPTY_FILTERS)}
-                className="text-[21.5px] font-semibold text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
-              >
-                필터 {filterCount}개 해제
-              </button>
-            )}
           </div>
 
           <ActiveFilterChips

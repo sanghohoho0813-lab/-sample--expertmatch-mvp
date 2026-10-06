@@ -36,24 +36,24 @@ export function ExpertMiniCard({ expert, className }: { expert: Expert; classNam
         className="aspect-square w-full"
       />
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <p className="text-[25px] font-bold leading-tight text-navy-900">
+        <p className="text-2xl font-bold leading-tight text-navy-900">
           {expert.name}
-          <span className="ml-1 text-[18.5px] font-semibold text-navy-400">전문가</span>
+          <span className="ml-1 text-sm font-semibold text-navy-400">전문가</span>
         </p>
-        <p className="mt-1 truncate text-[19.5px] text-navy-500">{expert.title}</p>
-        <p className="mt-1.5 inline-flex items-center gap-1 text-[19.5px]">
+        <p className="mt-1 truncate text-base text-navy-500">{expert.title}</p>
+        <p className="mt-1.5 inline-flex items-center gap-1 text-base">
           <Star className="h-4 w-4 text-amber-500" fill="currentColor" strokeWidth={0} />
           <span className="font-bold text-navy-900">{expert.rating.toFixed(1)}</span>
           <span className="text-navy-400">후기 {formatCount(expert.reviewCount)}</span>
         </p>
         <div className="mt-auto pt-3">
-          <p className="text-[22px] font-extrabold text-navy-900">
+          <p className="text-lg font-extrabold text-navy-900">
             {formatPrice(lead.price)}
-            <span className="text-[18px] font-semibold text-navy-500">원~</span>
+            <span className="text-sm font-semibold text-navy-500">원~</span>
           </p>
           <p
             className={cx(
-              "mt-0.5 text-[18.5px] font-semibold",
+              "mt-0.5 text-sm font-semibold",
               label ? "text-teal-700" : "text-navy-400",
             )}
           >

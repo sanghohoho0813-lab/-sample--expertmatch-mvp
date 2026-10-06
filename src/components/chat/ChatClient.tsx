@@ -28,8 +28,8 @@ export function ChatClient() {
   if (upcoming.length > 0) {
     return (
       <div className="mx-auto max-w-xl">
-        <h1 className="text-[32px] font-bold text-navy-900 sm:text-[38px]">상담 채팅</h1>
-        <p className="mt-2 text-[20px] leading-relaxed text-navy-500">
+        <h1 className="text-5xl font-bold text-navy-900 sm:text-6xl">상담 채팅</h1>
+        <p className="mt-2 text-md leading-relaxed text-navy-500">
           예약한 상담의 채팅방이에요. 데모에서는 채팅이 제공되지 않아요.
         </p>
         <ul className="mt-6 space-y-3">
@@ -49,17 +49,17 @@ export function ChatClient() {
                 />
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-center gap-x-2">
-                    <span className="text-[22px] font-bold text-navy-900">{b.expertName} 전문가</span>
+                    <span className="text-lg font-bold text-navy-900">{b.expertName} 전문가</span>
                     {now && (
-                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-[17px] font-bold text-teal-800">
+                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-bold text-teal-800">
                         {dDay(b.date, now)}
                       </span>
                     )}
                   </span>
-                  <span className="block text-[19px] text-navy-500">
+                  <span className="block text-base text-navy-500">
                     {formatDateKorean(b.date)} {formatTimeKorean(b.time)} · {METHOD_LABEL[b.method]}
                   </span>
-                  <span className="mt-0.5 inline-flex items-center gap-1 text-[17px] text-navy-400">
+                  <span className="mt-0.5 inline-flex items-center gap-1 text-xs text-navy-400">
                     <Lock className="h-3.5 w-3.5" strokeWidth={2.4} />
                     상담 시작 10분 전에 열려요
                   </span>
@@ -78,20 +78,20 @@ export function ChatClient() {
       <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-navy-50">
         <MessageCircle className="h-9 w-9 text-navy-300" strokeWidth={1.8} />
       </div>
-      <h1 className="mt-6 text-[32px] font-bold text-navy-900 sm:text-[38px]">예약하면 채팅이 열려요</h1>
-      <p className="mt-3 text-[21px] leading-relaxed text-navy-500">
+      <h1 className="mt-6 text-5xl font-bold text-navy-900 sm:text-6xl">예약하면 채팅이 열려요</h1>
+      <p className="mt-3 text-lg leading-relaxed text-navy-500">
         상담을 예약하면 상담 시간에 전문가와 1:1 채팅을 할 수 있어요.
       </p>
       <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
         <Link
           href="/experts"
-          className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-[22px] font-bold text-white transition-colors hover:bg-navy-800"
+          className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
         >
           전문가 찾아보기
         </Link>
         <Link
           href="/mypage?tab=upcoming"
-          className="inline-flex h-14 items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-[22px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+          className="inline-flex h-14 items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-lg font-semibold text-navy-700 transition-colors hover:bg-navy-50"
         >
           <CalendarClock className="h-4 w-4" strokeWidth={2.2} />내 예약 보기
         </Link>

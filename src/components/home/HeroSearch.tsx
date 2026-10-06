@@ -87,7 +87,7 @@ export function HeroSearch() {
               onBlur={() => setFocused(false)}
               onKeyDown={onKeyDown}
               placeholder="분야·고민을 검색해 보세요"
-              className="h-14 w-full min-w-0 bg-transparent text-[21px] text-navy-900 outline-none placeholder:text-navy-300 sm:h-[60px]"
+              className="h-14 w-full min-w-0 bg-transparent text-lg text-navy-900 outline-none placeholder:text-navy-300 sm:h-[60px]"
               autoComplete="off"
               role="combobox"
               aria-expanded={open}
@@ -97,7 +97,7 @@ export function HeroSearch() {
           </div>
           <button
             type="submit"
-            className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-xl bg-teal-600 px-7 text-[20px] font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98] sm:h-[60px] sm:rounded-[14px] sm:px-8"
+            className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-xl bg-teal-600 px-7 text-md font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98] sm:h-[60px] sm:rounded-[14px] sm:px-8"
           >
             <Search className="h-5 w-5 sm:hidden" strokeWidth={2.6} />
             전문가 찾기
@@ -115,7 +115,7 @@ export function HeroSearch() {
 
       {/* 모바일은 한 줄 가로 스크롤로 — 히어로 높이를 줄인다 */}
       <div className="no-scrollbar -mx-5 mt-4 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
-        <span className="inline-flex shrink-0 items-center gap-1.5 text-[17px] font-semibold text-teal-300">
+        <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-teal-300">
           <Sparkles className="h-4 w-4" strokeWidth={2.4} />
           인기 검색어
         </span>
@@ -127,7 +127,7 @@ export function HeroSearch() {
               setValue(k);
               submit(k);
             }}
-            className="min-h-[40px] shrink-0 whitespace-nowrap rounded-full border border-white/20 bg-white/10 px-3.5 text-[17px] font-medium text-white/90 transition-colors duration-200 hover:border-teal-400/60 hover:bg-white/20 hover:text-white"
+            className="min-h-[40px] shrink-0 whitespace-nowrap rounded-full border border-white/20 bg-white/10 px-3.5 text-xs font-medium text-white/90 transition-colors duration-200 hover:border-teal-400/60 hover:bg-white/20 hover:text-white"
           >
             {k}
           </button>

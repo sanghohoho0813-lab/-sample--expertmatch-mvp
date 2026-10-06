@@ -20,8 +20,8 @@ export function ValueStrip() {
                 <ValueIcon className="h-5 w-5 lg:h-6 lg:w-6" strokeWidth={1.9} />
               </span>
               <div className="min-w-0">
-                <p className="whitespace-nowrap text-[19.5px] font-bold leading-tight text-navy-900 lg:text-[23px]">{v.title}</p>
-                <p className="mt-0.5 hidden text-[19px] leading-snug text-navy-500 lg:block">{v.body}</p>
+                <p className="whitespace-nowrap text-base font-bold leading-tight text-navy-900 lg:text-xl">{v.title}</p>
+                <p className="mt-0.5 hidden text-base leading-snug text-navy-500 lg:block">{v.body}</p>
               </div>
             </li>
           );

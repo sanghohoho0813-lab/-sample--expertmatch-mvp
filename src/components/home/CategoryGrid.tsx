@@ -23,7 +23,7 @@ export function CategoryGrid() {
         </div>
         <Link
           href="/experts?panel=categories"
-          className="hidden min-h-[44px] items-center gap-1.5 text-[20px] font-semibold text-teal-700 transition-colors hover:text-teal-800 sm:inline-flex"
+          className="hidden min-h-[44px] items-center gap-1.5 text-md font-semibold text-teal-700 transition-colors hover:text-teal-800 sm:inline-flex"
         >
           전체 분야 보기
           <ArrowRight className="h-5 w-5" strokeWidth={2.4} />
@@ -49,7 +49,7 @@ export function CategoryGrid() {
                 >
                   <Icon name={cat.icon} className="h-7 w-7" />
                 </span>
-                <span className="text-center text-[19px] font-semibold text-navy-800">
+                <span className="text-center text-base font-semibold text-navy-800">
                   {cat.name}
                 </span>
               </Link>
@@ -64,7 +64,7 @@ export function CategoryGrid() {
             <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full border border-white bg-cream-100 text-navy-500 shadow-card">
               <LayoutGrid className="h-7 w-7" strokeWidth={1.9} />
             </span>
-            <span className="text-center text-[19px] font-semibold text-navy-800">
+            <span className="text-center text-base font-semibold text-navy-800">
               전체
             </span>
           </Link>
@@ -95,13 +95,13 @@ export function CategoryGrid() {
                 >
                   <Icon name={cat.icon} className="h-7 w-7" />
                 </span>
-                <span className="relative mt-4 text-[25px] font-bold text-navy-900">
+                <span className="relative mt-4 text-2xl font-bold text-navy-900">
                   {cat.name}
                 </span>
-                <span className="relative mt-1.5 line-clamp-2 text-[19px] leading-snug text-navy-500">
+                <span className="relative mt-1.5 line-clamp-2 text-base leading-snug text-navy-500">
                   {cat.tagline}
                 </span>
-                <span className="relative mt-4 inline-flex items-center gap-1 text-[18px] font-semibold text-navy-400">
+                <span className="relative mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy-400">
                   전문가 {count}명
                   <ArrowRight
                     className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"

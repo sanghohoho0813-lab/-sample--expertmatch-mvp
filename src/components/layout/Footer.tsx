@@ -40,7 +40,7 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-[1.3fr_1fr_1fr] lg:gap-12">
           <div>
             <Logo />
-            <p className="mt-3 max-w-xs text-[20px] leading-relaxed text-navy-500">
+            <p className="mt-3 max-w-xs text-md leading-relaxed text-navy-500">
               검증된 전문가를 찾아 바로 상담을 예약하세요.
             </p>
           </div>
@@ -48,13 +48,13 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-6 sm:contents">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="text-[20px] font-bold text-navy-900">{col.title}</h3>
+                <h3 className="text-md font-bold text-navy-900">{col.title}</h3>
                 <ul className="mt-3 space-y-1">
                   {col.links.map((link) => (
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="inline-flex min-h-[40px] items-center text-[20px] text-navy-500 transition-colors duration-200 hover:text-navy-900"
+                        className="inline-flex min-h-[40px] items-center text-md text-navy-500 transition-colors duration-200 hover:text-navy-900"
                       >
                         {link.label}
                       </Link>
@@ -66,7 +66,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-navy-100 pt-6 text-[18px] text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-navy-100 pt-6 text-sm text-navy-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © 2026 <span className="font-semibold text-navy-600">미래에이아이랩</span> · (sample)
             ExpertMatch · 전문가 정보와 후기는 예시 데이터입니다.

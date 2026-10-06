@@ -15,11 +15,11 @@ export function MobileBookingBar({ expert }: { expert: Expert }) {
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-navy-100 bg-white px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] shadow-bar lg:hidden">
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-[23px] font-extrabold leading-tight text-navy-900">
+          <p className="text-xl font-extrabold leading-tight text-navy-900">
             {formatPrice(lowest.price)}
-            <span className="text-[18.5px] font-semibold text-navy-500">원~</span>
+            <span className="text-sm font-semibold text-navy-500">원~</span>
           </p>
-          <p className="mt-0.5 flex min-h-[24px] items-center gap-1 whitespace-nowrap text-[16.5px] font-semibold leading-tight text-teal-700 min-[390px]:text-[18px]">
+          <p className="mt-0.5 flex min-h-[24px] items-center gap-1 whitespace-nowrap text-xs font-semibold leading-tight text-teal-700 min-[390px]:text-sm">
             {avail && (
               <>
                 <CalendarClock className="h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
@@ -32,7 +32,7 @@ export function MobileBookingBar({ expert }: { expert: Expert }) {
         </div>
         <Link
           href={`/booking/${expert.id}`}
-          className="inline-flex h-[52px] shrink-0 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-4 text-[20px] font-bold text-white min-[390px]:px-5 min-[390px]:text-[22px] transition-colors duration-200 hover:bg-teal-700"
+          className="inline-flex h-[52px] shrink-0 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-4 text-md font-bold text-white min-[390px]:px-5 min-[390px]:text-lg transition-colors duration-200 hover:bg-teal-700"
         >
           상담 예약하기
         </Link>

@@ -76,11 +76,11 @@ function EmptyState({
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-navy-50">
         <EmptyIcon className="h-6 w-6 text-navy-300" strokeWidth={2} />
       </div>
-      <h2 className="mt-4 text-[25px] font-bold text-navy-900">{title}</h2>
-      <p className="mt-1.5 text-[20.5px] leading-relaxed text-navy-500">{body}</p>
+      <h2 className="mt-4 text-2xl font-bold text-navy-900">{title}</h2>
+      <p className="mt-1.5 text-md leading-relaxed text-navy-500">{body}</p>
       <Link
         href={actionHref}
-        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-[21px] font-bold text-white transition-colors hover:bg-navy-800"
+        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
       >
         {actionLabel}
       </Link>
@@ -89,7 +89,7 @@ function EmptyState({
 }
 
 const ghostBtn =
-  "inline-flex min-h-[44px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-navy-200 bg-white px-3 text-[20px] sm:min-w-[150px] sm:px-4 font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50";
+  "inline-flex min-h-[44px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-navy-200 bg-white px-3 text-md sm:min-w-[150px] sm:px-4 font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50";
 
 function BookingRow({
   booking,
@@ -132,18 +132,18 @@ function BookingRow({
           <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
             <Link
               href={`/experts/${booking.expertId}`}
-              className="text-[23px] font-bold text-navy-900 transition-colors hover:text-teal-700"
+              className="text-xl font-bold text-navy-900 transition-colors hover:text-teal-700"
             >
               {booking.expertName}
             </Link>
-            <span className={cx("rounded-md px-1.5 py-0.5 text-[17px] font-bold", badge.className)}>
+            <span className={cx("rounded-md px-1.5 py-0.5 text-xs font-bold", badge.className)}>
               {badge.label}
             </span>
           </p>
-          <p className="truncate text-[19px] text-navy-500">{booking.expertTitle}</p>
+          <p className="truncate text-base text-navy-500">{booking.expertTitle}</p>
         </div>
         {status === "upcoming" && now && (
-          <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1 text-[19px] font-bold text-teal-800">
+          <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1 text-base font-bold text-teal-800">
             {dDay(booking.date, now)}
           </span>
         )}
@@ -153,25 +153,25 @@ function BookingRow({
       <div className={cx("mt-3.5 rounded-xl bg-canvas px-4 py-3", cancelled && "opacity-70")}>
         <p
           className={cx(
-            "flex items-center gap-1.5 text-[22px] font-bold",
+            "flex items-center gap-1.5 text-lg font-bold",
             cancelled ? "text-navy-400 line-through" : "text-navy-900",
           )}
         >
           <Clock3 className="h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
           {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
         </p>
-        <p className="mt-0.5 text-[19px] leading-snug text-navy-500">
+        <p className="mt-0.5 text-base leading-snug text-navy-500">
           {METHOD_LABEL[booking.method]} · {booking.productName} · {formatPrice(booking.price)}원
         </p>
-        <p className="mt-1 font-mono text-[16.5px] text-navy-400">예약번호 {booking.code}</p>
+        <p className="mt-1 font-mono text-xs text-navy-400">예약번호 {booking.code}</p>
       </div>
 
       {review && (
         <div className="mt-3 rounded-xl border border-navy-100 px-4 py-3">
-          <p className="flex items-center gap-2 text-[19px] font-bold text-navy-700">
+          <p className="flex items-center gap-2 text-base font-bold text-navy-700">
             내 후기 <Stars value={review.rating} size={14} />
           </p>
-          <p className="mt-1 line-clamp-2 text-[20px] leading-relaxed text-navy-600">{review.body}</p>
+          <p className="mt-1 line-clamp-2 text-md leading-relaxed text-navy-600">{review.body}</p>
         </div>
       )}
 
@@ -182,7 +182,7 @@ function BookingRow({
           role="alertdialog"
           aria-label="예약 취소 확인"
         >
-          <p className="text-[20.5px] font-semibold text-danger-700">
+          <p className="text-md font-semibold text-danger-700">
             이 예약을 취소할까요? 취소한 시간은 다른 분이 예약할 수 있어요.
           </p>
           <div className="mt-2.5 grid grid-cols-2 gap-2">
@@ -192,7 +192,7 @@ function BookingRow({
             <button
               type="button"
               onClick={() => onCancel(booking.id)}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-danger-600 px-3.5 text-[20px] font-bold text-white transition-colors hover:bg-danger-700"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-danger-600 px-3.5 text-md font-bold text-white transition-colors hover:bg-danger-700"
             >
               예약 취소
             </button>
@@ -214,7 +214,7 @@ function BookingRow({
               <button
                 type="button"
                 onClick={() => onComplete(booking.id)}
-                className="mt-1.5 inline-flex min-h-[40px] items-center gap-1.5 px-1 text-[18px] font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
+                className="mt-1.5 inline-flex min-h-[40px] items-center gap-1.5 px-1 text-sm font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
               >
                 <CalendarCheck className="h-4 w-4" strokeWidth={2.2} />
                 데모: 상담 완료로 표시
@@ -227,7 +227,7 @@ function BookingRow({
                 <button
                   type="button"
                   onClick={() => onReview(booking)}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-3.5 text-[20px] font-bold text-white transition-colors hover:bg-navy-800 sm:min-w-[150px]"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-3.5 text-md font-bold text-white transition-colors hover:bg-navy-800 sm:min-w-[150px]"
                 >
                   <PenLine className="h-4 w-4" strokeWidth={2.2} />
                   후기 작성
@@ -274,14 +274,14 @@ function ReviewDialog({
           type="button"
           disabled={!valid}
           onClick={() => onSubmit(rating, body.trim())}
-          className="flex h-14 w-full items-center justify-center rounded-xl bg-navy-900 text-[23.5px] font-bold text-white transition-colors hover:bg-navy-800 disabled:bg-navy-200 disabled:text-navy-500"
+          className="flex h-14 w-full items-center justify-center rounded-xl bg-navy-900 text-xl font-bold text-white transition-colors hover:bg-navy-800 disabled:bg-navy-200 disabled:text-navy-500"
         >
           {valid ? "후기 등록" : "10자 이상 작성해 주세요"}
         </button>
       }
     >
       <div className="px-5 py-5 sm:px-6">
-        <p className="text-[21px] font-semibold text-navy-700">상담은 어떠셨나요?</p>
+        <p className="text-lg font-semibold text-navy-700">상담은 어떠셨나요?</p>
         <div className="mt-2 flex gap-1" role="radiogroup" aria-label="별점">
           {[1, 2, 3, 4, 5].map((n) => (
             <button
@@ -300,7 +300,7 @@ function ReviewDialog({
             </button>
           ))}
         </div>
-        <label htmlFor="review-body" className="mt-5 block text-[21px] font-semibold text-navy-700">
+        <label htmlFor="review-body" className="mt-5 block text-lg font-semibold text-navy-700">
           후기 내용
         </label>
         <textarea
@@ -311,7 +311,7 @@ function ReviewDialog({
           placeholder="어떤 점이 도움이 되었는지 알려주세요."
           className="field mt-2 resize-none leading-relaxed"
         />
-        <p className="mt-1.5 text-right text-[18px] text-navy-400">{body.length} / 300</p>
+        <p className="mt-1.5 text-right text-sm text-navy-400">{body.length} / 300</p>
       </div>
     </Overlay>
   );
@@ -384,12 +384,12 @@ export function MyPageClient() {
       {/* 누구의 상담인지 — 상태별 개수는 아래 탭에, 다음 상담은 '예정' 목록 맨 위에 (D-day 표시) */}
       <section>
         <div className="flex items-center gap-3.5">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-[26px] font-extrabold text-white">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-teal-600 text-3xl font-extrabold text-white">
             {DEMO_USER.initials}
           </span>
           <div className="min-w-0">
-            <p className="text-[18px] font-semibold text-teal-700">{DEMO_USER.org}</p>
-            <h1 className="truncate text-[30px] font-extrabold tracking-tight text-navy-900 sm:text-[34px]">
+            <p className="text-sm font-semibold text-teal-700">{DEMO_USER.org}</p>
+            <h1 className="truncate text-4xl font-extrabold tracking-tight text-navy-900 sm:text-5xl">
               {DEMO_USER.name}님의 상담
             </h1>
           </div>
@@ -431,14 +431,14 @@ export function MyPageClient() {
               tabIndex={active ? 0 : -1}
               onClick={() => setTab(t.id)}
               className={cx(
-                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-2.5 text-[21px] font-semibold transition-colors duration-200 sm:px-3 sm:text-[22px]",
+                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-2.5 text-lg font-semibold transition-colors duration-200 sm:px-3 sm:text-lg",
                 active ? "text-navy-900" : "text-navy-400 hover:text-navy-700",
               )}
             >
               <TabIcon className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
               {t.label}
               {ready && count !== null && count > 0 && (
-                <span className={cx("text-[18px] font-bold", active ? "text-teal-700" : "text-navy-400")}>
+                <span className={cx("text-sm font-bold", active ? "text-teal-700" : "text-navy-400")}>
                   {count}
                 </span>
               )}
@@ -472,7 +472,7 @@ export function MyPageClient() {
               (groups.done.length > 0 ? (
                 <>
                 {pendingReviews > 0 && (
-                  <p className="mb-3 rounded-xl border border-gold-200 bg-cream-50 px-4 py-3 text-[20px] text-navy-700">
+                  <p className="mb-3 rounded-xl border border-gold-200 bg-cream-50 px-4 py-3 text-md text-navy-700">
                     후기를 기다리는 상담이 <b className="text-navy-900">{pendingReviews}건</b> 있어요.
                     남겨 주신 후기는 전문가 프로필에 바로 반영돼요.
                   </p>
@@ -528,7 +528,7 @@ export function MyPageClient() {
                     <button
                       type="button"
                       onClick={clearRecent}
-                      className="inline-flex min-h-[44px] items-center px-2 text-[20px] font-semibold text-navy-400 hover:text-navy-700"
+                      className="inline-flex min-h-[44px] items-center px-2 text-md font-semibold text-navy-400 hover:text-navy-700"
                     >
                       기록 지우기
                     </button>
@@ -550,8 +550,8 @@ export function MyPageClient() {
             {tab === "profile" && (
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h2 className="text-[25px] font-bold text-navy-900">기본 정보</h2>
-                  <dl className="mt-4 space-y-3 text-[23px]">
+                  <h2 className="text-2xl font-bold text-navy-900">기본 정보</h2>
+                  <dl className="mt-4 space-y-3 text-xl">
                     {[
                       { label: "소속", value: DEMO_USER.org },
                       { label: "이름", value: `${DEMO_USER.name}님` },
@@ -567,14 +567,14 @@ export function MyPageClient() {
                       </div>
                     ))}
                   </dl>
-                  <p className="mt-4 rounded-xl bg-navy-50 px-3.5 py-3 text-[20.5px] leading-relaxed text-navy-500">
+                  <p className="mt-4 rounded-xl bg-navy-50 px-3.5 py-3 text-md leading-relaxed text-navy-500">
                     {DEMO_USER.note}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-navy-100 bg-white p-5">
-                  <h2 className="text-[25px] font-bold text-navy-900">이용 요약</h2>
-                  <dl className="mt-4 space-y-3 text-[23px]">
+                  <h2 className="text-2xl font-bold text-navy-900">이용 요약</h2>
+                  <dl className="mt-4 space-y-3 text-xl">
                     {[
                       {
                         label: "누적 상담료",
@@ -598,7 +598,7 @@ export function MyPageClient() {
                   </dl>
                   <Link
                     href="/experts"
-                    className="mt-4 flex min-h-[48px] items-center justify-between rounded-xl border border-navy-100 px-4 text-[22px] font-semibold text-navy-700 transition-colors hover:border-navy-200 hover:bg-navy-50"
+                    className="mt-4 flex min-h-[48px] items-center justify-between rounded-xl border border-navy-100 px-4 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-200 hover:bg-navy-50"
                   >
                     전문가 찾기
                     <ChevronRight className="h-4 w-4 text-navy-300" strokeWidth={2.2} />

@@ -102,7 +102,7 @@ export function ActiveFilterChips({
           type="button"
           onClick={() => onChange(c.clear())}
           aria-label={`${c.label} 필터 해제`}
-          className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 pl-3 pr-2 text-[19px] font-semibold text-teal-800 transition-colors duration-200 hover:border-teal-400 hover:bg-teal-100"
+          className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 pl-3 pr-2 text-base font-semibold text-teal-800 transition-colors duration-200 hover:border-teal-400 hover:bg-teal-100"
         >
           {c.label}
           <X className="h-4 w-4 text-teal-600" strokeWidth={2.6} />
@@ -112,7 +112,7 @@ export function ActiveFilterChips({
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex min-h-[40px] items-center rounded-xl px-2.5 text-[19px] font-medium text-navy-500 underline-offset-2 transition-colors hover:text-navy-800 hover:underline"
+          className="inline-flex min-h-[40px] items-center rounded-xl px-2.5 text-base font-medium text-navy-500 underline-offset-2 transition-colors hover:text-navy-800 hover:underline"
         >
           전체 해제
         </button>

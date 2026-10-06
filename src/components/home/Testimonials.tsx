@@ -23,10 +23,10 @@ export function Testimonials() {
                 className="flex w-[82%] max-w-[340px] shrink-0 snap-start flex-col rounded-2xl border border-cream-200 bg-white p-5 shadow-card sm:p-6 lg:w-auto lg:max-w-none"
               >
                 <Stars value={t.rating} size={17} />
-                <p className="mt-3 flex-1 text-[20.5px] leading-relaxed text-navy-700">
+                <p className="mt-3 flex-1 text-md leading-relaxed text-navy-700">
                   {t.quote}
                 </p>
-                <p className="mt-4 text-[19px] text-navy-500">
+                <p className="mt-4 text-base text-navy-500">
                   <span className="font-bold text-navy-900">{t.name}</span> · {t.role}
                 </p>
                 {expert && (
@@ -39,7 +39,7 @@ export function Testimonials() {
                       sizes="40px"
                       className="h-10 w-10 shrink-0"
                     />
-                    <p className="min-w-0 truncate text-[18px] text-navy-500">
+                    <p className="min-w-0 truncate text-sm text-navy-500">
                       <span className="font-semibold text-navy-700">{expert.name} 전문가</span>와 상담
                     </p>
                   </div>

@@ -63,7 +63,7 @@ export function SearchSuggest({
     >
       {suggestions.keywords.length > 0 && (
         <div className="border-b border-navy-100 py-1.5">
-          <p className="px-4 py-1.5 text-[15px] font-bold text-navy-400">추천 검색어</p>
+          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">추천 검색어</p>
           {suggestions.keywords.map((k) => {
             const i = indexOf("keyword", k);
             return (
@@ -77,7 +77,7 @@ export function SearchSuggest({
                 className={rowClass(i)}
               >
                 <Search className="h-[18px] w-[18px] shrink-0 text-navy-300" strokeWidth={2.2} />
-                <span className="min-w-0 flex-1 truncate text-[19px] text-navy-800">
+                <span className="min-w-0 flex-1 truncate text-base text-navy-800">
                   {k}
                 </span>
                 {i === activeIndex && (
@@ -91,7 +91,7 @@ export function SearchSuggest({
 
       {suggestions.categories.length > 0 && (
         <div className="border-b border-navy-100 py-1.5">
-          <p className="px-4 py-1.5 text-[15px] font-bold text-navy-400">상담 분야</p>
+          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">상담 분야</p>
           {suggestions.categories.map((c) => {
             const i = indexOf("category", c.id);
             return (
@@ -108,10 +108,10 @@ export function SearchSuggest({
                   <Icon name={c.icon} className="h-[18px] w-[18px]" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[19px] font-semibold text-navy-900">
+                  <span className="block truncate text-base font-semibold text-navy-900">
                     {c.name}
                   </span>
-                  <span className="block truncate text-[16px] text-navy-400">
+                  <span className="block truncate text-xs text-navy-400">
                     {c.tagline}
                   </span>
                 </span>
@@ -123,7 +123,7 @@ export function SearchSuggest({
 
       {suggestions.experts.length > 0 && (
         <div className="py-1.5">
-          <p className="px-4 py-1.5 text-[15px] font-bold text-navy-400">전문가</p>
+          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">전문가</p>
           {suggestions.experts.map((e) => {
             const i = indexOf("expert", e.id);
             const lead = e.products.reduce((a, b) => (b.price < a.price ? b : a));
@@ -146,13 +146,13 @@ export function SearchSuggest({
                   className="h-10 w-10 shrink-0"
                 />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[19px] font-semibold text-navy-900">
+                  <span className="block truncate text-base font-semibold text-navy-900">
                     {e.name}
-                    <span className="ml-1.5 text-[16px] font-normal text-navy-400">
+                    <span className="ml-1.5 text-xs font-normal text-navy-400">
                       {e.title}
                     </span>
                   </span>
-                  <span className="mt-0.5 flex items-center gap-2 text-[16px] text-navy-500">
+                  <span className="mt-0.5 flex items-center gap-2 text-xs text-navy-500">
                     <span className="inline-flex items-center gap-0.5 font-semibold text-navy-700">
                       <Star className="h-3.5 w-3.5 text-amber-500" fill="currentColor" strokeWidth={0} />
                       {e.rating.toFixed(1)}
@@ -170,7 +170,7 @@ export function SearchSuggest({
       <Link
         href="/experts"
         onMouseDown={(e) => e.preventDefault()}
-        className="block border-t border-navy-100 bg-navy-50/60 px-4 py-3 text-center text-[17px] font-semibold text-navy-500 transition-colors hover:bg-navy-100 hover:text-navy-800"
+        className="block border-t border-navy-100 bg-navy-50/60 px-4 py-3 text-center text-xs font-semibold text-navy-500 transition-colors hover:bg-navy-100 hover:text-navy-800"
       >
         전체 전문가 둘러보기
       </Link>

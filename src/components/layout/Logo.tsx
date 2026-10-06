@@ -24,7 +24,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cx(
-            "whitespace-nowrap text-[22px] font-extrabold tracking-[-0.03em] sm:text-[26px]",
+            "whitespace-nowrap text-lg font-extrabold tracking-[-0.03em] sm:text-3xl",
             tone === "dark" ? "text-navy-900" : "text-white",
           )}
         >
@@ -32,7 +32,7 @@ export function Logo({
         </span>
         <span
           className={cx(
-            "mt-0.5 whitespace-nowrap text-[12.5px] font-semibold uppercase tracking-[0.14em]",
+            "mt-0.5 whitespace-nowrap text-3xs font-semibold uppercase tracking-[0.14em]",
             tone === "dark" ? "text-navy-400" : "text-teal-300",
           )}
         >

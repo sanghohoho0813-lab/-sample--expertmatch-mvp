@@ -36,10 +36,10 @@ export function HowItWorks() {
 
       <div className="shell relative">
         <div className="max-w-xl">
-          <h2 className="text-[33px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[42px]">
+          <h2 className="text-5xl font-bold leading-tight tracking-[-0.02em] text-white sm:text-7xl">
             4단계로 끝나는 전문가 상담
           </h2>
-          <p className="mt-2 text-[21px] leading-relaxed text-navy-200 sm:text-[23px]">
+          <p className="mt-2 text-lg leading-relaxed text-navy-200 sm:text-xl">
             고민을 고르는 순간부터 예약까지 한 흐름이에요.
           </p>
         </div>
@@ -53,7 +53,7 @@ export function HowItWorks() {
                 className="relative flex gap-4 border-b border-white/10 py-4 last:border-0 sm:block sm:overflow-hidden sm:rounded-2xl sm:border sm:bg-white/[0.05] sm:p-6 sm:last:border"
               >
                 <span
-                  className="pointer-events-none absolute -right-2 -top-5 hidden text-[94px] font-extrabold leading-none text-white/[0.06] sm:block"
+                  className="pointer-events-none absolute -right-2 -top-5 hidden text-mega font-extrabold leading-none text-white/[0.06] sm:block"
                   aria-hidden
                 >
                   {i + 1}
@@ -62,11 +62,11 @@ export function HowItWorks() {
                   <StepIcon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2} />
                 </span>
                 <div className="relative min-w-0 sm:mt-5">
-                  <h3 className="text-[22px] font-bold text-white sm:text-[25px]">
+                  <h3 className="text-lg font-bold text-white sm:text-2xl">
                     <span className="mr-1.5 text-teal-300 sm:hidden">{i + 1}.</span>
                     {step.title}
                   </h3>
-                  <p className="mt-1 text-[19px] leading-relaxed text-navy-200 sm:mt-2 sm:text-[20px]">
+                  <p className="mt-1 text-base leading-relaxed text-navy-200 sm:mt-2 sm:text-md">
                     {step.body}
                   </p>
                 </div>

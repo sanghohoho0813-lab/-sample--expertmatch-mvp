@@ -40,7 +40,7 @@ export function CompareBar() {
         <div className="mx-auto flex w-full max-w-shell animate-fade-up items-center gap-3 rounded-2xl bg-navy-900 px-3 py-2.5 shadow-pop sm:gap-4 sm:px-4">
           <div className="hidden shrink-0 items-center gap-2 pl-1 text-white sm:flex">
             <GitCompareArrows className="h-5 w-5 text-teal-400" strokeWidth={2.2} />
-            <span className="text-[23px] font-bold">전문가 비교</span>
+            <span className="text-xl font-bold">전문가 비교</span>
           </div>
 
           <ul className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto no-scrollbar">
@@ -61,7 +61,7 @@ export function CompareBar() {
             {Array.from({ length: MAX_COMPARE - experts.length }).map((_, i) => (
               <li
                 key={`slot-${i}`}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-dashed border-navy-600 text-[17.5px] font-semibold text-navy-500"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-dashed border-navy-600 text-sm font-semibold text-navy-500"
                 aria-hidden
               >
                 +
@@ -73,7 +73,7 @@ export function CompareBar() {
             <button
               type="button"
               onClick={clearCompare}
-              className="hidden h-11 items-center rounded-xl px-3 text-[21.5px] font-medium text-navy-300 transition-colors hover:bg-white/10 hover:text-white sm:inline-flex"
+              className="hidden h-11 items-center rounded-xl px-3 text-lg font-medium text-navy-300 transition-colors hover:bg-white/10 hover:text-white sm:inline-flex"
             >
               전체 해제
             </button>
@@ -81,7 +81,7 @@ export function CompareBar() {
               type="button"
               onClick={() => setOpen(true)}
               disabled={!canCompare}
-              className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-[21px] font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400 disabled:cursor-default disabled:bg-white/10 disabled:text-navy-200"
+              className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-lg font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400 disabled:cursor-default disabled:bg-white/10 disabled:text-navy-200"
             >
               <GitCompareArrows className="h-4 w-4 sm:hidden" strokeWidth={2.4} />
               {canCompare ? `${experts.length}명 비교하기` : "1명 더 담아 주세요"}
@@ -104,14 +104,14 @@ export function CompareBar() {
                 clearCompare();
                 setOpen(false);
               }}
-              className="inline-flex h-12 shrink-0 items-center whitespace-nowrap rounded-xl border border-navy-200 px-4 text-[20px] font-semibold text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900"
+              className="inline-flex h-12 shrink-0 items-center whitespace-nowrap rounded-xl border border-navy-200 px-4 text-md font-semibold text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900"
             >
               비우기
             </button>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-navy-900 px-5 text-[21px] font-semibold text-white transition-colors hover:bg-navy-800 sm:ml-auto sm:flex-none"
+              className="inline-flex h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-navy-900 px-5 text-lg font-semibold text-white transition-colors hover:bg-navy-800 sm:ml-auto sm:flex-none"
             >
               계속 둘러보기
             </button>

@@ -20,14 +20,14 @@ export function RecentExperts({ exclude }: { exclude?: string }) {
   return (
     <section className="mt-6 rounded-2xl border border-navy-100 bg-white p-5">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="inline-flex items-center gap-2 text-[19px] font-bold text-navy-900">
+        <h2 className="inline-flex items-center gap-2 text-base font-bold text-navy-900">
           <Clock3 className="h-5 w-5 text-navy-300" strokeWidth={2.2} />
           최근 본 전문가
         </h2>
         <button
           type="button"
           onClick={clearRecent}
-          className="rounded-lg px-2 py-1 text-[16px] font-medium text-navy-400 transition-colors hover:text-navy-800"
+          className="rounded-lg px-2 py-1 text-xs font-medium text-navy-400 transition-colors hover:text-navy-800"
         >
           기록 지우기
         </button>
@@ -51,13 +51,13 @@ export function RecentExperts({ exclude }: { exclude?: string }) {
                   className="h-[52px] w-[52px] shrink-0"
                 />
                 <span className="min-w-0">
-                  <span className="block truncate text-[18px] font-bold text-navy-900">
+                  <span className="block truncate text-sm font-bold text-navy-900">
                     {e.name}
                   </span>
-                  <span className="block truncate text-[15.5px] text-navy-400">
+                  <span className="block truncate text-2xs text-navy-400">
                     {e.title}
                   </span>
-                  <span className="mt-0.5 block text-[15.5px] font-semibold text-navy-700">
+                  <span className="mt-0.5 block text-2xs font-semibold text-navy-700">
                     {formatPrice(lead.price)}원 / {lead.minutes}분
                   </span>
                 </span>

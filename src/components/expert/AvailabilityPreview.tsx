@@ -26,15 +26,15 @@ export function AvailabilityPreview({ expert }: { expert: Expert }) {
   return (
     <section id="availability" className="scroll-mt-28">
       <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-[30px] font-bold text-navy-900 sm:text-[34px]">상담 가능 시간</h2>
+        <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">상담 가능 시간</h2>
         <Link
           href={`/booking/${expert.id}`}
-          className="inline-flex min-h-[44px] shrink-0 items-center text-[20px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+          className="inline-flex min-h-[44px] shrink-0 items-center text-md font-semibold text-teal-700 transition-colors hover:text-teal-800"
         >
           전체 일정
         </Link>
       </div>
-      <p className="mt-1 text-[20px] text-navy-500">날짜를 누르면 바로 예약할 수 있어요.</p>
+      <p className="mt-1 text-md text-navy-500">날짜를 누르면 바로 예약할 수 있어요.</p>
 
       {days === null ? (
         <div className="mt-4 flex gap-2 overflow-hidden">
@@ -50,18 +50,18 @@ export function AvailabilityPreview({ expert }: { expert: Expert }) {
             const dayLabel = offset === 0 ? "오늘" : offset === 1 ? "내일" : WEEKDAY[d.getDay()];
             const body = (
               <>
-                <span className={cx("text-[18px] font-semibold", closed ? "text-navy-300" : "text-navy-500")}>
+                <span className={cx("text-sm font-semibold", closed ? "text-navy-300" : "text-navy-500")}>
                   {dayLabel}
                 </span>
-                <span className={cx("text-[26px] font-extrabold leading-tight", closed ? "text-navy-300" : "text-navy-900")}>
+                <span className={cx("text-3xl font-extrabold leading-tight", closed ? "text-navy-300" : "text-navy-900")}>
                   {d.getMonth() + 1}/{d.getDate()}
                 </span>
                 {closed ? (
-                  <span className="mt-1.5 text-[18px] text-navy-300">마감</span>
+                  <span className="mt-1.5 text-sm text-navy-300">마감</span>
                 ) : (
                   <>
-                    <span className="mt-1.5 text-[18px] font-bold text-teal-700">{slots.length}개</span>
-                    <span className="text-[16.5px] text-navy-400">{slots[0]}부터</span>
+                    <span className="mt-1.5 text-sm font-bold text-teal-700">{slots.length}개</span>
+                    <span className="text-xs text-navy-400">{slots[0]}부터</span>
                   </>
                 )}
               </>

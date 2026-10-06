@@ -63,7 +63,7 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cx(
-                  "relative whitespace-nowrap rounded-lg px-2.5 py-2 text-[20px] transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900 xl:px-3 xl:text-[22px]",
+                  "relative whitespace-nowrap rounded-lg px-2.5 py-2 text-md transition-colors duration-200 hover:bg-navy-50 hover:text-navy-900 xl:px-3 xl:text-lg",
                   active ? "font-bold text-navy-900" : "font-medium text-navy-500",
                 )}
               >
@@ -92,7 +92,7 @@ export function Header() {
           >
             <Heart className="h-5 w-5" />
             {ready && favorites.length > 0 && (
-              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[15.5px] font-bold text-white">
+              <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-2xs font-bold text-white">
                 {favorites.length}
               </span>
             )}
@@ -103,14 +103,14 @@ export function Header() {
             aria-label={`${DEMO_USER.displayName}님 프로필`}
             className="hidden items-center gap-2.5 rounded-xl border border-navy-100 p-1.5 transition-colors hover:border-navy-200 hover:bg-navy-50 lg:inline-flex xl:pr-3.5"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-[19px] font-extrabold text-white">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-base font-extrabold text-white">
               {DEMO_USER.initials}
             </span>
             <span className="hidden leading-tight xl:block">
-              <span className="block text-[15px] font-semibold text-teal-700">
+              <span className="block text-2xs font-semibold text-teal-700">
                 {DEMO_USER.org}
               </span>
-              <span className="block text-[18px] font-bold text-navy-800">
+              <span className="block text-sm font-bold text-navy-800">
                 {DEMO_USER.name}님
               </span>
             </span>
@@ -135,7 +135,7 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex min-h-[52px] items-center rounded-xl px-2 text-[25px] font-medium text-navy-700 transition-colors hover:bg-navy-50"
+                className="flex min-h-[52px] items-center rounded-xl px-2 text-2xl font-medium text-navy-700 transition-colors hover:bg-navy-50"
               >
                 {item.label}
               </Link>
@@ -145,14 +145,14 @@ export function Header() {
               href="/mypage?tab=profile"
               className="mb-3 mt-1 flex items-center gap-3 rounded-xl border border-navy-100 bg-canvas p-3"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-[19px] font-extrabold text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-600 text-base font-extrabold text-white">
                 {DEMO_USER.initials}
               </span>
               <span className="min-w-0 leading-tight">
-                <span className="block text-[15.5px] font-semibold text-teal-700">
+                <span className="block text-2xs font-semibold text-teal-700">
                   {DEMO_USER.org}
                 </span>
-                <span className="block text-[19px] font-bold text-navy-900">
+                <span className="block text-base font-bold text-navy-900">
                   {DEMO_USER.name}님
                 </span>
               </span>

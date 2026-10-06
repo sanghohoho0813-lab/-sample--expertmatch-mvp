@@ -27,7 +27,7 @@ export function ExpertActions({ expert }: { expert: Expert }) {
   };
 
   const base =
-    "inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-[20px] font-medium transition-colors duration-200";
+    "inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-md font-medium transition-colors duration-200";
 
   return (
     <div className="-ml-3 flex flex-wrap items-center gap-1">

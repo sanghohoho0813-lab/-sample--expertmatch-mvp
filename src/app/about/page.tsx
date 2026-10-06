@@ -68,20 +68,20 @@ const SITE_LINKS = [
 export default function AboutPage() {
   return (
     <div className="pb-24 lg:pb-0">
-      <section className="relative overflow-hidden bg-[#071a22] py-16 sm:py-20">
+      <section className="relative overflow-hidden bg-mirae-ink py-16 sm:py-20">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(115%_100%_at_20%_-10%,#0d4652_0%,#071a22_58%,#04121a_100%)]"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -right-24 -top-16 h-[420px] w-[420px] rounded-full bg-[#19c6f4]/12 blur-[110px]"
+          className="pointer-events-none absolute -right-24 -top-16 h-[420px] w-[420px] rounded-full bg-mirae-sky/12 blur-[110px]"
           aria-hidden
         />
 
         <div className="shell relative">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-[18px] font-semibold text-[#a9bcc4] transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-mirae-haze transition-colors hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" strokeWidth={2.4} />
             서비스로 돌아가기
@@ -89,12 +89,12 @@ export default function AboutPage() {
 
           <div className="mt-8 max-w-3xl">
             <MiraeLogo plate className="h-[62px] sm:h-[78px]" priority />
-            <h1 className="mt-8 text-[36px] font-extrabold leading-[1.2] tracking-[-0.03em] text-white sm:text-[48px]">
+            <h1 className="mt-8 text-6xl font-extrabold leading-[1.2] tracking-[-0.03em] text-white sm:text-8xl">
               아이디어를 만져볼 수 있는
               <br />
-              <span className="text-[#19c6f4]">제품</span>으로 만듭니다
+              <span className="text-mirae-sky">제품</span>으로 만듭니다
             </h1>
-            <p className="mt-6 text-[21px] leading-relaxed text-[#c9d6dc]">
+            <p className="mt-6 text-lg leading-relaxed text-mirae-mist">
               미래에이아이랩은 서비스 기획, UI/UX 디자인, 개발을 한 팀에서 진행합니다.
               문서로만 끝나는 제안이 아니라, 실제로 클릭하고 사용할 수 있는 결과물을
               만들어 검증합니다.
@@ -113,11 +113,11 @@ export default function AboutPage() {
                 key={c.title}
                 className="rounded-2xl border border-navy-100 bg-white p-6 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover"
               >
-                <span className="flex h-[54px] w-[54px] items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-white">
+                <span className="flex h-[54px] w-[54px] items-center justify-center rounded-xl bg-gradient-to-br from-mirae-teal to-mirae-blue text-white">
                   <CapIcon className="h-7 w-7" strokeWidth={1.9} />
                 </span>
-                <h3 className="mt-5 text-[23px] font-bold text-navy-900">{c.title}</h3>
-                <p className="mt-2.5 text-[18px] leading-relaxed text-navy-500">
+                <h3 className="mt-5 text-xl font-bold text-navy-900">{c.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-navy-500">
                   {c.body}
                 </p>
               </li>
@@ -139,10 +139,10 @@ export default function AboutPage() {
                 key={s.label}
                 className="flex flex-col gap-1 px-6 py-5 sm:flex-row sm:items-center sm:gap-6"
               >
-                <dt className="w-[120px] shrink-0 text-[18px] font-semibold text-navy-400">
+                <dt className="w-[120px] shrink-0 text-sm font-semibold text-navy-400">
                   {s.label}
                 </dt>
-                <dd className="text-[20px] font-semibold text-navy-900">{s.value}</dd>
+                <dd className="text-md font-semibold text-navy-900">{s.value}</dd>
               </div>
             ))}
           </dl>
@@ -150,13 +150,13 @@ export default function AboutPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-xl bg-navy-900 px-7 py-4 text-[19px] font-bold text-white transition-colors hover:bg-navy-800"
+              className="inline-flex items-center justify-center rounded-xl bg-navy-900 px-7 py-4 text-base font-bold text-white transition-colors hover:bg-navy-800"
             >
               데모 홈으로
             </Link>
             <Link
               href="/experts"
-              className="inline-flex items-center justify-center rounded-xl border border-navy-200 bg-white px-7 py-4 text-[19px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+              className="inline-flex items-center justify-center rounded-xl border border-navy-200 bg-white px-7 py-4 text-base font-semibold text-navy-700 transition-colors hover:bg-navy-50"
             >
               전문가 둘러보기
             </Link>
@@ -164,7 +164,7 @@ export default function AboutPage() {
               href={MIRAE_LINKS.home}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-7 py-4 text-[19px] font-semibold text-navy-700 transition-colors hover:bg-navy-50"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-7 py-4 text-base font-semibold text-navy-700 transition-colors hover:bg-navy-50"
             >
               미래AI랩 홈페이지
               <ArrowUpRight className="h-5 w-5 text-navy-400" strokeWidth={2.2} />
@@ -189,16 +189,16 @@ export default function AboutPage() {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-full items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-[#0E7C86]/40 hover:shadow-card-hover"
+                    className="flex h-full items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-teal-600/40 hover:shadow-card-hover"
                   >
-                    <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#00a3a3] to-[#1478ff] text-white">
+                    <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-mirae-teal to-mirae-blue text-white">
                       <LinkIcon className="h-6 w-6" strokeWidth={1.9} />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[21px] font-bold text-navy-900">
+                      <span className="block text-lg font-bold text-navy-900">
                         {l.label}
                       </span>
-                      <span className="mt-0.5 block text-[17px] text-navy-400">
+                      <span className="mt-0.5 block text-xs text-navy-400">
                         {l.desc}
                       </span>
                     </span>

@@ -19,14 +19,14 @@ export function StepIndicator({
       {/* 모바일: 지금 단계 · 다음 단계 · 남은 단계 */}
       <div className="lg:hidden">
         <div className="flex items-baseline justify-between gap-3">
-          <p className="min-w-0 truncate text-[23.5px] font-bold text-navy-900">
-            <span className="mr-1.5 text-[19.5px] font-bold text-teal-700">
+          <p className="min-w-0 truncate text-xl font-bold text-navy-900">
+            <span className="mr-1.5 text-base font-bold text-teal-700">
               {current + 1}/{steps.length}
             </span>
             {steps[current]}
           </p>
           {/* 다음 단계 이름은 하단 CTA('다음 · OOO')가 알려준다 */}
-          <p className="shrink-0 text-[19px] text-navy-400">
+          <p className="shrink-0 text-base text-navy-400">
             {current < steps.length - 1 ? `${steps.length - 1 - current}단계 남음` : "마지막 단계"}
           </p>
         </div>
@@ -65,7 +65,7 @@ export function StepIndicator({
               >
                 <span
                   className={cx(
-                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[19px] font-bold transition-colors duration-200",
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-base font-bold transition-colors duration-200",
                     active
                       ? "bg-teal-600 text-white"
                       : done
@@ -78,7 +78,7 @@ export function StepIndicator({
                 {/* 좁은 데스크톱에서는 현재 단계 라벨만 노출해 가로 넘침을 막는다 */}
                 <span
                   className={cx(
-                    "whitespace-nowrap text-[19px] font-semibold transition-colors duration-200 xl:text-[21px]",
+                    "whitespace-nowrap text-base font-semibold transition-colors duration-200 xl:text-lg",
                     active ? "text-navy-900" : "hidden text-navy-600 xl:inline",
                     !active && !done && "xl:text-navy-300",
                   )}

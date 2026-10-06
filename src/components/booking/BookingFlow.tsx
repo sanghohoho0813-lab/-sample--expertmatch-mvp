@@ -229,7 +229,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               sizes="40px"
               className="hidden h-10 w-10 shrink-0 sm:block lg:hidden"
             />
-            <p className="min-w-0 flex-1 truncate text-[24.5px] font-bold text-navy-900">
+            <p className="min-w-0 flex-1 truncate text-2xl font-bold text-navy-900">
               {expert.name} 전문가 예약
             </p>
             <div className="hidden lg:block">
@@ -256,7 +256,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                     <button
                       type="button"
                       onClick={() => goTo(t.step)}
-                      className="inline-flex min-h-[40px] items-center gap-1.5 rounded-2xl border border-navy-100 bg-white px-3 py-1 text-left text-[19.5px] text-navy-600 transition-colors hover:border-navy-300"
+                      className="inline-flex min-h-[40px] items-center gap-1.5 rounded-2xl border border-navy-100 bg-white px-3 py-1 text-left text-base text-navy-600 transition-colors hover:border-navy-300"
                     >
                       <Check className="h-3.5 w-3.5 shrink-0 text-teal-600" strokeWidth={3} />
                       <span className="shrink-0 text-navy-400">{t.label}</span>
@@ -270,10 +270,10 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             {/* STEP 1 — 상담 상품 */}
             {step === 0 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   어떤 상담을 받으시겠어요?
                 </h1>
-                <p className="mt-2 text-[23px] text-navy-500">
+                <p className="mt-2 text-xl text-navy-500">
                   시간과 깊이에 따라 고를 수 있어요.
                 </p>
 
@@ -306,24 +306,24 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                           </span>
                           <span className="min-w-0 flex-1">
                             <span className="flex flex-wrap items-center gap-2">
-                              <span className="text-[27px] font-bold text-navy-900">
+                              <span className="text-3xl font-bold text-navy-900">
                                 {p.name}
                               </span>
                               {p.recommended && (
-                                <span className="rounded-md bg-navy-100 px-2 py-0.5 text-[18.5px] font-bold text-navy-700">
+                                <span className="rounded-md bg-navy-100 px-2 py-0.5 text-sm font-bold text-navy-700">
                                   가장 많이 선택
                                 </span>
                               )}
                             </span>
-                            <span className="mt-1 block text-[22px] leading-relaxed text-navy-500">
+                            <span className="mt-1 block text-lg leading-relaxed text-navy-500">
                               {p.description}
                             </span>
                             <span className="mt-2.5 flex flex-wrap items-baseline gap-3">
-                              <span className="text-[31.5px] font-extrabold text-navy-900">
+                              <span className="text-4xl font-extrabold text-navy-900">
                                 {formatPrice(p.price)}
-                                <span className="ml-0.5 text-[20.5px] font-semibold text-navy-500">원</span>
+                                <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
                               </span>
-                              <span className="inline-flex items-center gap-1 text-[20.5px] text-navy-500">
+                              <span className="inline-flex items-center gap-1 text-md text-navy-500">
                                 <Clock3 className="h-4 w-4" strokeWidth={2.2} />
                                 {p.minutes}분
                               </span>
@@ -340,7 +340,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             {/* STEP 2 — 상담 방식 */}
             {step === 1 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   어떤 방식으로 상담할까요?
                 </h1>
 
@@ -371,10 +371,10 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                             <Icon name={METHOD_ICON[m]} className="h-5 w-5" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block text-[25.5px] font-bold text-navy-900">
+                            <span className="block text-2xl font-bold text-navy-900">
                               {METHOD_LABEL[m]}
                             </span>
-                            <span className="mt-0.5 block text-[20.5px] leading-snug text-navy-500">
+                            <span className="mt-0.5 block text-md leading-snug text-navy-500">
                               {METHOD_HINT[m]}
                             </span>
                           </span>
@@ -400,10 +400,10 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             {/* STEP 3 — 날짜 */}
             {step === 2 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   언제 상담받으시겠어요?
                 </h1>
-                <p className="mt-2 text-[23px] text-navy-500">
+                <p className="mt-2 text-xl text-navy-500">
                   {product.minutes}분 상담이 가능한 날짜만 선택할 수 있어요.
                 </p>
 
@@ -423,7 +423,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                         type="button"
                         onClick={() => setCalendarOpen((v) => !v)}
                         aria-expanded={calendarOpen}
-                        className="mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-[20.5px] font-semibold text-navy-600 transition-colors hover:border-navy-300 lg:hidden"
+                        className="mt-3 inline-flex h-11 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-md font-semibold text-navy-600 transition-colors hover:border-navy-300 lg:hidden"
                       >
                         <CalendarRange className="h-4 w-4" strokeWidth={2.2} />
                         {calendarOpen ? "달력 닫기" : "달력에서 선택"}
@@ -451,18 +451,18 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             {/* STEP 4 — 시간 */}
             {step === 3 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   몇 시가 좋으세요?
                 </h1>
                 <p className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-50 px-3 py-1.5 text-[22px] font-bold text-teal-800">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-50 px-3 py-1.5 text-lg font-bold text-teal-800">
                     <CalendarDays className="h-4 w-4" strokeWidth={2.2} />
                     {dateKey ? formatDateKorean(dateKey) : ""}
                   </span>
                   <button
                     type="button"
                     onClick={() => goTo(2)}
-                    className="inline-flex min-h-[40px] items-center px-2 text-[20.5px] font-semibold text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
+                    className="inline-flex min-h-[40px] items-center px-2 text-md font-semibold text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
                   >
                     날짜 변경
                   </button>
@@ -476,7 +476,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                     .filter((g) => g.list.length > 0)
                     .map((group) => (
                       <div key={group.label}>
-                        <p className="text-[20.5px] font-bold text-navy-400">{group.label}</p>
+                        <p className="text-md font-bold text-navy-400">{group.label}</p>
                         <div className="mt-2.5 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
                           {group.list.map((s) => {
                             const active = time === s.time;
@@ -489,7 +489,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                                 onClick={() => setTime(s.time)}
                                 aria-pressed={active}
                                 className={cx(
-                                  "flex min-h-[56px] flex-col items-center justify-center rounded-xl border text-[23px] font-bold transition-colors duration-150",
+                                  "flex min-h-[56px] flex-col items-center justify-center rounded-xl border text-xl font-bold transition-colors duration-150",
                                   active
                                     ? "border-teal-600 bg-teal-600 text-white"
                                     : blocked
@@ -499,7 +499,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                               >
                                 {s.time}
                                 {blocked && (
-                                  <span className="text-[16.5px] font-semibold leading-tight">
+                                  <span className="text-xs font-semibold leading-tight">
                                     {s.state === "taken" ? "예약됨" : "내 다른 예약"}
                                   </span>
                                 )}
@@ -511,7 +511,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                     ))}
 
                   {slotStates.every((s) => s.state !== "open") && (
-                    <p className="rounded-xl border border-dashed border-navy-200 bg-white px-4 py-8 text-center text-[22px] text-navy-500">
+                    <p className="rounded-xl border border-dashed border-navy-200 bg-white px-4 py-8 text-center text-lg text-navy-500">
                       이 날짜에는 예약 가능한 시간이 없어요. 다른 날짜를 선택해 주세요.
                     </p>
                   )}
@@ -522,10 +522,10 @@ export function BookingFlow({ expert }: { expert: Expert }) {
             {/* STEP 5 — 상담 내용 */}
             {step === 4 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   전문가에게 미리 알려주세요
                 </h1>
-                <p className="mt-2 text-[23px] text-navy-500">
+                <p className="mt-2 text-xl text-navy-500">
                   선택 사항이에요. 적어 주시면 상담이 더 구체적이에요.
                 </p>
 
@@ -535,7 +535,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                       key={t.label}
                       type="button"
                       onClick={() => addTemplate(t.text)}
-                      className="inline-flex min-h-[40px] items-center gap-1 rounded-full border border-navy-200 bg-white px-3.5 text-[20px] font-medium text-navy-600 transition-colors hover:border-teal-400 hover:text-teal-800"
+                      className="inline-flex min-h-[40px] items-center gap-1 rounded-full border border-navy-200 bg-white px-3.5 text-md font-medium text-navy-600 transition-colors hover:border-teal-400 hover:text-teal-800"
                     >
                       <Plus className="h-3.5 w-3.5" strokeWidth={2.6} />
                       {t.label}
@@ -555,14 +555,14 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   placeholder="전문가에게 미리 전달하고 싶은 내용을 작성해주세요."
                   className="field mt-3 resize-none leading-relaxed"
                 />
-                <p className="mt-2 text-right text-[19.5px] text-navy-400">{note.length} / 500</p>
+                <p className="mt-2 text-right text-base text-navy-400">{note.length} / 500</p>
               </section>
             )}
 
             {/* STEP 6 — 예약 확인 */}
             {step === 5 && (
               <section className="animate-fade-up">
-                <h1 className="text-[35px] font-bold text-navy-900 sm:text-[42px]">
+                <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
                   예약 내용을 확인해 주세요
                 </h1>
 
@@ -577,8 +577,8 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                       className="h-14 w-14 shrink-0"
                     />
                     <div className="min-w-0">
-                      <p className="text-[25.5px] font-bold text-navy-900">{expert.name}</p>
-                      <p className="truncate text-[20.5px] text-navy-500">{expert.title}</p>
+                      <p className="text-2xl font-bold text-navy-900">{expert.name}</p>
+                      <p className="truncate text-md text-navy-500">{expert.title}</p>
                     </div>
                   </div>
 
@@ -586,17 +586,17 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                     {summaryRows.map((row) => (
                       <div key={row.label} className="flex items-center gap-4 px-5 py-4">
                         <div className="min-w-0 flex-1 sm:flex sm:items-baseline sm:gap-4">
-                          <p className="text-[18.5px] text-navy-400 sm:w-[112px] sm:shrink-0 sm:text-[20.5px] sm:text-navy-500">
+                          <p className="text-sm text-navy-400 sm:w-[112px] sm:shrink-0 sm:text-md sm:text-navy-500">
                             {row.label}
                           </p>
-                          <p className="mt-0.5 text-[22px] font-semibold text-navy-900 sm:mt-0 sm:text-[23px]">
+                          <p className="mt-0.5 text-lg font-semibold text-navy-900 sm:mt-0 sm:text-xl">
                             {row.value}
                           </p>
                         </div>
                         <button
                           type="button"
                           onClick={() => goTo(row.step)}
-                          className="shrink-0 rounded-lg px-2 py-1.5 text-[19.5px] font-semibold text-teal-700 hover:bg-teal-50"
+                          className="shrink-0 rounded-lg px-2 py-1.5 text-base font-semibold text-teal-700 hover:bg-teal-50"
                         >
                           변경
                         </button>
@@ -605,38 +605,38 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                     <div className="px-5 py-4">
                       <div className="flex items-center gap-4">
                         <div className="min-w-0 flex-1 sm:flex sm:items-baseline sm:gap-4">
-                          <p className="text-[18.5px] text-navy-400 sm:w-[112px] sm:shrink-0 sm:text-[20.5px] sm:text-navy-500">
+                          <p className="text-sm text-navy-400 sm:w-[112px] sm:shrink-0 sm:text-md sm:text-navy-500">
                             전달 내용
                           </p>
-                          <p className="mt-0.5 text-[20.5px] text-navy-400 sm:mt-0">
+                          <p className="mt-0.5 text-md text-navy-400 sm:mt-0">
                             {note.trim() ? "작성함" : "작성하지 않음"}
                           </p>
                         </div>
                         <button
                           type="button"
                           onClick={() => goTo(4)}
-                          className="shrink-0 rounded-lg px-2 py-1.5 text-[19.5px] font-semibold text-teal-700 hover:bg-teal-50"
+                          className="shrink-0 rounded-lg px-2 py-1.5 text-base font-semibold text-teal-700 hover:bg-teal-50"
                         >
                           {note.trim() ? "수정" : "작성"}
                         </button>
                       </div>
                       {note.trim() && (
-                        <p className="mt-2 whitespace-pre-line rounded-xl bg-canvas px-4 py-3 text-[20.5px] leading-relaxed text-navy-700">
+                        <p className="mt-2 whitespace-pre-line rounded-xl bg-canvas px-4 py-3 text-md leading-relaxed text-navy-700">
                           {note.trim()}
                         </p>
                       )}
                     </div>
                     <div className="flex items-center justify-between gap-4 bg-canvas px-5 py-5">
-                      <p className="text-[23px] font-bold text-navy-900">결제 예정 금액</p>
-                      <p className="text-[33px] font-extrabold tracking-tight text-navy-900">
+                      <p className="text-xl font-bold text-navy-900">결제 예정 금액</p>
+                      <p className="text-5xl font-extrabold tracking-tight text-navy-900">
                         {formatPrice(product.price)}
-                        <span className="ml-0.5 text-[20.5px] font-semibold text-navy-500">원</span>
+                        <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <p className="mt-3 flex items-start gap-2 text-[19.5px] leading-relaxed text-navy-400">
+                <p className="mt-3 flex items-start gap-2 text-base leading-relaxed text-navy-400">
                   <ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
                   데모 예약입니다. 실제 결제는 발생하지 않으며 예약은 이 브라우저에 저장됩니다.
                 </p>
@@ -648,7 +648,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               <button
                 type="button"
                 onClick={() => (step === 0 ? router.back() : goTo(step - 1))}
-                className="inline-flex h-14 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-[22px] font-semibold text-navy-600 transition-colors hover:bg-navy-50"
+                className="inline-flex h-14 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-6 text-lg font-semibold text-navy-600 transition-colors hover:bg-navy-50"
               >
                 <ArrowLeft className="h-4 w-4" strokeWidth={2.2} />
                 {step === 0 ? "전문가 상세로" : "이전"}
@@ -659,7 +659,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   type="button"
                   disabled={!canAdvance}
                   onClick={() => goTo(step + 1)}
-                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-navy-900 px-8 text-[22px] font-bold text-white transition-colors hover:bg-navy-800 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400"
+                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-navy-900 px-8 text-lg font-bold text-white transition-colors hover:bg-navy-800 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400"
                 >
                   {canAdvance ? `다음: ${STEPS[step + 1]}` : NEED[step]}
                   {canAdvance && <ArrowRight className="h-4 w-4" strokeWidth={2.4} />}
@@ -669,7 +669,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   type="button"
                   disabled={submitting}
                   onClick={submit}
-                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-9 text-[23px] font-bold text-white transition-colors hover:bg-teal-700 disabled:opacity-60"
+                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-9 text-xl font-bold text-white transition-colors hover:bg-teal-700 disabled:opacity-60"
                 >
                   {submitting ? "예약 처리 중..." : "상담 예약하기"}
                 </button>
@@ -690,8 +690,8 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   className="h-14 w-14 shrink-0"
                 />
                 <div className="min-w-0">
-                  <p className="truncate text-[25.5px] font-bold text-navy-900">{expert.name}</p>
-                  <p className="flex items-center gap-1.5 text-[19.5px] text-navy-500">
+                  <p className="truncate text-2xl font-bold text-navy-900">{expert.name}</p>
+                  <p className="flex items-center gap-1.5 text-base text-navy-500">
                     <Stars value={expert.rating} size={13} />
                     {expert.rating.toFixed(1)} · 후기 {expert.reviewCount}
                   </p>
@@ -714,12 +714,12 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                           reachable && !current && "hover:bg-navy-50",
                         )}
                       >
-                        <dt className={cx("shrink-0 text-[20.5px]", current ? "font-semibold text-teal-800" : "text-navy-400")}>
+                        <dt className={cx("shrink-0 text-md", current ? "font-semibold text-teal-800" : "text-navy-400")}>
                           {row.label}
                         </dt>
                         <dd
                           className={cx(
-                            "text-right text-[20.5px] font-semibold",
+                            "text-right text-md font-semibold",
                             row.value ? "text-navy-900" : current ? "text-teal-700" : "text-navy-300",
                           )}
                         >
@@ -732,10 +732,10 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               </dl>
 
               <div className="mt-4 flex items-center justify-between border-t border-navy-100 pt-4">
-                <span className="text-[22px] text-navy-600">총 상담료</span>
-                <span className="text-[34px] font-extrabold tracking-tight text-navy-900">
+                <span className="text-lg text-navy-600">총 상담료</span>
+                <span className="text-5xl font-extrabold tracking-tight text-navy-900">
                   {formatPrice(product.price)}
-                  <span className="ml-0.5 text-[20.5px] font-semibold text-navy-500">원</span>
+                  <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
                 </span>
               </div>
             </div>
@@ -756,8 +756,8 @@ export function BookingFlow({ expert }: { expert: Expert }) {
           </button>
           {/* 가격은 선택 칩에 이미 보이므로, 결제 직전 단계에서만 함께 보여준다 */}
           <div className={cx("min-w-0 shrink-0", isLast ? "block" : "hidden")}>
-            <p className="text-[17px] text-navy-400">총 상담료</p>
-            <p className="text-[22px] font-extrabold leading-tight text-navy-900">
+            <p className="text-xs text-navy-400">총 상담료</p>
+            <p className="text-lg font-extrabold leading-tight text-navy-900">
               {formatPrice(product.price)}원
             </p>
           </div>
@@ -766,7 +766,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               type="button"
               disabled={!canAdvance}
               onClick={() => goTo(step + 1)}
-              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-4 text-[21.5px] font-bold text-white transition-colors disabled:bg-navy-200 disabled:text-navy-500"
+              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-4 text-lg font-bold text-white transition-colors disabled:bg-navy-200 disabled:text-navy-500"
             >
               <span className="truncate">
                 {canAdvance ? `다음 · ${STEPS[step + 1]}` : NEED[step]}
@@ -778,7 +778,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               type="button"
               disabled={submitting}
               onClick={submit}
-              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-3 text-[21px] font-bold text-white transition-colors disabled:opacity-60 xs:text-[22px]"
+              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-3 text-lg font-bold text-white transition-colors disabled:opacity-60 xs:text-lg"
             >
               {submitting ? "예약 처리 중..." : "상담 예약하기"}
             </button>

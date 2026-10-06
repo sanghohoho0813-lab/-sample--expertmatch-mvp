@@ -15,20 +15,20 @@ export function ProductList({ expert }: { expert: Expert }) {
           >
             <span className="min-w-0 flex-1">
               <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <span className="text-[22px] font-bold text-navy-900">{p.name}</span>
+                <span className="text-lg font-bold text-navy-900">{p.name}</span>
                 {p.recommended && (
-                  <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-[16px] font-bold text-teal-800">
+                  <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-bold text-teal-800">
                     가장 많이 선택
                   </span>
                 )}
               </span>
-              <span className="mt-1 block text-[19px] leading-snug text-navy-500">{p.description}</span>
+              <span className="mt-1 block text-base leading-snug text-navy-500">{p.description}</span>
               <span className="mt-2 flex items-baseline gap-2.5">
-                <span className="text-[23px] font-extrabold text-navy-900">
+                <span className="text-xl font-extrabold text-navy-900">
                   {formatPrice(p.price)}
-                  <span className="text-[18px] font-semibold text-navy-500">원</span>
+                  <span className="text-sm font-semibold text-navy-500">원</span>
                 </span>
-                <span className="inline-flex items-center gap-1 text-[18px] text-navy-400">
+                <span className="inline-flex items-center gap-1 text-sm text-navy-400">
                   <Clock3 className="h-3.5 w-3.5" strokeWidth={2.2} />
                   {p.minutes}분
                 </span>

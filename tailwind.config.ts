@@ -3,6 +3,28 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
+    // 화면 전체가 쓰는 단일 글자 크기 단계 (기본 크기를 1.5배 키운 디자인 기준)
+    fontSize: {
+      /** 로고 보조 표기 같은 아주 작은 대문자 라벨 전용 */
+      "3xs": "12.5px",
+      "2xs": "15px",
+      xs: "16.5px",
+      sm: "18px",
+      base: "19.5px",
+      md: "20.5px",
+      lg: "21.5px",
+      xl: "23px",
+      "2xl": "24.5px",
+      "3xl": "27px",
+      "4xl": "30.5px",
+      "5xl": "33px",
+      "6xl": "36px",
+      "7xl": "41px",
+      "8xl": "46px",
+      "9xl": "55px",
+      display: "76px",
+      mega: "94px",
+    },
     extend: {
       screens: {
         xs: "360px",
@@ -20,6 +42,19 @@ const config: Config = {
           800: "#1B2F4F",
           900: "#16294B",
           950: "#0C1B36",
+        },
+        // 미래에이아이랩 브랜드 색 — 제작사 표기·브릿지 CTA·소개 페이지에서만 사용
+        mirae: {
+          ink: "#071A22",
+          mist: "#C9D6DC",
+          haze: "#A9BCC4",
+          teal: "#00A3A3",
+          lagoon: "#0E9AA7",
+          deep: "#0B5F6B",
+          sky: "#19C6F4",
+          glow: "#00E5E5",
+          blue: "#1478FF",
+          navy: "#1265A8",
         },
         teal: {
           50: "#EDFAFB",

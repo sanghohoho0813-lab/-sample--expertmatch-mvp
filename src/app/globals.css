@@ -86,11 +86,11 @@
   }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-navy-100 bg-navy-50 px-2.5 py-1 text-[21px] font-medium text-navy-600;
+    @apply inline-flex items-center gap-1 rounded-full border border-navy-100 bg-navy-50 px-2.5 py-1 text-lg font-medium text-navy-600;
   }
 
   .field {
-    @apply w-full rounded-xl border border-navy-200 bg-white px-4 py-3.5 text-[21.5px] text-navy-900 transition-colors duration-200 placeholder:text-navy-300 hover:border-navy-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
+    @apply w-full rounded-xl border border-navy-200 bg-white px-4 py-3.5 text-lg text-navy-900 transition-colors duration-200 placeholder:text-navy-300 hover:border-navy-300 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10;
   }
 
   .link-quiet {
@@ -98,11 +98,11 @@
   }
 
   .section-title {
-    @apply text-[33px] font-bold leading-tight tracking-[-0.02em] text-navy-900 sm:text-[42px];
+    @apply text-5xl font-bold leading-tight tracking-[-0.02em] text-navy-900 sm:text-7xl;
   }
 
   .section-sub {
-    @apply mt-2 text-[21px] leading-relaxed text-navy-500 sm:text-[23px];
+    @apply mt-2 text-lg leading-relaxed text-navy-500 sm:text-xl;
   }
 
   /* 모바일 하단 고정 요소를 위한 안전 여백 */

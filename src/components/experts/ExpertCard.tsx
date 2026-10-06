@@ -26,20 +26,20 @@ function EarliestLine({ expert }: { expert: Expert }) {
 
   if (!avail) {
     return (
-      <p className="flex items-center gap-2 text-[20.5px] text-navy-300" aria-hidden>
+      <p className="flex items-center gap-2 text-md text-navy-300" aria-hidden>
         <span className="h-2 w-2 rounded-full bg-navy-100" />
         예약 가능 시간 확인 중
       </p>
     );
   }
   if (!avail.earliest) {
-    return <p className="text-[20.5px] text-navy-400">예약 가능한 시간이 없어요</p>;
+    return <p className="text-md text-navy-400">예약 가능한 시간이 없어요</p>;
   }
 
   const label = formatSlotLabel(avail.earliest.dateKey, avail.earliest.time, avail.now);
   const soon = label.startsWith("오늘") || label.startsWith("내일");
   return (
-    <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[20.5px]">
+    <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-md">
       <span className="inline-flex items-center gap-1.5 text-navy-400">
         <span
           className={cx("h-2 w-2 rounded-full", soon ? "bg-teal-500" : "bg-navy-200")}
@@ -93,7 +93,7 @@ export function ExpertCard({
             className="aspect-square w-full"
           />
           {comparing && (
-            <span className="absolute inset-x-1 bottom-1 inline-flex items-center justify-center gap-1 rounded-lg bg-teal-600 py-0.5 text-[16px] font-bold text-white">
+            <span className="absolute inset-x-1 bottom-1 inline-flex items-center justify-center gap-1 rounded-lg bg-teal-600 py-0.5 text-xs font-bold text-white">
               <Check className="h-3 w-3" strokeWidth={3.2} />
               비교중
             </span>
@@ -101,28 +101,28 @@ export function ExpertCard({
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="text-[27px] font-bold leading-tight text-navy-900">
+          <h3 className="text-3xl font-bold leading-tight text-navy-900">
             <Link
               href={`/experts/${expert.id}`}
               className="transition-colors hover:text-teal-700"
             >
               {expert.name}
-              <span className="ml-1 text-[19.5px] font-semibold text-navy-400">
+              <span className="ml-1 text-base font-semibold text-navy-400">
                 전문가
               </span>
               <span className="absolute inset-0 z-0" aria-hidden />
             </Link>
           </h3>
-          <p className="mt-1 line-clamp-2 text-[21px] leading-snug text-navy-500">{expert.title}</p>
-          <p className="mt-1.5 text-[20px] text-navy-500">
+          <p className="mt-1 line-clamp-2 text-lg leading-snug text-navy-500">{expert.title}</p>
+          <p className="mt-1.5 text-md text-navy-500">
             <Rating expert={expert} />
           </p>
         </div>
       </div>
 
       {/* 2. 핵심 분야 · 해결하는 문제 */}
-      <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[20px] text-navy-500">
-        <span className="inline-flex items-center gap-1 rounded-md bg-teal-50 px-2 py-1 text-[19px] font-semibold leading-none text-teal-800">
+      <div className="mt-3.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-md text-navy-500">
+        <span className="inline-flex items-center gap-1 rounded-md bg-teal-50 px-2 py-1 text-base font-semibold leading-none text-teal-800">
           <Icon name={primary.icon} className="h-3.5 w-3.5" />
           {primary.name}
         </span>
@@ -132,13 +132,13 @@ export function ExpertCard({
         </span>
         <span>상담 {formatCount(expert.consultCount)}회</span>
       </div>
-      <p className="mt-2 line-clamp-2 text-[22px] leading-snug text-navy-700">{expert.headline}</p>
+      <p className="mt-2 line-clamp-2 text-lg leading-snug text-navy-700">{expert.headline}</p>
 
       {/* 3. 검색 조건과 일치하는 근거 */}
       {reasons.length > 0 && (
         <ul className="mt-2.5 flex flex-col gap-1" aria-label="조건 일치 이유">
           {reasons.map((r) => (
-            <li key={r} className="flex items-center gap-1.5 text-[19.5px] font-semibold text-teal-800">
+            <li key={r} className="flex items-center gap-1.5 text-base font-semibold text-teal-800">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.4} />
               <span className="truncate">{r}</span>
             </li>
@@ -150,12 +150,12 @@ export function ExpertCard({
       <div className="mt-auto pt-4">
         <div className="border-t border-navy-100 pt-3.5">
           <p className="flex flex-wrap items-baseline gap-x-1.5">
-            <span className="text-[20px] text-navy-400">상담</span>
-            <span className="text-[30px] font-extrabold tracking-tight text-navy-900">
+            <span className="text-md text-navy-400">상담</span>
+            <span className="text-4xl font-extrabold tracking-tight text-navy-900">
               {formatPrice(lead.price)}
-              <span className="ml-0.5 text-[20px] font-bold text-navy-600">원</span>
+              <span className="ml-0.5 text-md font-bold text-navy-600">원</span>
             </span>
-            <span className="text-[20px] text-navy-400">/ {lead.minutes}분</span>
+            <span className="text-md text-navy-400">/ {lead.minutes}분</span>
           </p>
           <div className="mt-1">
             <EarliestLine expert={expert} />
@@ -169,7 +169,7 @@ export function ExpertCard({
             aria-pressed={comparing}
             aria-label={comparing ? `${expert.name} 비교 해제` : `${expert.name} 비교하기`}
             className={cx(
-              "inline-flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3.5 text-[20px] font-semibold transition-colors duration-200",
+              "inline-flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3.5 text-md font-semibold transition-colors duration-200",
               comparing
                 ? "border-teal-600 bg-teal-50 text-teal-800"
                 : "border-navy-200 bg-white text-navy-600 hover:border-navy-300 hover:bg-navy-50",
@@ -194,7 +194,7 @@ export function ExpertCard({
           </button>
           <Link
             href={`/experts/${expert.id}`}
-            className="inline-flex h-12 min-w-0 flex-1 items-center justify-center rounded-xl bg-navy-900 px-4 text-[21px] font-bold text-white transition-colors duration-200 hover:bg-navy-800"
+            className="inline-flex h-12 min-w-0 flex-1 items-center justify-center rounded-xl bg-navy-900 px-4 text-lg font-bold text-white transition-colors duration-200 hover:bg-navy-800"
           >
             상세보기
           </Link>

@@ -69,7 +69,7 @@ export function MonthCalendar({
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={2.4} />
         </button>
-        <p className="text-[25px] font-bold text-navy-900">
+        <p className="text-2xl font-bold text-navy-900">
           {cursor.getFullYear()}년 {cursor.getMonth() + 1}월
         </p>
         <button
@@ -88,7 +88,7 @@ export function MonthCalendar({
           <div
             key={w}
             className={cx(
-              "pb-2 text-center text-[19px] font-semibold",
+              "pb-2 text-center text-base font-semibold",
               i === 0 ? "text-danger-500" : "text-navy-400",
             )}
           >
@@ -117,7 +117,7 @@ export function MonthCalendar({
                 disabled ? " 예약 불가" : ` 예약 가능 ${slots.length}자리`
               }`}
               className={cx(
-                "relative flex h-11 w-full flex-col items-center justify-center rounded-xl text-[23.5px] font-semibold transition-all duration-200 sm:h-[46px]",
+                "relative flex h-11 w-full flex-col items-center justify-center rounded-xl text-xl font-semibold transition-all duration-200 sm:h-[46px]",
                 selected
                   ? "bg-teal-600 text-white shadow-[0_6px_16px_-8px_rgba(5,144,137,0.9)]"
                   : disabled
@@ -141,7 +141,7 @@ export function MonthCalendar({
         })}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-navy-100 pt-3.5 text-[20.5px] text-navy-400">
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-navy-100 pt-3.5 text-md text-navy-400">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-teal-500" />
           예약 가능

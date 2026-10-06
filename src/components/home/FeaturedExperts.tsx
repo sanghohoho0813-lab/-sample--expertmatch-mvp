@@ -19,7 +19,7 @@ export function FeaturedExperts() {
           </div>
           <Link
             href="/experts"
-            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 text-[20px] font-semibold text-teal-700 transition-colors hover:text-teal-800"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 text-md font-semibold text-teal-700 transition-colors hover:text-teal-800"
           >
             전체보기
             <ArrowRight className="h-4 w-4" strokeWidth={2.4} />

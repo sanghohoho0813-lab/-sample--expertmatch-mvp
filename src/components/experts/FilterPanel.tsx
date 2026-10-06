@@ -31,7 +31,7 @@ const VISIBLE_CATEGORIES = 6;
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border-b border-navy-100 py-4 last:border-b-0">
-      <h3 className="text-[23px] font-bold text-navy-900">{title}</h3>
+      <h3 className="text-xl font-bold text-navy-900">{title}</h3>
       <div className="mt-2.5">{children}</div>
     </div>
   );
@@ -68,13 +68,13 @@ function CheckRow({
       </span>
       <span
         className={cx(
-          "min-w-0 flex-1 truncate text-[21.5px]",
+          "min-w-0 flex-1 truncate text-lg",
           checked ? "font-semibold text-navy-900" : "text-navy-600",
         )}
       >
         {label}
       </span>
-      {hint && <span className="shrink-0 text-[18.5px] text-navy-400">{hint}</span>}
+      {hint && <span className="shrink-0 text-sm text-navy-400">{hint}</span>}
     </button>
   );
 }
@@ -103,7 +103,7 @@ function Segmented<T extends number | null>({
             aria-checked={active}
             onClick={() => onChange(o.value)}
             className={cx(
-              "min-h-[40px] rounded-lg border px-2 text-[19.5px] font-semibold transition-colors duration-150",
+              "min-h-[40px] rounded-lg border px-2 text-base font-semibold transition-colors duration-150",
               active
                 ? "border-teal-600 bg-teal-50 text-teal-800"
                 : "border-navy-200 bg-white text-navy-600 hover:border-navy-300",
@@ -155,11 +155,11 @@ export function FilterPanel({
     <div>
       {showHeader && (
         <div className="flex items-center justify-between border-b border-navy-100 pb-3">
-          <h2 className="text-[24.5px] font-bold text-navy-900">필터</h2>
+          <h2 className="text-2xl font-bold text-navy-900">필터</h2>
           <button
             type="button"
             onClick={onReset}
-            className="min-h-[40px] rounded-lg px-1.5 text-[19.5px] font-medium text-navy-400 transition-colors hover:text-teal-700"
+            className="min-h-[40px] rounded-lg px-1.5 text-base font-medium text-navy-400 transition-colors hover:text-teal-700"
           >
             초기화
           </button>
@@ -169,7 +169,7 @@ export function FilterPanel({
       {/* 가장 결정적인 조건을 맨 위에 — 한 번에 켜고 끄기 */}
       <div className="border-b border-navy-100 py-4">
         <label className="flex cursor-pointer items-center justify-between gap-3">
-          <span className="text-[22px] font-semibold text-navy-800">
+          <span className="text-lg font-semibold text-navy-800">
             7일 이내 예약 가능
           </span>
           <span className="relative inline-flex shrink-0">
@@ -207,7 +207,7 @@ export function FilterPanel({
             type="button"
             onClick={() => setShowAllCats((v) => !v)}
             aria-expanded={showAllCats}
-            className="mt-1.5 inline-flex min-h-[40px] items-center gap-1 px-1 text-[19.5px] font-semibold text-teal-700 hover:text-teal-800"
+            className="mt-1.5 inline-flex min-h-[40px] items-center gap-1 px-1 text-base font-semibold text-teal-700 hover:text-teal-800"
           >
             {showAllCats ? "접기" : `분야 더보기 (${hiddenCount})`}
             <ChevronDown
@@ -266,7 +266,7 @@ export function FilterPanel({
           type="button"
           onClick={() => setShowDetail((v) => !v)}
           aria-expanded={showDetail}
-          className="flex min-h-[44px] w-full items-center justify-between rounded-lg px-1 text-[20.5px] font-semibold text-navy-500 hover:text-navy-800"
+          className="flex min-h-[44px] w-full items-center justify-between rounded-lg px-1 text-md font-semibold text-navy-500 hover:text-navy-800"
         >
           상세 필터
           <ChevronDown
@@ -276,7 +276,7 @@ export function FilterPanel({
         </button>
         {showDetail && (
           <div className="mt-1">
-            <p className="px-1 text-[19.5px] font-semibold text-navy-400">상담 언어</p>
+            <p className="px-1 text-base font-semibold text-navy-400">상담 언어</p>
             <div className="mt-1 space-y-0.5">
               {LANGUAGES.map((l) => (
                 <CheckRow

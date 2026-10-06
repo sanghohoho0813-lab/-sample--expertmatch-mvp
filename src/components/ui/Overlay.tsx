@@ -119,11 +119,11 @@ export function Overlay({
       >
         <header className="flex shrink-0 items-start gap-3 border-b border-navy-100 px-5 py-4 sm:px-6 sm:py-5">
           <div className="min-w-0 flex-1">
-            <h2 className="text-[27.5px] font-bold text-navy-900">
+            <h2 className="text-3xl font-bold text-navy-900">
               {title}
             </h2>
             {description && (
-              <p className="mt-1 text-[21px] text-navy-500">
+              <p className="mt-1 text-lg text-navy-500">
                 {description}
               </p>
             )}

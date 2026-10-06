@@ -47,7 +47,7 @@ const ROWS: Row[] = [
           <span
             key={c}
             className={cx(
-              "rounded-md px-2 py-1 text-[19.5px] font-semibold leading-none",
+              "rounded-md px-2 py-1 text-base font-semibold leading-none",
               i === 0 ? "bg-teal-50 text-teal-800" : "bg-navy-50 text-navy-600",
             )}
           >
@@ -76,7 +76,7 @@ const ROWS: Row[] = [
             <span
               key={m}
               className={cx(
-                "inline-flex items-center gap-1 rounded-md px-2 py-1 text-[19.5px] leading-none",
+                "inline-flex items-center gap-1 rounded-md px-2 py-1 text-base leading-none",
                 on ? "bg-navy-50 font-semibold text-navy-700" : "text-navy-300",
               )}
             >
@@ -183,7 +183,7 @@ function Cell({
         {row.render(expert, ctx)}
       </span>
       {best && (
-        <span className="text-[18.5px] font-semibold text-teal-700">{row.bestLabel}</span>
+        <span className="text-sm font-semibold text-teal-700">{row.bestLabel}</span>
       )}
     </div>
   );
@@ -223,7 +223,7 @@ export function CompareView({
         <table className="w-full min-w-[720px] border-collapse text-left">
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 w-[150px] bg-white p-5 align-bottom text-[19.5px] font-semibold text-navy-400">
+              <th className="sticky left-0 z-10 w-[150px] bg-white p-5 align-bottom text-base font-semibold text-navy-400">
                 <span className="sr-only">비교 항목</span>
               </th>
               {experts.map((e) => (
@@ -245,11 +245,11 @@ export function CompareView({
                       <Link
                         href={`/experts/${e.id}`}
                         onClick={onNavigate}
-                        className="block text-[25.5px] font-bold text-navy-900 transition-colors hover:text-teal-700"
+                        className="block text-2xl font-bold text-navy-900 transition-colors hover:text-teal-700"
                       >
                         {e.name}
                       </Link>
-                      <p className="mt-0.5 text-[19.5px] leading-snug text-navy-500">
+                      <p className="mt-0.5 text-base leading-snug text-navy-500">
                         {e.title}
                       </p>
                     </div>
@@ -263,7 +263,7 @@ export function CompareView({
                     </button>
                   </div>
                   {/* 특징 한 줄 */}
-                  <p className="mt-3.5 rounded-xl bg-canvas px-3.5 py-3 text-[20px] leading-snug text-navy-700">
+                  <p className="mt-3.5 rounded-xl bg-canvas px-3.5 py-3 text-md leading-snug text-navy-700">
                     {e.headline}
                   </p>
                 </th>
@@ -275,14 +275,14 @@ export function CompareView({
               <tr key={row.key} className="border-t border-navy-100">
                 <th
                   scope="row"
-                  className="sticky left-0 z-10 bg-white p-5 align-top text-[20.5px] font-semibold text-navy-500"
+                  className="sticky left-0 z-10 bg-white p-5 align-top text-md font-semibold text-navy-500"
                 >
                   {row.label}
                 </th>
                 {experts.map((e) => (
                   <td
                     key={e.id}
-                    className="border-l border-navy-100 p-5 align-top text-[22px]"
+                    className="border-l border-navy-100 p-5 align-top text-lg"
                   >
                     <Cell row={row} expert={e} ctx={ctx} best={best[row.key].has(e.id)} />
                   </td>
@@ -296,14 +296,14 @@ export function CompareView({
                   <Link
                     href={`/booking/${e.id}`}
                     onClick={onNavigate}
-                    className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-[22px] font-bold text-white transition-colors hover:bg-teal-700"
+                    className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-lg font-bold text-white transition-colors hover:bg-teal-700"
                   >
                     상담 예약하기
                   </Link>
                   <Link
                     href={`/experts/${e.id}`}
                     onClick={onNavigate}
-                    className="mt-2 inline-flex h-11 w-full items-center justify-center rounded-xl text-[20.5px] font-semibold text-navy-500 transition-colors hover:bg-navy-50 hover:text-navy-800"
+                    className="mt-2 inline-flex h-11 w-full items-center justify-center rounded-xl text-md font-semibold text-navy-500 transition-colors hover:bg-navy-50 hover:text-navy-800"
                   >
                     프로필 보기
                   </Link>
@@ -331,11 +331,11 @@ export function CompareView({
                 <Link
                   href={`/experts/${e.id}`}
                   onClick={onNavigate}
-                  className="text-[24.5px] font-bold text-navy-900"
+                  className="text-2xl font-bold text-navy-900"
                 >
                   {e.name}
                 </Link>
-                <p className="mt-0.5 truncate text-[19.5px] text-navy-500">{e.title}</p>
+                <p className="mt-0.5 truncate text-base text-navy-500">{e.title}</p>
               </div>
               <button
                 type="button"
@@ -347,17 +347,17 @@ export function CompareView({
               </button>
             </div>
 
-            <p className="mt-3 rounded-xl bg-canvas px-3.5 py-3 text-[20px] leading-snug text-navy-700">
+            <p className="mt-3 rounded-xl bg-canvas px-3.5 py-3 text-md leading-snug text-navy-700">
               {e.headline}
             </p>
 
             <dl className="mt-2 divide-y divide-navy-100">
               {ROWS.map((row) => (
                 <div key={row.key} className="flex gap-3 py-3">
-                  <dt className="w-[92px] shrink-0 pt-0.5 text-[19.5px] font-semibold text-navy-400">
+                  <dt className="w-[92px] shrink-0 pt-0.5 text-base font-semibold text-navy-400">
                     {row.label}
                   </dt>
-                  <dd className="min-w-0 flex-1 text-[20.5px]">
+                  <dd className="min-w-0 flex-1 text-md">
                     <Cell row={row} expert={e} ctx={ctx} best={best[row.key].has(e.id)} />
                   </dd>
                 </div>
@@ -367,7 +367,7 @@ export function CompareView({
             <Link
               href={`/booking/${e.id}`}
               onClick={onNavigate}
-              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-[22px] font-bold text-white transition-colors hover:bg-teal-700"
+              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors hover:bg-teal-700"
             >
               {e.name} 전문가 상담 예약하기
             </Link>

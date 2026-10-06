@@ -29,18 +29,18 @@ export function CtaBand() {
             ))}
           </div>
 
-          <h2 className="mt-6 text-[30px] font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-[52px]">
+          <h2 className="mt-6 text-4xl font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-9xl">
             혼자 고민하지 말고,
             <br />
             <span className="text-teal-300">경험 있는 사람</span>에게 물어보세요
           </h2>
-          <p className="mt-4 text-[20px] leading-relaxed text-navy-200 sm:text-[23px]">
+          <p className="mt-4 text-md leading-relaxed text-navy-200 sm:text-xl">
             회원가입 없이 예약까지 바로 체험할 수 있어요.
           </p>
 
           <Link
             href="/experts"
-            className="mt-7 inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-[22px] font-bold text-navy-950 transition-colors hover:bg-teal-400 sm:w-auto"
+            className="mt-7 inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-lg font-bold text-navy-950 transition-colors hover:bg-teal-400 sm:w-auto"
           >
             전문가 찾아보기
             <ArrowRight className="h-5 w-5" strokeWidth={2.4} />

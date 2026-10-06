@@ -70,12 +70,12 @@ export function MobileTabBar() {
                     strokeWidth={active ? 2.4 : 1.9}
                   />
                   {t.label === "예약" && ready && upcomingCount > 0 && (
-                    <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-[15.5px] font-bold text-white">
+                    <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-2xs font-bold text-white">
                       {upcomingCount}
                     </span>
                   )}
                 </span>
-                <span className="text-[17.5px] font-semibold tracking-tight">
+                <span className="text-sm font-semibold tracking-tight">
                   {t.label}
                 </span>
               </Link>

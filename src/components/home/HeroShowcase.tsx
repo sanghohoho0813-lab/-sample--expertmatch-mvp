@@ -46,12 +46,12 @@ export function HeroShowcase() {
           aria-hidden
         />
         <div className="absolute inset-x-0 bottom-0 z-20 p-5">
-          <p className="text-[26.5px] font-extrabold tracking-tight text-white">
+          <p className="text-3xl font-extrabold tracking-tight text-white">
             {main.name}
-            <span className="ml-1.5 text-[18px] font-semibold text-navy-200">전문가</span>
+            <span className="ml-1.5 text-sm font-semibold text-navy-200">전문가</span>
           </p>
-          <p className="mt-0.5 text-[18px] text-navy-200">{main.title}</p>
-          <div className="mt-2 flex items-center gap-2.5 text-[18px]">
+          <p className="mt-0.5 text-sm text-navy-200">{main.title}</p>
+          <div className="mt-2 flex items-center gap-2.5 text-sm">
             <span className="inline-flex items-center gap-1 font-bold text-white">
               <Star className="h-4 w-4 text-gold-300" fill="currentColor" strokeWidth={0} />
               {main.rating.toFixed(1)}
@@ -62,11 +62,11 @@ export function HeroShowcase() {
               <span className="ml-0.5 font-normal text-navy-200">/ {main.products[0].minutes}분</span>
             </span>
           </div>
-          <Earliest expert={main} className="mt-2 block text-[18px] font-bold text-teal-300" />
+          <Earliest expert={main} className="mt-2 block text-sm font-bold text-teal-300" />
         </div>
       </Link>
 
-      <p className="px-2.5 pb-1.5 pt-3.5 text-[17px] font-bold text-navy-300">지금 예약 가능한 전문가</p>
+      <p className="px-2.5 pb-1.5 pt-3.5 text-xs font-bold text-navy-300">지금 예약 가능한 전문가</p>
       <ul className="space-y-1">
         {others.map((e) => (
           <li key={e.id}>
@@ -83,13 +83,13 @@ export function HeroShowcase() {
                 className="h-12 w-12 shrink-0"
               />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-[19px] font-bold text-white">
+                <span className="block truncate text-base font-bold text-white">
                   {e.name}
-                  <span className="ml-1.5 text-[16px] font-medium text-navy-300">
+                  <span className="ml-1.5 text-xs font-medium text-navy-300">
                     {CATEGORY_MAP[e.categories[0]].name}
                   </span>
                 </span>
-                <Earliest expert={e} className="block truncate text-[16.5px] font-semibold text-teal-300" />
+                <Earliest expert={e} className="block truncate text-xs font-semibold text-teal-300" />
               </span>
               <ChevronRight className="h-4 w-4 shrink-0 text-navy-400" strokeWidth={2.2} />
             </Link>

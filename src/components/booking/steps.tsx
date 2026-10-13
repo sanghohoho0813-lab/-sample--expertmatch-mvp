@@ -39,7 +39,7 @@ export function ProductStep({
         어떤 상담을 받으시겠어요?
       </h1>
       <p className="mt-2 text-xl text-navy-500">
-        시간과 깊이에 따라 고를 수 있어요.
+        고민의 크기에 맞춰 고르세요. 어떤 상품이든 방식은 다음 단계에서 골라요.
       </p>
 
       <ul className="mt-6 space-y-3">
@@ -80,9 +80,17 @@ export function ProductStep({
                       </span>
                     )}
                   </span>
-                  <span className="mt-1 block text-lg leading-relaxed text-navy-500">
-                    {p.description}
+                  <span className="mt-1 block text-lg leading-relaxed text-navy-600">
+                    {p.recommendedFor}
                   </span>
+                  {active && (
+                    <span className="mt-2 block rounded-xl bg-white/80 px-3.5 py-2.5 text-md leading-snug text-navy-600 ring-1 ring-navy-100">
+                      <span className="font-semibold text-navy-800">상담이 끝나면</span> · {p.deliverable}
+                      <span className="mt-1 block">
+                        <span className="font-semibold text-navy-800">준비할 것</span> · {p.prepare.join(", ")}
+                      </span>
+                    </span>
+                  )}
                   <span className="mt-2.5 flex flex-wrap items-baseline gap-3">
                     <span className="text-4xl font-extrabold text-navy-900">
                       {formatPrice(p.price)}
@@ -107,16 +115,25 @@ export function MethodStep({
   methods,
   value,
   onChange,
+  hint,
 }: {
   methods: ConsultMethod[];
   value: ConsultMethod | null;
   onChange: (method: ConsultMethod) => void;
+  /** 미리 선택된 이유 (맞춤 찾기·지난 상담) */
+  hint?: string;
 }) {
   return (
     <section className="animate-fade-up">
       <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
         어떤 방식으로 상담할까요?
       </h1>
+      {hint && value && (
+        <p className="mt-2 text-lg text-navy-500">
+          <Check className="mr-1 inline h-4 w-4 align-[-2px] text-teal-600" strokeWidth={3} />
+          {hint} · 다른 방식으로 바꿔도 돼요.
+        </p>
+      )}
 
       <ul className="mt-6 space-y-2.5">
         {(["video", "phone", "chat"] as ConsultMethod[])
@@ -238,20 +255,24 @@ export function TimeStep({
   value,
   onChange,
   onChangeDate,
+  heading = "h1",
 }: {
   dateKey: string;
   states: { time: string; state: SlotState }[];
   value: string | null;
   onChange: (time: string) => void;
   onChangeDate: () => void;
+  /** 한 화면에 날짜·시간을 함께 둘 때는 h2 */
+  heading?: "h1" | "h2";
 }) {
   const morning = states.filter((s) => Number(s.time.slice(0, 2)) < 12);
   const afternoon = states.filter((s) => Number(s.time.slice(0, 2)) >= 12);
+  const Heading = heading;
   return (
     <section className="animate-fade-up">
-      <h1 className="text-6xl font-bold text-navy-900 sm:text-7xl">
+      <Heading className="text-6xl font-bold text-navy-900 sm:text-7xl">
         몇 시가 좋으세요?
-      </h1>
+      </Heading>
       <p className="mt-3 flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-50 px-3 py-1.5 text-lg font-bold text-teal-800">
           <CalendarDays className="h-4 w-4" strokeWidth={2.2} />
@@ -326,7 +347,18 @@ const NOTE_TEMPLATES = [
   { label: "시도해 본 방법", text: "시도해 본 방법: " },
 ];
 
-export function NoteStep({ value, onChange }: { value: string; onChange: (note: string) => void }) {
+export function NoteStep({
+  value,
+  onChange,
+  notice,
+  onClearNotice,
+}: {
+  value: string;
+  onChange: (note: string) => void;
+  /** 미리 채운 내용의 출처 */
+  notice?: string;
+  onClearNotice?: () => void;
+}) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   /** 예시 문구를 새 줄로 덧붙이고 커서를 끝으로 */
@@ -349,6 +381,20 @@ export function NoteStep({ value, onChange }: { value: string; onChange: (note: 
       <p className="mt-2 text-xl text-navy-500">
         선택 사항이에요. 적어 주시면 상담이 더 구체적이에요.
       </p>
+      {notice && value && (
+        <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl bg-teal-50 px-4 py-3 text-md text-teal-900">
+          <span>{notice}</span>
+          {onClearNotice && (
+            <button
+              type="button"
+              onClick={onClearNotice}
+              className="font-semibold text-teal-700 underline underline-offset-2 hover:text-teal-900"
+            >
+              비우고 새로 쓰기
+            </button>
+          )}
+        </p>
+      )}
 
       <div className="mt-5 flex flex-wrap gap-2" aria-label="예시 문구 추가">
         {NOTE_TEMPLATES.map((t) => (

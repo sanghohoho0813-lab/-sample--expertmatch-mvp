@@ -29,7 +29,16 @@ export interface ConsultationProduct {
   description: string;
   /** 목록/상세에서 대표 상품으로 강조 */
   recommended?: boolean;
+  /** 이런 경우에 고르세요 (한 문장) */
+  recommendedFor: string;
+  /** 상담이 끝나면 받는 것 · 상담 범위 */
+  deliverable: string;
+  /** 상담 전에 준비하면 좋은 것 */
+  prepare: string[];
 }
+
+/** 상담 대상 — 니즈 진단·상세의 '이런 분께 맞아요'에 쓰인다 */
+export type Audience = "individual" | "founder" | "business";
 
 export interface CareerItem {
   period: string;
@@ -70,6 +79,12 @@ export interface Expert {
   badge?: string;
   /** 추천 노출 순위 (낮을수록 상위) */
   featuredRank: number;
+  /** 주로 상담하는 대상 */
+  audiences: Audience[];
+  /** 이런 분께 맞아요 — 구체적인 상황 */
+  bestFor: string[];
+  /** 상담 후 기대할 수 있는 것 */
+  outcomes: string[];
 }
 
 export interface Review {
@@ -105,6 +120,12 @@ export interface Booking {
   status: BookingStatus;
   cancelledAt?: string;
   completedAt?: string;
+  /** 상담 전 준비 체크리스트에서 완료한 항목 */
+  prepDone?: string[];
+  /** 일정을 바꾼 경우 이전 일정 (가장 최근 1건) */
+  rescheduledFrom?: { date: string; time: string };
+  /** 같은 전문가에게 다시 예약한 경우 이전 예약번호 */
+  rebookOf?: string;
 }
 
 export type BookingStatus = "upcoming" | "done" | "cancelled";

@@ -46,3 +46,45 @@ export async function bookFromDetail(page: Page, expertId = "kim-dohyun") {
   await page.waitForURL(/\/booking\/complete\?code=/);
   return picked;
 }
+
+/* ── 저장소 미리 채우기 (예약 이후 화면을 바로 검증할 때) ── */
+
+export const SEED_CODE = "EM-20990101-0001";
+
+/** 오늘부터 며칠 뒤 날짜 (브라우저와 같은 Asia/Seoul 기준) */
+export function dateIn(days: number): string {
+  const d = new Date(Date.now() + days * 86_400_000);
+  return d.toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+}
+
+export function seedBooking(over: Record<string, unknown> = {}) {
+  return {
+    id: "seed-1",
+    code: SEED_CODE,
+    expertId: "kim-dohyun",
+    expertName: "김도현",
+    expertTitle: "스타트업 전략 · 사업개발 파트너",
+    expertAccent: 0,
+    categoryName: "창업",
+    productId: "p2",
+    productName: "60분 집중 상담",
+    minutes: 60,
+    price: 90000,
+    method: "phone",
+    date: dateIn(3),
+    time: "10:00",
+    note: "",
+    createdAt: new Date(Date.now() - 86_400_000).toISOString(),
+    status: "upcoming",
+    ...over,
+  };
+}
+
+/** 첫 방문에만 저장소를 채운다 (이후 이동·새로고침에서는 앱이 쓴 값을 유지) */
+export async function seed(page: Page, state: Record<string, unknown>) {
+  await page.addInitScript((s) => {
+    if (sessionStorage.getItem("e2e-seeded")) return;
+    localStorage.setItem("expertmatch:v1", JSON.stringify(s));
+    sessionStorage.setItem("e2e-seeded", "1");
+  }, state);
+}

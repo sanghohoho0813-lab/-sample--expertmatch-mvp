@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { Check, Minus, Star, X } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
-import { CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
+import { AUDIENCE_LABEL, CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
 import { earliestSlot, type EarliestSlot } from "@/lib/availability";
+import { slotScore } from "@/lib/compareInsights";
 import { useAppStore } from "@/lib/store/AppStore";
 import { shortestMinutes, useNow } from "@/lib/useAvailability";
 import { cx, formatCount, formatPrice, formatSlotLabel } from "@/lib/format";
@@ -31,12 +32,7 @@ interface Row {
 
 const METHODS: ConsultMethod[] = ["video", "phone", "chat"];
 
-function slotScore(s: EarliestSlot | null | undefined): number | null {
-  if (!s) return null;
-  return Number(s.dateKey.replace(/-/g, "")) * 10000 + Number(s.time.replace(":", ""));
-}
-
-// 비교 우선순위: 분야 → 경력 → 방식 → 가격 → 예약 가능일 → 평점 → 후기 → 상담 건수
+// 비교 우선순위: 분야 → 맞는 사람 → 가격 → 예약 가능일 → 경력 → 방식 → 대상 → 결과 → 평점 → 후기 → 상담 건수
 const ROWS: Row[] = [
   {
     key: "categories",
@@ -58,39 +54,17 @@ const ROWS: Row[] = [
     ),
   },
   {
-    key: "years",
-    label: "경력",
-    render: (e) => <>{e.yearsOfExperience}년</>,
-    score: (e) => e.yearsOfExperience,
-    better: "high",
-    bestLabel: "가장 김",
-  },
-  {
-    key: "methods",
-    label: "상담 방식",
+    key: "bestFor",
+    label: "이런 분께 맞아요",
     render: (e) => (
-      <div className="flex flex-wrap gap-1.5">
-        {METHODS.map((m) => {
-          const on = e.methods.includes(m);
-          return (
-            <span
-              key={m}
-              className={cx(
-                "inline-flex items-center gap-1 rounded-md px-2 py-1 text-base leading-none",
-                on ? "bg-navy-50 font-semibold text-navy-700" : "text-navy-300",
-              )}
-            >
-              {on ? (
-                <Check className="h-3.5 w-3.5 text-teal-600" strokeWidth={3} />
-              ) : (
-                <Minus className="h-3.5 w-3.5" strokeWidth={3} />
-              )}
-              {METHOD_LABEL[m].replace("상담", "")}
-              <span className="sr-only">{on ? "가능" : "불가"}</span>
-            </span>
-          );
-        })}
-      </div>
+      <ul className="space-y-1">
+        {e.bestFor.slice(0, 2).map((b) => (
+          <li key={b} className="flex gap-1.5 leading-snug">
+            <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-navy-300" aria-hidden />
+            {b}
+          </li>
+        ))}
+      </ul>
     ),
   },
   {
@@ -121,6 +95,61 @@ const ROWS: Row[] = [
     score: (e, ctx) => slotScore(ctx.earliest[e.id]),
     better: "low",
     bestLabel: "가장 빠름",
+  },
+  {
+    key: "years",
+    label: "경력",
+    render: (e) => <>{e.yearsOfExperience}년</>,
+    score: (e) => e.yearsOfExperience,
+    better: "high",
+    bestLabel: "가장 김",
+  },
+  {
+    key: "methods",
+    label: "상담 방식",
+    render: (e) => (
+      <div className="flex flex-wrap gap-1.5">
+        {METHODS.map((m) => {
+          const on = e.methods.includes(m);
+          return (
+            <span
+              key={m}
+              className={cx(
+                "inline-flex items-center gap-1 rounded-md px-2 py-1 text-base leading-none",
+                on ? "bg-navy-50 font-semibold text-navy-700" : "text-navy-400",
+              )}
+            >
+              {on ? (
+                <Check className="h-3.5 w-3.5 text-teal-600" strokeWidth={3} />
+              ) : (
+                <Minus className="h-3.5 w-3.5" strokeWidth={3} />
+              )}
+              {METHOD_LABEL[m].replace("상담", "")}
+              <span className="sr-only">{on ? "가능" : "불가"}</span>
+            </span>
+          );
+        })}
+      </div>
+    ),
+  },
+  {
+    key: "audiences",
+    label: "주요 상담 대상",
+    render: (e) => <>{e.audiences.map((a) => AUDIENCE_LABEL[a]).join(" · ")}</>,
+  },
+  {
+    key: "outcomes",
+    label: "상담 후 얻는 것",
+    render: (e) => (
+      <ul className="space-y-1">
+        {e.outcomes.slice(0, 2).map((o) => (
+          <li key={o} className="flex gap-1.5 leading-snug">
+            <Check className="mt-1 h-3.5 w-3.5 shrink-0 text-teal-600" strokeWidth={3} />
+            {o}
+          </li>
+        ))}
+      </ul>
+    ),
   },
   {
     key: "rating",
@@ -315,7 +344,7 @@ export function CompareView({
       </div>
 
       {/* 모바일: 세로 카드 비교 */}
-      <div className="space-y-3 p-4 md:hidden">
+      <div className="space-y-3 md:hidden">
         {experts.map((e) => (
           <div key={e.id} className="rounded-2xl border border-navy-100 bg-white p-4">
             <div className="flex items-start gap-3">

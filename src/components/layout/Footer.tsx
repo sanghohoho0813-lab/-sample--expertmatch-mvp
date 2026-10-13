@@ -11,7 +11,8 @@ const COLUMNS = [
     title: "서비스",
     links: [
       { label: "전문가 찾기", href: "/experts" },
-      { label: "상담 분야", href: "/experts?panel=categories" },
+      { label: "맞춤 찾기", href: "/match" },
+      { label: "전문가 비교", href: "/compare" },
       { label: "이용방법", href: "/#how-it-works" },
       { label: "내 예약", href: "/mypage?tab=upcoming" },
     ],
@@ -27,12 +28,12 @@ const COLUMNS = [
   },
 ];
 
-/** 예약 진행 중에는 단계에 집중하도록 푸터를 숨긴다 (완료 화면에는 노출) */
-const HIDDEN = /^\/booking\/(?!complete)[^/]+$/;
+/** 예약 진행·맞춤 찾기 질문 중에는 단계에 집중하도록 푸터를 숨긴다 (완료·결과 화면에는 노출) */
+const HIDDEN = [/^\/booking\/(?!complete)[^/]+$/, /^\/match$/];
 
 export function Footer() {
   const pathname = usePathname();
-  if (HIDDEN.test(pathname)) return null;
+  if (HIDDEN.some((re) => re.test(pathname))) return null;
 
   return (
     <footer className="mt-12 border-t border-navy-100 bg-white pb-24 lg:mt-16 lg:pb-0">

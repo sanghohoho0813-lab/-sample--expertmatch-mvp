@@ -1,4 +1,5 @@
 import { EXPERT_MAP } from "@/lib/data/experts";
+import { needsFromParams, type Needs } from "@/lib/needs";
 import type { Booking, BookingStatus, ConsultMethod, MyReview } from "@/lib/types";
 
 export const STORAGE_KEY = "expertmatch:v1";
@@ -13,6 +14,8 @@ export interface PersistedState {
   recent: string[];
   /** 내가 남긴 후기 (데모) */
   myReviews: MyReview[];
+  /** 마지막 맞춤 찾기 답변 — 예약할 때 상담 방식·고민 메모를 미리 채운다 */
+  needs: Needs | null;
 }
 
 export const INITIAL_STATE: PersistedState = {
@@ -21,10 +24,14 @@ export const INITIAL_STATE: PersistedState = {
   bookings: [],
   recent: [],
   myReviews: [],
+  needs: null,
 };
 
 const METHODS: ConsultMethod[] = ["video", "phone", "chat"];
 const STATUSES: BookingStatus[] = ["upcoming", "done", "cancelled"];
+
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const TIME_RE = /^\d{2}:\d{2}$/;
 
 const isObj = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
@@ -47,7 +54,7 @@ export function toBooking(v: unknown): Booking | null {
   if (!isObj(v)) return null;
   const required = ["id", "code", "expertId", "expertName", "productId", "productName", "date", "time"];
   if (!required.every((k) => isStr(v[k]))) return null;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(v.date as string) || !/^\d{2}:\d{2}$/.test(v.time as string)) return null;
+  if (!DATE_RE.test(v.date as string) || !TIME_RE.test(v.time as string)) return null;
   if (!isNum(v.minutes) || !isNum(v.price)) return null;
   if (!METHODS.includes(v.method as ConsultMethod)) return null;
   return {
@@ -59,6 +66,16 @@ export function toBooking(v: unknown): Booking | null {
     createdAt: isStr(v.createdAt) ? v.createdAt : new Date(0).toISOString(),
     // 상태가 없던 이전 버전 데이터는 예정 상담으로 본다
     status: STATUSES.includes(v.status as BookingStatus) ? (v.status as BookingStatus) : "upcoming",
+    prepDone: Array.isArray(v.prepDone) ? v.prepDone.filter(isStr) : undefined,
+    rescheduledFrom:
+      isObj(v.rescheduledFrom) &&
+      isStr(v.rescheduledFrom.date) &&
+      isStr(v.rescheduledFrom.time) &&
+      DATE_RE.test(v.rescheduledFrom.date) &&
+      TIME_RE.test(v.rescheduledFrom.time)
+        ? { date: v.rescheduledFrom.date, time: v.rescheduledFrom.time }
+        : undefined,
+    rebookOf: isStr(v.rebookOf) ? v.rebookOf : undefined,
   };
 }
 
@@ -67,6 +84,16 @@ function toReview(v: unknown): MyReview | null {
   if (!isStr(v.id) || !isStr(v.bookingId) || !isStr(v.expertId) || !isStr(v.body)) return null;
   if (!isNum(v.rating) || v.rating < 1 || v.rating > 5) return null;
   return v as unknown as MyReview;
+}
+
+function toNeeds(v: unknown): Needs | null {
+  if (!isObj(v)) return null;
+  const params = new URLSearchParams();
+  for (const k of ["topic", "who", "method", "budget", "when"]) {
+    if (typeof v[k] === "string" || typeof v[k] === "number") params.set(k, String(v[k]));
+  }
+  const needs = needsFromParams(params);
+  return { ...needs, memo: typeof v.memo === "string" ? v.memo.slice(0, 300) : undefined };
 }
 
 /**
@@ -90,5 +117,6 @@ export function parsePersisted(raw: string | null): PersistedState {
     recent: expertIds(parsed.recent, MAX_RECENT),
     bookings: list(parsed.bookings, toBooking),
     myReviews: list(parsed.myReviews, toReview),
+    needs: toNeeds(parsed.needs),
   };
 }

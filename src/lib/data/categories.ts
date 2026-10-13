@@ -1,4 +1,4 @@
-import type { Category, ConsultMethod, SortOption } from "@/lib/types";
+import type { Audience, Category, ConsultMethod, SortOption } from "@/lib/types";
 
 export const CATEGORIES: Category[] = [
   {
@@ -119,6 +119,18 @@ export const METHOD_HINT: Record<ConsultMethod, string> = {
   video: "화면 공유로 자료를 함께 보며 진행합니다",
   phone: "이동 중에도 편하게 통화로 진행합니다",
   chat: "텍스트로 기록을 남기며 진행합니다",
+};
+
+export const AUDIENCE_LABEL: Record<Audience, string> = {
+  individual: "개인",
+  founder: "예비·초기 창업자",
+  business: "사업자·기업",
+};
+
+export const AUDIENCE_HINT: Record<Audience, string> = {
+  individual: "이직·계약·세금처럼 개인적인 고민",
+  founder: "창업 준비 중이거나 창업 3년 이내",
+  business: "운영 중인 가게·회사의 문제",
 };
 
 export const SORT_OPTIONS: SortOption[] = [

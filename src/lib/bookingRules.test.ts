@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clashMessage, findClash, overlaps } from "@/lib/bookingRules";
+import { canChange, clashMessage, findClash, minutesUntil, overlaps, roomState } from "@/lib/bookingRules";
 import type { Booking } from "@/lib/types";
 
 const b = (over: Partial<Booking>): Booking => ({
@@ -50,5 +50,24 @@ describe("findClash", () => {
   it("explains a same-expert clash as a just-taken slot", () => {
     const same = b({ id: "a" });
     expect(clashMessage(same, b({ id: "new" }))).toContain("방금");
+  });
+});
+
+describe("변경·취소 정책과 상담방", () => {
+  const NOW = new Date(2026, 9, 7, 9, 0);
+
+  it("allows changes until the cutoff before start", () => {
+    expect(minutesUntil(b({ time: "10:00" }), NOW)).toBe(60);
+    expect(canChange(b({ time: "10:00" }), NOW)).toBe(true);
+    expect(canChange(b({ time: "09:20" }), NOW)).toBe(false);
+    expect(canChange(b({ time: "10:00", status: "cancelled" }), NOW)).toBe(false);
+  });
+
+  it("opens the room 10 minutes before and closes it at the end", () => {
+    expect(roomState(b({ time: "09:30" }), NOW)).toBe("before");
+    expect(roomState(b({ time: "09:10" }), NOW)).toBe("open");
+    expect(roomState(b({ time: "08:30", minutes: 60 }), NOW)).toBe("open");
+    expect(roomState(b({ time: "08:00", minutes: 60 }), NOW)).toBe("ended");
+    expect(roomState(b({ time: "09:30", status: "done" }), NOW)).toBe("ended");
   });
 });

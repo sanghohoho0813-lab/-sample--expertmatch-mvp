@@ -1,6 +1,19 @@
 import { expect, test } from "@playwright/test";
 
-const PAGES = ["/", "/experts", "/experts/kim-dohyun", "/booking/kim-dohyun", "/mypage", "/chat", "/about", "/booking/complete"];
+const PAGES = [
+  "/",
+  "/experts",
+  "/experts/kim-dohyun",
+  "/match",
+  "/match/result?topic=startup&who=founder&method=video&budget=80000&when=week",
+  "/compare",
+  "/booking/kim-dohyun",
+  "/booking/reschedule",
+  "/mypage",
+  "/chat",
+  "/about",
+  "/booking/complete",
+];
 
 for (const path of PAGES) {
   test(`가로 스크롤·콘솔 오류 없음 ${path}`, async ({ page }) => {

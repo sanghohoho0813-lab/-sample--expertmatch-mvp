@@ -54,3 +54,33 @@ describe("parsePersisted", () => {
     expect(state.myReviews.map((r) => r.id)).toEqual(["r"]);
   });
 });
+
+describe("V2 fields", () => {
+  it("keeps valid needs answers and drops invented ones", () => {
+    const state = parsePersisted(
+      JSON.stringify({ needs: { topic: "tax", who: "nobody", method: "video", budget: 999, when: "week", memo: "x".repeat(400) } }),
+    );
+    expect(state.needs).toMatchObject({ topic: "tax", who: null, method: "video", budget: null, when: "week" });
+    expect(state.needs?.memo).toHaveLength(300);
+    expect(parsePersisted(JSON.stringify({ needs: "oops" })).needs).toBeNull();
+  });
+
+  it("sanitises checklist progress, reschedule history and rebook links", () => {
+    const state = parsePersisted(
+      JSON.stringify({
+        bookings: [
+          {
+            ...validBooking,
+            prepDone: ["질문 정리", 3, ""],
+            rescheduledFrom: { date: "어제", time: "10:00" },
+            rebookOf: "EM-20260901-0001",
+          },
+        ],
+      }),
+    );
+    const bk = state.bookings[0];
+    expect(bk.prepDone).toEqual(["질문 정리"]);
+    expect(bk.rescheduledFrom).toBeUndefined();
+    expect(bk.rebookOf).toBe("EM-20260901-0001");
+  });
+});

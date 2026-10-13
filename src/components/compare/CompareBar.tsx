@@ -1,11 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { GitCompareArrows, X } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
-import { Overlay } from "@/components/ui/Overlay";
-import { CompareView } from "@/components/compare/CompareView";
 import { EXPERT_MAP } from "@/lib/data/experts";
 import { MAX_COMPARE, useAppStore } from "@/lib/store/AppStore";
 import { cx } from "@/lib/format";
@@ -14,7 +12,6 @@ import { useBottomLayerChange } from "@/lib/useBottomLayerChange";
 export function CompareBar() {
   const pathname = usePathname();
   const { compare, removeCompare, clearCompare, ready } = useAppStore();
-  const [open, setOpen] = useState(false);
 
   const experts = compare.map((id) => EXPERT_MAP[id]).filter(Boolean);
   // 비교는 전문가를 둘러보는 화면(홈·검색·상세)에서만 띄운다
@@ -29,7 +26,6 @@ export function CompareBar() {
   if (hidden) return null;
 
   return (
-    <>
       <div
         className={cx(
           // 데스크톱은 가운데 정렬한 폭으로 — 오른쪽 아래 공용 이동 버튼 자리를 비워 둔다
@@ -77,53 +73,25 @@ export function CompareBar() {
             >
               전체 해제
             </button>
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              disabled={!canCompare}
-              className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-lg font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400 disabled:cursor-default disabled:bg-white/10 disabled:text-navy-200"
-            >
-              <GitCompareArrows className="h-4 w-4 sm:hidden" strokeWidth={2.4} />
-              {canCompare ? `${experts.length}명 비교하기` : "1명 더 담아 주세요"}
-            </button>
+            {canCompare ? (
+              <Link
+                href="/compare"
+                className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-lg font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400"
+              >
+                <GitCompareArrows className="h-4 w-4 sm:hidden" strokeWidth={2.4} />
+                {experts.length}명 비교하기
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                className="inline-flex h-11 cursor-default items-center whitespace-nowrap rounded-xl bg-white/10 px-4 text-lg font-bold text-navy-200"
+              >
+                1명 더 담아 주세요
+              </button>
+            )}
           </div>
         </div>
-      </div>
-
-      <Overlay
-        open={open}
-        onClose={() => setOpen(false)}
-        title={`전문가 ${experts.length}명 비교`}
-        description="수치로 비교할 수 있는 항목만 모았어요."
-        width="max-w-5xl"
-        footer={
-          <div className="flex items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => {
-                clearCompare();
-                setOpen(false);
-              }}
-              className="inline-flex h-12 shrink-0 items-center whitespace-nowrap rounded-xl border border-navy-200 px-4 text-md font-semibold text-navy-600 transition-colors hover:bg-navy-50 hover:text-navy-900"
-            >
-              비우기
-            </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="inline-flex h-12 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-navy-900 px-5 text-lg font-semibold text-white transition-colors hover:bg-navy-800 sm:ml-auto sm:flex-none"
-            >
-              계속 둘러보기
-            </button>
-          </div>
-        }
-      >
-        <CompareView
-          experts={experts}
-          onRemove={removeCompare}
-          onNavigate={() => setOpen(false)}
-        />
-      </Overlay>
-    </>
+    </div>
   );
 }

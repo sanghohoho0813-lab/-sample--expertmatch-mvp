@@ -2,7 +2,8 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ChevronDown, SlidersHorizontal, Search, X } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronDown, ListChecks, SlidersHorizontal, Search, X } from "lucide-react";
 import {
   SearchSuggest,
   flattenSuggestions,
@@ -25,6 +26,10 @@ import {
   searchExperts,
 } from "@/lib/search";
 import { cx } from "@/lib/format";
+import { earliestSlot } from "@/lib/availability";
+import { evaluateFit, needsSummary, needsToParams, type Fit } from "@/lib/needs";
+import { useAppStore } from "@/lib/store/AppStore";
+import { shortestMinutes, useNow } from "@/lib/useAvailability";
 import type { CategoryId, Filters, SortOption } from "@/lib/types";
 
 export function ExpertSearchClient() {
@@ -96,6 +101,21 @@ export function ExpertSearchClient() {
   );
 
   const filterCount = activeFilterCount(filters);
+
+  // 맞춤 찾기에 답한 적이 있으면, 검색어·필터 없이 둘러볼 때 카드마다 내 조건과 대조해 보여 준다
+  const { needs, setNeeds, bookings, ready } = useAppStore();
+  const now = useNow();
+  const answered = !!needs && (needs.topic !== null || needsSummary(needs).length > 1);
+  const useNeeds = answered && !query && filterCount === 0;
+  const fitsById = useMemo<Record<string, Fit[]> | null>(() => {
+    if (!useNeeds || !needs || !now || !ready) return null;
+    return Object.fromEntries(
+      results.map((e) => [
+        e.id,
+        evaluateFit(e, needs, earliestSlot(e.id, now, bookings, shortestMinutes(e)), now).fits,
+      ]),
+    );
+  }, [useNeeds, needs, now, ready, bookings, results]);
 
   const suggestions = useMemo(() => suggestFor(input), [input]);
   const flatSuggest = useMemo(
@@ -345,6 +365,51 @@ export function ExpertSearchClient() {
             onReset={() => setFilters(EMPTY_FILTERS)}
           />
 
+          {useNeeds && needs ? (
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-teal-600/30 bg-teal-50/50 px-4 py-3 sm:px-5">
+              <ListChecks className="h-5 w-5 shrink-0 text-teal-700" strokeWidth={2.2} />
+              <p className="min-w-0 flex-1 text-md text-navy-700">
+                맞춤 찾기 조건과 대조해 보여 드려요 ·{" "}
+                <span className="font-semibold text-navy-900">{needsSummary(needs).join(" · ")}</span>
+              </p>
+              <span className="flex shrink-0 items-center gap-1">
+                <Link
+                  href={`/match/result?${needsToParams(needs)}`}
+                  className="inline-flex h-10 items-center rounded-lg px-3 text-base font-semibold text-teal-700 hover:bg-teal-50"
+                >
+                  추천 결과
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setNeeds(null)}
+                  className="inline-flex h-10 items-center rounded-lg px-3 text-base font-semibold text-navy-500 hover:bg-navy-50 hover:text-navy-800"
+                >
+                  조건 지우기
+                </button>
+              </span>
+            </div>
+          ) : (
+            !query && filterCount === 0 && (
+            <Link
+              href="/match"
+              className="group mt-4 flex items-center gap-3 rounded-2xl border border-navy-100 bg-white px-4 py-3.5 transition-colors hover:border-teal-600/40 sm:px-5"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+                <ListChecks className="h-5 w-5" strokeWidth={2.2} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-lg font-bold text-navy-900">누구에게 물어야 할지 모르겠다면</span>
+                <span className="block text-base text-navy-500">질문 5개로 고민·예산·일정에 맞는 전문가를 좁혀 드려요</span>
+              </span>
+              <span className="hidden shrink-0 items-center gap-1 text-md font-bold text-teal-700 sm:inline-flex">
+                맞춤 찾기
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
+              </span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-teal-700 sm:hidden" strokeWidth={2.4} />
+            </Link>
+            )
+          )}
+
           <h2 className="sr-only">검색 결과</h2>
           {results.length > 0 ? (
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -353,6 +418,7 @@ export function ExpertSearchClient() {
                   key={expert.id}
                   expert={expert}
                   reasons={matchReasons(expert, { query, filters, sort })}
+                  fits={fitsById?.[expert.id]}
                 />
               ))}
             </div>
@@ -390,6 +456,12 @@ export function ExpertSearchClient() {
               >
                 전체 전문가 다시 보기
               </button>
+              <p className="mt-6 border-t border-navy-100 pt-5 text-lg text-navy-500">
+                어떤 분야인지부터 막막하다면{" "}
+                <Link href="/match" className="font-semibold text-teal-700 underline-offset-4 hover:underline">
+                  질문 5개로 맞춤 찾기
+                </Link>
+              </p>
             </div>
           )}
           <RecentExperts />

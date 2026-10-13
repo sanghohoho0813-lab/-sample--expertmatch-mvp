@@ -41,7 +41,7 @@ function startOfDay(d: Date) {
 export function BookingFlow({ expert }: { expert: Expert }) {
   const router = useRouter();
   const params = useSearchParams();
-  const { addBooking, pushToast } = useAppStore();
+  const { addBooking, pushToast, needs, bookings, ready } = useAppStore();
 
   // 상세에서 상품을 고르고 들어오면 상품 단계는 건너뛴다 (언제든 되돌아가 바꿀 수 있음)
   const productFromQuery = params.get("product");
@@ -65,6 +65,42 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   const [time, setTime] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  /** 맞춤 찾기·지난 상담에서 미리 채운 항목 — 화면에 출처를 밝힌다 */
+  const [prefilled, setPrefilled] = useState<{ method?: string; note?: string }>({});
+
+  // 같은 전문가에게 다시 예약 (?rebook=예약번호) — 지난 상담의 방식과 이어서 할 이야기를 채운다
+  const rebookCode = params.get("rebook");
+  const previous = ready && rebookCode
+    ? bookings.find((b) => b.code === rebookCode && b.expertId === expert.id)
+    : undefined;
+
+  // 저장소는 마운트 후에 읽히므로, 준비되면 한 번만 채운다 (사용자가 이미 고른 값은 건드리지 않는다)
+  const prefillDone = useRef(false);
+  useEffect(() => {
+    if (!ready || prefillDone.current) return;
+    prefillDone.current = true;
+    if (previous) {
+      if (expert.methods.includes(previous.method)) {
+        setMethod((m) => m ?? previous.method);
+        setPrefilled((p) => ({ ...p, method: "지난 상담과 같은 방식이에요" }));
+      }
+      setNote((n) => n || `지난 상담(${formatDateKorean(previous.date)}) 이후 이어서 묻고 싶은 점: `);
+      setPrefilled((p) => ({ ...p, note: "지난 상담에 이어서 물어볼 내용을 적어 주세요" }));
+      return;
+    }
+    // 맞춤 찾기 답변 — 이 전문가의 분야와 맞을 때만
+    if (!needs || (needs.topic && !expert.categories.includes(needs.topic))) return;
+    if (needs.method && expert.methods.includes(needs.method)) {
+      const picked = needs.method;
+      setMethod((m) => m ?? picked);
+      setPrefilled((p) => ({ ...p, method: "맞춤 찾기에서 고른 방식이에요" }));
+    }
+    if (needs.memo) {
+      const memo = needs.memo;
+      setNote((n) => n || memo);
+      setPrefilled((p) => ({ ...p, note: "맞춤 찾기에서 적은 고민을 옮겨 왔어요" }));
+    }
+  }, [ready, previous, needs, expert]);
 
   const product = expert.products.find((p) => p.id === productId) ?? expert.products[0];
 
@@ -135,6 +171,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
       note: note.trim(),
       createdAt: new Date().toISOString(),
       status: "upcoming",
+      ...(previous ? { rebookOf: previous.code } : {}),
     };
     const result = addBooking(booking);
     if (!result.ok) {
@@ -231,7 +268,9 @@ export function BookingFlow({ expert }: { expert: Expert }) {
 
             {step === 0 && <ProductStep products={expert.products} value={productId} onChange={setProductId} />}
 
-            {step === 1 && <MethodStep methods={expert.methods} value={method} onChange={setMethod} />}
+            {step === 1 && (
+              <MethodStep methods={expert.methods} value={method} onChange={setMethod} hint={prefilled.method} />
+            )}
 
             {step === 2 && (
               <DateStep
@@ -256,7 +295,17 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               />
             )}
 
-            {step === 4 && <NoteStep value={note} onChange={setNote} />}
+            {step === 4 && (
+              <NoteStep
+                value={note}
+                onChange={setNote}
+                notice={prefilled.note}
+                onClearNotice={() => {
+                  setNote("");
+                  setPrefilled((p) => ({ ...p, note: undefined }));
+                }}
+              />
+            )}
 
             {step === 5 && (
               <ConfirmStep expert={expert} rows={summaryRows} note={note} price={product.price} onEdit={goTo} />

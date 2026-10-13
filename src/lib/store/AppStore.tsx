@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import type { Needs } from "@/lib/needs";
 import type { Booking, MyReview } from "@/lib/types";
 import { clashMessage, findClash } from "@/lib/bookingRules";
 import {
@@ -39,13 +40,23 @@ interface AppStoreValue extends PersistedState {
   toggleCompare: (id: string, name: string) => void;
   clearCompare: () => void;
   removeCompare: (id: string) => void;
+  /** 비교 목록을 통째로 바꾼다 (맞춤 찾기 추천 → 비교) */
+  replaceCompare: (ids: string[]) => void;
   /** 같은 전문가·시간 중복 예약은 거부한다 */
   addBooking: (booking: Booking) => AddBookingResult;
   cancelBooking: (id: string) => void;
+  /** 같은 예약의 날짜·시간만 바꾼다 (겹침 검사는 새 예약과 같은 규칙) */
+  rescheduleBooking: (id: string, date: string, time: string) => AddBookingResult;
+  /** 상담 전 준비 체크리스트 항목 토글 */
+  togglePrep: (id: string, item: string) => void;
+  /** 상담 전에 전문가에게 전달할 내용 고치기 */
+  updateNote: (id: string, note: string) => void;
   /** 데모: 예정된 상담을 완료 처리 */
   completeBooking: (id: string) => void;
   addReview: (review: MyReview) => void;
   reviewFor: (bookingId: string) => MyReview | undefined;
+  /** 맞춤 찾기 답변 저장 (null 이면 지움) */
+  setNeeds: (needs: Needs | null) => void;
   markViewed: (id: string) => void;
   clearRecent: () => void;
   toasts: Toast[];
@@ -188,6 +199,14 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     [commit],
   );
 
+  const replaceCompare = useCallback(
+    (ids: string[]) => {
+      const next = Array.from(new Set(ids)).slice(0, MAX_COMPARE);
+      commit({ ...stateRef.current, compare: next });
+    },
+    [commit],
+  );
+
   const markViewed = useCallback(
     (id: string) => {
       const prev = stateRef.current;
@@ -196,6 +215,13 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
         ...prev,
         recent: [id, ...prev.recent.filter((r) => r !== id)].slice(0, MAX_RECENT),
       });
+    },
+    [commit],
+  );
+
+  const setNeeds = useCallback(
+    (needs: Needs | null) => {
+      commit({ ...stateRef.current, needs });
     },
     [commit],
   );
@@ -231,6 +257,55 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
         tone: "default",
         action: { label: "취소 내역", href: "/mypage?tab=cancelled" },
       });
+    },
+    [commit, pushToast],
+  );
+
+  const rescheduleBooking = useCallback(
+    (id: string, date: string, time: string): AddBookingResult => {
+      const prev = stateRef.current;
+      const target = prev.bookings.find((b) => b.id === id);
+      if (!target || target.status !== "upcoming") {
+        return { ok: false, reason: "이미 지난 상담이거나 취소된 예약이에요" };
+      }
+      const candidate: Booking = { ...target, date, time };
+      const clash = findClash(prev.bookings, candidate);
+      if (clash) return { ok: false, reason: clashMessage(clash, candidate) };
+      commit({
+        ...prev,
+        bookings: prev.bookings.map((b) =>
+          b.id === id ? { ...candidate, rescheduledFrom: { date: target.date, time: target.time } } : b,
+        ),
+      });
+      pushToast({ message: "상담 일정을 변경했어요. 전문가에게도 알려 드렸어요", tone: "success" });
+      return { ok: true };
+    },
+    [commit, pushToast],
+  );
+
+  const togglePrep = useCallback(
+    (id: string, item: string) => {
+      const prev = stateRef.current;
+      commit({
+        ...prev,
+        bookings: prev.bookings.map((b) => {
+          if (b.id !== id) return b;
+          const done = b.prepDone ?? [];
+          return { ...b, prepDone: done.includes(item) ? done.filter((d) => d !== item) : [...done, item] };
+        }),
+      });
+    },
+    [commit],
+  );
+
+  const updateNote = useCallback(
+    (id: string, note: string) => {
+      const prev = stateRef.current;
+      commit({
+        ...prev,
+        bookings: prev.bookings.map((b) => (b.id === id ? { ...b, note: note.slice(0, 500) } : b)),
+      });
+      pushToast({ message: "전달할 내용을 저장했어요. 전문가가 상담 전에 확인해요", tone: "success" });
     },
     [commit, pushToast],
   );
@@ -280,12 +355,17 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       toggleCompare,
       clearCompare,
       removeCompare,
+      replaceCompare,
       addBooking,
       cancelBooking,
+      rescheduleBooking,
+      togglePrep,
+      updateNote,
       completeBooking,
       addReview,
       reviewFor: (bookingId) =>
         state.myReviews.find((r) => r.bookingId === bookingId),
+      setNeeds,
       markViewed,
       clearRecent,
       toasts,
@@ -299,10 +379,15 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       toggleCompare,
       clearCompare,
       removeCompare,
+      replaceCompare,
       addBooking,
       cancelBooking,
+      rescheduleBooking,
+      togglePrep,
+      updateNote,
       completeBooking,
       addReview,
+      setNeeds,
       markViewed,
       clearRecent,
       toasts,

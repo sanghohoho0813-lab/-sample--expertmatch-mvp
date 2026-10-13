@@ -57,9 +57,18 @@ export function useExpertAvailability(
 }
 
 /** 예약 플로우용 — 선택한 상품 길이 기준으로 날짜·시간 가능 여부를 계산 */
-export function useSlotPicker(expertId: string, minutes: number) {
+export function useSlotPicker(
+  expertId: string,
+  minutes: number,
+  /** 일정 변경 중인 예약 — 자기 자신과는 겹침으로 보지 않는다 */
+  excludeId?: string,
+) {
   const now = useNow();
-  const { bookings, ready } = useAppStore();
+  const { bookings: all, ready } = useAppStore();
+  const bookings = useMemo(
+    () => (excludeId ? all.filter((b) => b.id !== excludeId) : all),
+    [all, excludeId],
+  );
 
   const getOpen = useCallback(
     (dateKey: string) =>

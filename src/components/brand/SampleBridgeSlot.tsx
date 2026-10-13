@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import { SampleBridgeCTA } from "@/components/brand/SampleBridgeCTA";
 
 /**
- * 예약 진행 중에는 하단이 단계 CTA로 고정되어 있어
- * 브릿지 CTA가 경쟁하지 않도록 숨긴다. (예약 완료 화면에는 노출)
+ * 예약 진행 중·맞춤 찾기 질문 중에는 한 가지 선택에 집중하도록
+ * 브릿지 CTA가 경쟁하지 않게 숨긴다. (예약 완료·추천 결과 화면에는 노출)
  */
-const HIDDEN_PATHS = [/^\/booking\/(?!complete)[^/]+$/];
+const HIDDEN_PATHS = [/^\/booking\/(?!complete)[^/]+$/, /^\/match$/];
 
 /**
  * 모든 샘플 페이지 하단(푸터 위)에 공통 CTA를 배치하는 슬롯.

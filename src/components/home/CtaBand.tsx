@@ -38,13 +38,21 @@ export function CtaBand() {
             회원가입 없이 예약까지 바로 체험할 수 있어요.
           </p>
 
-          <Link
-            href="/experts"
-            className="mt-7 inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-lg font-bold text-navy-950 transition-colors hover:bg-teal-400 sm:w-auto"
-          >
-            전문가 찾아보기
-            <ArrowRight className="h-5 w-5" strokeWidth={2.4} />
-          </Link>
+          <div className="mt-7 flex flex-col justify-center gap-2.5 sm:flex-row">
+            <Link
+              href="/match"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-lg font-bold text-navy-950 transition-colors hover:bg-teal-400 sm:w-auto"
+            >
+              질문 5개로 맞춤 찾기
+              <ArrowRight className="h-5 w-5" strokeWidth={2.4} />
+            </Link>
+            <Link
+              href="/experts"
+              className="inline-flex h-14 w-full items-center justify-center whitespace-nowrap rounded-2xl border border-white/25 px-8 text-lg font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
+            >
+              전문가 둘러보기
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -82,7 +82,9 @@ export function BookingPanel({ expert }: { expert: Expert }) {
                   </span>
                   {/* 설명은 선택한 상품만 — CTA가 첫 화면 안에 들어오도록 */}
                   {active && (
-                    <span className="mt-0.5 block text-sm leading-snug text-navy-500">{p.description}</span>
+                    <span className="mt-0.5 block text-sm leading-snug text-navy-500">
+                      {p.recommendedFor}
+                    </span>
                   )}
                   <span className="mt-1 flex items-baseline gap-2">
                     <span className="text-lg font-extrabold text-navy-900">
@@ -100,6 +102,10 @@ export function BookingPanel({ expert }: { expert: Expert }) {
           })}
         </div>
       </fieldset>
+
+      <p className="mt-3 text-sm leading-snug text-navy-500">
+        <span className="font-semibold text-navy-700">상담이 끝나면</span> · {product.deliverable}
+      </p>
 
       <Link
         href={`/booking/${expert.id}?product=${product.id}`}

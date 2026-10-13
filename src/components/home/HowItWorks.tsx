@@ -1,25 +1,25 @@
-import { CalendarCheck, MessageSquareQuote, Search, Target } from "lucide-react";
+import { CalendarCheck, GitCompareArrows, ListChecks, RotateCcw } from "lucide-react";
 
 const STEPS = [
   {
-    icon: Target,
-    title: "고민 선택",
-    body: "지금 해결하고 싶은 분야를 고르거나 검색어를 입력합니다.",
+    icon: ListChecks,
+    title: "고민 정리",
+    body: "질문 5개로 분야·대상·방식·예산·시기를 정리하거나, 검색어로 바로 찾습니다.",
   },
   {
-    icon: Search,
-    title: "전문가 탐색",
-    body: "경력·평점·상담료를 나란히 비교하며 나에게 맞는 전문가를 찾습니다.",
+    icon: GitCompareArrows,
+    title: "비교와 결정",
+    body: "상담료·가장 빠른 예약·경력 차이와 '이런 경우엔 누가 맞는지'를 한 화면에서 봅니다.",
   },
   {
     icon: CalendarCheck,
-    title: "상담 예약",
-    body: "상담 방식과 날짜·시간을 고르고 미리 질문을 남겨둡니다.",
+    title: "예약과 준비",
+    body: "상품별 결과물과 준비물을 확인해 예약하고, 체크리스트로 상담을 준비합니다.",
   },
   {
-    icon: MessageSquareQuote,
-    title: "문제 해결",
-    body: "예약한 시간에 상담을 진행하고 다음 실행 계획을 받아갑니다.",
+    icon: RotateCcw,
+    title: "상담과 이어가기",
+    body: "상담방에서 만나고, 후기를 남기거나 같은 전문가에게 이어서 상담합니다.",
   },
 ];
 
@@ -37,10 +37,10 @@ export function HowItWorks() {
       <div className="shell relative">
         <div className="max-w-xl">
           <h2 className="text-5xl font-bold leading-tight tracking-[-0.02em] text-white sm:text-7xl">
-            4단계로 끝나는 전문가 상담
+            고민 정리부터 재상담까지 한 흐름으로
           </h2>
           <p className="mt-2 text-lg leading-relaxed text-navy-200 sm:text-xl">
-            고민을 고르는 순간부터 예약까지 한 흐름이에요.
+            누구에게 물어야 할지 몰라도 괜찮아요. 고르는 일부터 도와 드려요.
           </p>
         </div>
 

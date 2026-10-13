@@ -1,4 +1,5 @@
 import { METHOD_LABEL } from "@/lib/data/categories";
+import { EXPERT_MAP } from "@/lib/data/experts";
 import type { Booking, ConsultMethod } from "@/lib/types";
 
 /** 상담 방식별 사전 준비사항 */
@@ -20,10 +21,24 @@ export const PREP_CHECKLIST: Record<ConsultMethod, string[]> = {
   ],
 };
 
-export const PREP_COMMON = [
-  "가장 궁금한 질문 2~3개를 미리 적어 두세요",
-  "일정 변경은 상담 24시간 전까지 가능해요",
-];
+export const PREP_COMMON = ["가장 궁금한 질문 2~3개를 미리 적어 두세요"];
+
+/**
+ * 한 예약의 상담 전 체크리스트 — 상품별 준비물(전문가가 정한 것) + 상담 방식별 환경 + 공통.
+ * 항목 문자열이 곧 체크 여부의 키다 (booking.prepDone).
+ */
+export function prepItems(booking: Pick<Booking, "expertId" | "productId" | "method">): {
+  group: string;
+  items: string[];
+}[] {
+  const product = EXPERT_MAP[booking.expertId]?.products.find((p) => p.id === booking.productId);
+  const groups = [
+    { group: "이 상담에 필요한 자료", items: product?.prepare ?? [] },
+    { group: `${METHOD_LABEL[booking.method]} 환경`, items: PREP_CHECKLIST[booking.method] },
+    { group: "질문 정리", items: PREP_COMMON },
+  ];
+  return groups.filter((g) => g.items.length > 0);
+}
 
 function icsStamp(dateKey: string, time: string, addMinutes = 0) {
   const [y, m, d] = dateKey.split("-").map(Number);

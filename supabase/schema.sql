@@ -53,6 +53,9 @@ create table if not exists public.experts (
   available_this_week boolean not null default true,
   open_slots int not null default 0,
   strengths text[] not null default '{}',
+  audiences text[] not null default '{}',   -- 'individual' | 'founder' | 'business'
+  best_for text[] not null default '{}',    -- 이런 분께 맞아요
+  outcomes text[] not null default '{}',    -- 상담 후 얻는 것
   badge text,
   accent smallint not null default 0,
   featured_rank int not null default 999,
@@ -84,6 +87,9 @@ create table if not exists public.consultation_products (
   price int not null,
   description text,
   recommended boolean not null default false,
+  recommended_for text,                     -- 이런 경우에 고르세요
+  deliverable text,                         -- 상담이 끝나면 받는 것
+  prepare text[] not null default '{}',     -- 준비하면 좋은 것
   sort_order int not null default 0
 );
 create index if not exists products_expert_idx on public.consultation_products(expert_id);
@@ -113,6 +119,9 @@ create table if not exists public.bookings (
   price int not null,
   note text,
   status booking_status not null default 'upcoming',
+  prep_done text[] not null default '{}',   -- 상담 전 준비 체크리스트에서 완료한 항목
+  rescheduled_from timestamptz,             -- 일정을 바꾼 경우 직전 일정
+  rebook_of text references public.bookings(code) on delete set null, -- 재상담이면 이전 예약번호
   created_at timestamptz not null default now()
 );
 create index if not exists bookings_user_idx on public.bookings(user_id, date desc);
@@ -133,6 +142,18 @@ create table if not exists public.reviews (
 );
 create index if not exists reviews_expert_idx on public.reviews(expert_id, created_at desc);
 
+-- 맞춤 찾기 답 (로그인 사용자의 마지막 답)
+create table if not exists public.match_answers (
+  user_id uuid primary key references public.users(id) on delete cascade,
+  topic text references public.categories(id) on delete set null,
+  who text,
+  method consult_method,
+  budget int,
+  timing text not null default 'any',       -- 'week' | 'twoWeeks' | 'any'
+  memo text,
+  updated_at timestamptz not null default now()
+);
+
 -- 찜
 create table if not exists public.favorites (
   user_id uuid not null references public.users(id) on delete cascade,
@@ -144,10 +165,13 @@ create table if not exists public.favorites (
 -- RLS: 본인 데이터만 접근, 전문가/분야/리뷰는 공개 읽기
 alter table public.bookings enable row level security;
 alter table public.favorites enable row level security;
+alter table public.match_answers enable row level security;
 
 create policy if not exists "본인 예약만 조회" on public.bookings
   for select using (auth.uid() = (select auth_id from public.users where id = user_id));
 create policy if not exists "본인 예약만 생성" on public.bookings
   for insert with check (auth.uid() = (select auth_id from public.users where id = user_id));
 create policy if not exists "본인 찜만 관리" on public.favorites
+  for all using (auth.uid() = (select auth_id from public.users where id = user_id));
+create policy if not exists "본인 맞춤 찾기 답만 관리" on public.match_answers
   for all using (auth.uid() = (select auth_id from public.users where id = user_id));

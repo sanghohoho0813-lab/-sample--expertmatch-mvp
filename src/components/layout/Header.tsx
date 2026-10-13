@@ -11,8 +11,8 @@ import { cx } from "@/lib/format";
 
 const NAV = [
   { href: "/experts", label: "전문가 찾기", match: (p: string) => p.startsWith("/experts") },
+  { href: "/match", label: "맞춤 찾기", match: (p: string) => p.startsWith("/match") },
   { href: "/experts?panel=categories", label: "상담 분야", match: () => false },
-  { href: "/#how-it-works", label: "이용방법", match: () => false },
   {
     href: "/mypage?tab=upcoming",
     label: "내 예약",

@@ -1,4 +1,5 @@
-import { BadgeCheck } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import { HeroSearch } from "@/components/home/HeroSearch";
 import { HeroShowcase } from "@/components/home/HeroShowcase";
 import { EXPERTS } from "@/lib/data/experts";
@@ -56,6 +57,20 @@ export function Hero() {
             <div className="mt-7 max-w-2xl sm:mt-8">
               <HeroSearch />
             </div>
+
+            <Link
+              href="/match"
+              className="group mt-5 flex max-w-2xl items-center gap-3 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-white transition-colors hover:border-teal-300/50 hover:bg-white/10 sm:mt-6"
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block text-md font-bold sm:text-lg">어떤 전문가가 필요한지 모르겠다면</span>
+                <span className="block text-base text-navy-200">질문 5개에 답하면 고민·예산·일정에 맞는 분을 골라 드려요</span>
+              </span>
+              <span className="inline-flex shrink-0 items-center gap-1 text-md font-bold text-teal-300">
+                맞춤 찾기
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
+              </span>
+            </Link>
 
           </div>
 

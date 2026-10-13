@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { CalendarCheck, Home, MessageCircle, Search, User } from "lucide-react";
+import { CalendarCheck, Home, ListChecks, Search, User } from "lucide-react";
 import { useAppStore } from "@/lib/store/AppStore";
 import { cx } from "@/lib/format";
 
@@ -17,14 +17,14 @@ const TABS = [
     icon: Search,
     match: (p: string) => p.startsWith("/experts"),
   },
+  { href: "/match", label: "맞춤 찾기", icon: ListChecks, match: (p: string) => p.startsWith("/match") },
   {
     href: "/mypage?tab=upcoming",
-    label: "예약",
+    label: "내 예약",
     icon: CalendarCheck,
     match: (p: string, t: string | null) =>
-      p === "/booking/complete" || (p === "/mypage" && !MY_TABS.includes(t ?? "")),
+      p === "/booking/complete" || p === "/chat" || (p === "/mypage" && !MY_TABS.includes(t ?? "")),
   },
-  { href: "/chat", label: "채팅", icon: MessageCircle, match: (p: string) => p === "/chat" },
   {
     href: "/mypage?tab=profile",
     label: "마이",
@@ -69,13 +69,13 @@ export function MobileTabBar() {
                     className="h-[22px] w-[22px]"
                     strokeWidth={active ? 2.4 : 1.9}
                   />
-                  {t.label === "예약" && ready && upcomingCount > 0 && (
+                  {t.href === "/mypage?tab=upcoming" && ready && upcomingCount > 0 && (
                     <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-2xs font-bold text-white">
                       {upcomingCount}
                     </span>
                   )}
                 </span>
-                <span className="text-sm font-semibold tracking-tight">
+                <span className="whitespace-nowrap text-xs font-semibold tracking-tight min-[390px]:text-sm">
                   {t.label}
                 </span>
               </Link>

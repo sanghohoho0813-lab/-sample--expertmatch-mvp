@@ -1,25 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  BadgeCheck,
-  ChevronRight,
-  Clock3,
-  Globe2,
-  MessagesSquare,
-  Star,
-} from "lucide-react";
+import { BadgeCheck, Check, ChevronRight, Globe2, Star } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
 import { Icon } from "@/components/ui/Icon";
 import { ExpertActions } from "@/components/expert/ExpertActions";
 import { BookingPanel } from "@/components/expert/BookingPanel";
-import { ProductList } from "@/components/expert/ProductList";
+import { ProductGuide } from "@/components/expert/ProductGuide";
 import { AvailabilityPreview } from "@/components/expert/AvailabilityPreview";
 import { ReviewList } from "@/components/expert/ReviewList";
 import { MobileBookingBar } from "@/components/expert/MobileBookingBar";
 import { TrackView } from "@/components/expert/TrackView";
 import { RecentExperts } from "@/components/experts/RecentExperts";
-import { CATEGORY_MAP } from "@/lib/data/categories";
+import { CHANGE_POLICY, ROOM_OPENS_MINUTES } from "@/lib/bookingRules";
+import { AUDIENCE_LABEL, CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
 import { EXPERTS, getExpert } from "@/lib/data/experts";
 import { reviewsForExpert } from "@/lib/data/reviews";
 import { formatCount } from "@/lib/format";
@@ -49,12 +43,40 @@ export function generateMetadata({
 }
 
 const SECTIONS = [
-  { id: "intro", label: "소개" },
-  { id: "specialties", label: "전문분야" },
-  { id: "availability", label: "상담 가능 시간" },
+  { id: "fit", label: "이런 분께" },
+  { id: "products", label: "상담 상품" },
+  { id: "availability", label: "예약 가능 시간" },
   { id: "reviews", label: "후기" },
-  { id: "career", label: "경력" },
+  { id: "about", label: "소개·경력" },
 ];
+
+/** 대표 경력으로 먼저 보여 줄 개수 — 나머지는 접어 둔다 */
+const CAREER_LEAD = 3;
+
+function CareerList({ items, muted = false }: { items: { period: string; org: string; role: string; note?: string }[]; muted?: boolean }) {
+  return (
+    <ol className="mt-4">
+      {items.map((c, i) => (
+        <li key={`${c.org}-${i}`} className="relative flex gap-4 pb-6 last:pb-0">
+          <div className="relative flex flex-col items-center">
+            <span
+              className={`mt-2 h-3 w-3 shrink-0 rounded-full ring-4 ${
+                i === 0 && !muted ? "bg-teal-600 ring-teal-100" : "bg-navy-200 ring-navy-50"
+              }`}
+            />
+            {i < items.length - 1 && <span className="mt-1 w-px flex-1 bg-navy-100" aria-hidden />}
+          </div>
+          <div className="min-w-0 flex-1 pb-1">
+            <p className="text-sm font-semibold text-teal-700">{c.period}</p>
+            <p className="mt-0.5 text-xl font-bold text-navy-900">{c.org}</p>
+            <p className="mt-0.5 text-md text-navy-600">{c.role}</p>
+            {c.note && <p className="mt-0.5 text-base text-navy-400">{c.note}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export default function ExpertDetailPage({
   params,
@@ -180,29 +202,60 @@ export default function ExpertDetailPage({
 
         {/* ── 판단을 뒷받침하는 상세 정보 ── */}
         <div className="min-w-0 space-y-12 py-8 lg:col-start-1 lg:row-start-3 lg:py-10">
-          <section id="intro" className="scroll-mt-28">
-            <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">전문가 소개</h2>
-            <p className="mt-3 whitespace-pre-line text-lg leading-[1.75] text-navy-600">
-              {expert.intro}
-            </p>
-            <p className="mt-4 inline-flex items-center gap-1.5 text-base text-navy-500">
-              <Globe2 className="h-4 w-4 text-navy-400" strokeWidth={2.2} />
-              상담 언어 · {expert.languages.join(", ")}
-            </p>
+          {/* 1. 나에게 맞는 전문가인가 */}
+          <section id="fit" className="scroll-mt-28" aria-labelledby="fit-title">
+            <h2 id="fit-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
+              이런 고민이라면 도움이 돼요
+            </h2>
+            <div className="mt-5 grid grid-cols-1 overflow-hidden rounded-2xl border border-navy-100 bg-white md:grid-cols-2">
+              <div className="p-5 sm:p-6">
+                <h3 className="text-lg font-bold text-navy-500">이런 분께 맞아요</h3>
+                <ul className="mt-3 space-y-2.5">
+                  {expert.bestFor.map((b) => (
+                    <li key={b} className="flex gap-2.5 text-lg leading-snug text-navy-800">
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-teal-600" strokeWidth={3} />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-base text-navy-500">
+                  주로 상담하는 대상 ·{" "}
+                  <span className="font-semibold text-navy-700">
+                    {expert.audiences.map((a) => AUDIENCE_LABEL[a]).join(", ")}
+                  </span>
+                </p>
+              </div>
+              <div className="border-t border-navy-100 bg-canvas/60 p-5 sm:p-6 md:border-l md:border-t-0">
+                <h3 className="text-lg font-bold text-navy-500">상담 후 얻는 것</h3>
+                <ol className="mt-3 space-y-2.5">
+                  {expert.outcomes.map((o, i) => (
+                    <li key={o} className="flex gap-3 text-lg leading-snug text-navy-800">
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy-900 text-3xs font-bold text-white">
+                        {i + 1}
+                      </span>
+                      {o}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
           </section>
 
-          <section id="specialties" className="scroll-mt-28">
-            <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">주요 전문분야</h2>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          {/* 2. 무엇을 해결해 왔나 */}
+          <section id="specialties" className="scroll-mt-28" aria-labelledby="solves-title">
+            <h2 id="solves-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
+              해결해 온 문제
+            </h2>
+            <ul className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
               {expert.specialties.map((sp) => (
-                <li key={sp.title} className="rounded-2xl border border-navy-100 bg-white p-5">
+                <li key={sp.title} className="border-t border-navy-100 py-4">
                   <h3 className="text-xl font-bold text-navy-900">{sp.title}</h3>
                   <p className="mt-1 text-md leading-relaxed text-navy-500">{sp.description}</p>
                 </li>
               ))}
             </ul>
             {/* 목록 카드에서 뺀 세부 키워드 — 누르면 같은 주제의 전문가를 찾는다 */}
-            <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="관련 키워드">
+            <ul className="mt-2 flex flex-wrap gap-1.5" aria-label="관련 키워드">
               {expert.skills.map((k) => (
                 <li key={k}>
                   <Link
@@ -216,16 +269,13 @@ export default function ExpertDetailPage({
             </ul>
           </section>
 
+          {/* 3. 어떤 상담을 고를까 */}
+          <ProductGuide expert={expert} />
+
+          {/* 4. 언제 받을 수 있나 */}
           <AvailabilityPreview expert={expert} />
 
-          {/* 모바일: 상품을 누르면 그 상품으로 바로 예약 시작 */}
-          <section id="products" className="scroll-mt-28 lg:hidden">
-            <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">상담 상품</h2>
-            <div className="mt-4">
-              <ProductList expert={expert} />
-            </div>
-          </section>
-
+          {/* 5. 받아 본 사람들은 */}
           <ReviewList
             expertId={expert.id}
             reviews={reviews}
@@ -233,48 +283,61 @@ export default function ExpertDetailPage({
             reviewCount={expert.reviewCount}
           />
 
-          <section id="career" className="scroll-mt-28">
-            <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">경력</h2>
-            <ol className="mt-4">
-              {expert.career.map((c, i) => (
-                <li key={`${c.org}-${i}`} className="relative flex gap-4 pb-6 last:pb-0">
-                  <div className="relative flex flex-col items-center">
-                    <span
-                      className={`mt-2 h-3 w-3 shrink-0 rounded-full ring-4 ${
-                        i === 0 ? "bg-teal-600 ring-teal-100" : "bg-navy-200 ring-navy-50"
-                      }`}
-                    />
-                    {i < expert.career.length - 1 && (
-                      <span className="mt-1 w-px flex-1 bg-navy-100" aria-hidden />
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1 pb-1">
-                    <p className="text-sm font-semibold text-teal-700">{c.period}</p>
-                    <p className="mt-0.5 text-xl font-bold text-navy-900">{c.org}</p>
-                    <p className="mt-0.5 text-md text-navy-600">{c.role}</p>
-                    {c.note && <p className="mt-0.5 text-base text-navy-400">{c.note}</p>}
-                  </div>
+          {/* 6. 어떤 사람인가 */}
+          <section id="about" className="scroll-mt-28" aria-labelledby="about-title">
+            <h2 id="about-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
+              전문가 소개
+            </h2>
+            <p className="mt-3 whitespace-pre-line text-lg leading-[1.75] text-navy-600">{expert.intro}</p>
+            <p className="mt-4 inline-flex items-center gap-1.5 text-base text-navy-500">
+              <Globe2 className="h-4 w-4 text-navy-400" strokeWidth={2.2} />
+              상담 언어 · {expert.languages.join(", ")}
+            </p>
+
+            <h3 id="career" className="mt-8 scroll-mt-28 text-2xl font-bold text-navy-900">
+              대표 경력
+            </h3>
+            <CareerList items={expert.career.slice(0, CAREER_LEAD)} />
+            {expert.career.length > CAREER_LEAD && (
+              <details className="group mt-2">
+                <summary className="inline-flex min-h-[44px] cursor-pointer list-none items-center gap-1 text-md font-semibold text-teal-700 hover:text-teal-800 [&::-webkit-details-marker]:hidden">
+                  이전 경력 {expert.career.length - CAREER_LEAD}개 더 보기
+                  <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" strokeWidth={2.4} />
+                </summary>
+                <CareerList items={expert.career.slice(CAREER_LEAD)} muted />
+              </details>
+            )}
+          </section>
+
+          {/* 7. 예약하면 어떻게 진행되나 */}
+          <section aria-labelledby="process-title" className="rounded-2xl border border-navy-100 bg-white p-5 sm:p-6">
+            <h2 id="process-title" className="text-2xl font-bold text-navy-900">
+              상담은 이렇게 진행돼요
+            </h2>
+            <ol className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4">
+              {[
+                { t: "예약·질문 전달", d: "날짜와 시간을 고르고 궁금한 점을 남겨요" },
+                { t: "상담 전 준비", d: "상품별 준비물을 체크리스트로 확인해요" },
+                {
+                  t: "상담방 입장",
+                  d: `시작 ${ROOM_OPENS_MINUTES}분 전부터 ${expert.methods.map((m) => METHOD_LABEL[m].replace("상담", "")).join("·")}으로 만나요`,
+                },
+                { t: "정리·후기", d: "상담 결과를 받고 후기와 재상담을 이어가요" },
+              ].map((step, i) => (
+                <li key={step.t} className="flex gap-3 sm:block">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-navy-200 text-3xs font-bold text-navy-600">
+                    {i + 1}
+                  </span>
+                  <span className="block sm:mt-2">
+                    <span className="block text-lg font-bold text-navy-900">{step.t}</span>
+                    <span className="mt-0.5 block text-md leading-snug text-navy-500">{step.d}</span>
+                  </span>
                 </li>
               ))}
             </ol>
-          </section>
-
-          <section className="rounded-2xl border border-navy-100 bg-white p-5">
-            <h2 className="text-xl font-bold text-navy-900">상담 전 알아두세요</h2>
-            <ul className="mt-3 space-y-2 text-md leading-relaxed text-navy-600">
-              <li className="flex gap-2">
-                <Clock3 className="mt-1.5 h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
-                예약할 때 남긴 질문은 상담 전에 전문가에게 전달돼요.
-              </li>
-              <li className="flex gap-2">
-                <MessagesSquare className="mt-1.5 h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
-                일정 변경·취소는 마이페이지에서 할 수 있어요.
-              </li>
-              <li className="flex gap-2">
-                <BadgeCheck className="mt-1.5 h-4 w-4 shrink-0 text-teal-600" strokeWidth={2.2} />
-                데모 서비스로, 실제 결제와 상담은 진행되지 않아요.
-              </li>
-            </ul>
+            <p className="mt-5 border-t border-navy-100 pt-4 text-base leading-relaxed text-navy-500">
+              {CHANGE_POLICY}. 데모 서비스로 실제 결제와 상담은 진행되지 않아요.
+            </p>
           </section>
 
           <RecentExperts exclude={expert.id} />

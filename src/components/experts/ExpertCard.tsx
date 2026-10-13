@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { Check, CheckCircle2, GitCompareArrows, Heart, Star } from "lucide-react";
+import { FitList } from "@/components/match/FitList";
 import { Portrait } from "@/components/ui/Portrait";
 import { Icon } from "@/components/ui/Icon";
 import { CATEGORY_MAP } from "@/lib/data/categories";
 import { useAppStore } from "@/lib/store/AppStore";
 import { useExpertAvailability } from "@/lib/useAvailability";
 import { cx, formatCount, formatPrice, formatSlotLabel } from "@/lib/format";
+import type { Fit } from "@/lib/needs";
 import type { Expert } from "@/lib/types";
 
 function Rating({ expert }: { expert: Expert }) {
@@ -57,10 +59,13 @@ function EarliestLine({ expert }: { expert: Expert }) {
 export function ExpertCard({
   expert,
   reasons = [],
+  fits,
 }: {
   expert: Expert;
   /** 검색 조건과 일치하는 근거 (matchReasons) */
   reasons?: string[];
+  /** 맞춤 찾기 조건별 대조 결과 — 맞는 조건을 먼저, 아닌 조건은 흐리게 */
+  fits?: Fit[];
 }) {
   const { isFavorite, toggleFavorite, isComparing, toggleCompare, ready } =
     useAppStore();
@@ -135,7 +140,11 @@ export function ExpertCard({
       <p className="mt-2 line-clamp-2 text-lg leading-snug text-navy-700">{expert.headline}</p>
 
       {/* 3. 검색 조건과 일치하는 근거 */}
-      {reasons.length > 0 && (
+      {fits && fits.length > 0 ? (
+        <div className="mt-3">
+          <FitList fits={fits} compact />
+        </div>
+      ) : reasons.length > 0 && (
         <ul className="mt-2.5 flex flex-col gap-1" aria-label="조건 일치 이유">
           {reasons.map((r) => (
             <li key={r} className="flex items-center gap-1.5 text-base font-semibold text-teal-800">

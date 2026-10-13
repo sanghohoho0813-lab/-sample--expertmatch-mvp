@@ -4,13 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import {
   CalendarCheck,
+  CalendarClock,
   ClipboardList,
   Clock3,
+  DoorOpen,
   PenLine,
   RotateCcw,
 } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
 import { Stars } from "@/components/ui/Stars";
+import { canChange, roomState } from "@/lib/bookingRules";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { cx, dDay, formatDateKorean, formatPrice, formatTimeKorean } from "@/lib/format";
 import type { Booking, BookingStatus, MyReview } from "@/lib/types";
@@ -46,6 +49,9 @@ export function BookingRow({
   const badge = STATUS_BADGE[status];
 
   const cancelled = status === "cancelled";
+  const changeable = status === "upcoming" && now ? canChange(booking, now) : false;
+  const roomOpen = status === "upcoming" && now ? roomState(booking, now) === "open" : false;
+  const prepTotal = booking.prepDone?.length ?? 0;
 
   return (
     <li
@@ -97,7 +103,10 @@ export function BookingRow({
         <p className="mt-0.5 text-base leading-snug text-navy-500">
           {METHOD_LABEL[booking.method]} · {booking.productName} · {formatPrice(booking.price)}원
         </p>
-        <p className="mt-1 font-mono text-xs text-navy-400">예약번호 {booking.code}</p>
+        <p className="mt-1 font-mono text-xs text-navy-400">
+          예약번호 {booking.code}
+          {booking.rescheduledFrom && !cancelled && <span className="ml-2 font-sans">· 일정 변경됨</span>}
+        </p>
       </div>
 
       {review && (
@@ -136,23 +145,52 @@ export function BookingRow({
         <div className="mt-3.5">
           {status === "upcoming" && (
             <>
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
-                <Link href={`/booking/complete?code=${booking.code}`} className={ghostBtn}>
-                  <ClipboardList className="h-4 w-4" strokeWidth={2.2} />
-                  일정·준비사항
-                </Link>
-                <button type="button" onClick={() => setConfirming(true)} className={ghostBtn}>
-                  예약 취소
+              <div className={cx("grid gap-2 sm:flex sm:justify-end", changeable ? "grid-cols-3" : "grid-cols-2")}>
+                {roomOpen ? (
+                  <Link
+                    href={`/chat?code=${booking.code}`}
+                    className="inline-flex min-h-[44px] items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-600 px-3 text-md font-bold text-white transition-colors hover:bg-teal-700 sm:min-w-[150px]"
+                  >
+                    <DoorOpen className="h-4 w-4" strokeWidth={2.2} />
+                    상담방 입장
+                  </Link>
+                ) : (
+                  <Link href={`/booking/complete?code=${booking.code}`} className={ghostBtn}>
+                    <ClipboardList className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
+                    상세·준비
+                  </Link>
+                )}
+                {changeable ? (
+                  <>
+                    <Link href={`/booking/reschedule?code=${booking.code}`} className={ghostBtn}>
+                      <CalendarClock className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
+                      일정 변경
+                    </Link>
+                    <button type="button" onClick={() => setConfirming(true)} className={ghostBtn}>
+                      예약 취소
+                    </button>
+                  </>
+                ) : (
+                  <Link href={`/chat?code=${booking.code}`} className={ghostBtn}>
+                    상담방
+                  </Link>
+                )}
+              </div>
+              <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-3">
+                {prepTotal > 0 ? (
+                  <span className="text-sm text-navy-400">준비 체크 {prepTotal}개 완료</span>
+                ) : (
+                  <span className="text-sm text-navy-400">상담 전 준비를 확인해 보세요</span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => onComplete(booking.id)}
+                  className="inline-flex min-h-[40px] items-center gap-1.5 px-1 text-sm font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
+                >
+                  <CalendarCheck className="h-4 w-4" strokeWidth={2.2} />
+                  데모: 상담 완료로 표시
                 </button>
               </div>
-              <button
-                type="button"
-                onClick={() => onComplete(booking.id)}
-                className="mt-1.5 inline-flex min-h-[40px] items-center gap-1.5 px-1 text-sm font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
-              >
-                <CalendarCheck className="h-4 w-4" strokeWidth={2.2} />
-                데모: 상담 완료로 표시
-              </button>
             </>
           )}
           {status !== "upcoming" && (
@@ -171,9 +209,16 @@ export function BookingRow({
                   프로필 보기
                 </Link>
               )}
-              <Link href={`/booking/${booking.expertId}?product=${booking.productId}`} className={ghostBtn}>
+              <Link
+                href={
+                  status === "done"
+                    ? `/booking/${booking.expertId}?product=${booking.productId}&rebook=${booking.code}`
+                    : `/booking/${booking.expertId}?product=${booking.productId}`
+                }
+                className={ghostBtn}
+              >
                 <RotateCcw className="h-4 w-4" strokeWidth={2.2} />
-                다시 예약
+                {status === "done" ? "재상담 예약" : "다시 예약"}
               </Link>
             </div>
           )}

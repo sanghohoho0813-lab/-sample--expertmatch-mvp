@@ -6,9 +6,10 @@ test.describe("예약", () => {
     await bookFromDetail(page);
 
     await expect(page.getByRole("heading", { name: "상담 예약이 완료되었습니다" })).toBeVisible();
-    await expect(page.getByText("상담 전 준비사항")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "상담 전 준비" })).toBeVisible();
+    await expect(page.getByRole("list", { name: "상담 진행 단계" })).toContainText("상담 준비");
 
-    await page.getByRole("link", { name: "내 예약 확인" }).click();
+    await page.getByRole("link", { name: "내 예약 전체 보기" }).click();
     await expect(page.locator('li[data-status="upcoming"]')).toHaveCount(1);
     await expect(page.getByText("예약 확정")).toBeVisible();
 

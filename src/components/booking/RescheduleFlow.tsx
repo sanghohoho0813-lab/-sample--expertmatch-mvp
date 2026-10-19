@@ -1,5 +1,6 @@
 "use client";
 
+import { photoFor } from "@/lib/data/experts";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -102,7 +103,7 @@ function Picker({ booking }: { booking: Booking }) {
           <Portrait
             name={booking.expertName}
             accent={booking.expertAccent}
-            photo={booking.expertPhoto}
+            photo={photoFor(booking.expertId, booking.expertPhoto)}
             rounded="rounded-xl"
             sizes="40px"
             className="h-10 w-10 shrink-0"

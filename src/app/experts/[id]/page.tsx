@@ -53,6 +53,32 @@ const SECTIONS = [
 /** 대표 경력으로 먼저 보여 줄 개수 — 나머지는 접어 둔다 */
 const CAREER_LEAD = 3;
 
+/** 분야 · 인증 · 이름 · 직함 · 소속 — 사진 위(모바일)와 사진 옆(데스크톱)에서 함께 쓴다 */
+function ExpertIdentity({ expert }: { expert: NonNullable<ReturnType<typeof getExpert>> }) {
+  const primary = CATEGORY_MAP[expert.categories[0]];
+  return (
+    <>
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span className="inline-flex items-center gap-1.5 rounded-lg bg-navy-900/60 px-2 py-1 text-sm font-semibold text-teal-200 ring-1 ring-white/10 backdrop-blur-sm lg:bg-teal-500/15 lg:ring-0">
+          <Icon name={primary.icon} className="h-4 w-4" />
+          {primary.name}
+        </span>
+        {expert.badge && (
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-gold-300">
+            <BadgeCheck className="h-4 w-4" strokeWidth={2.4} />
+            {expert.badge}
+          </span>
+        )}
+      </div>
+      <h1 className="mt-2 text-7xl font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-8xl">
+        {expert.name}
+      </h1>
+      <p className="mt-0.5 text-xl font-semibold leading-snug text-teal-200 sm:text-2xl">{expert.title}</p>
+      <p className="mt-1 text-base text-navy-200">{expert.affiliation}</p>
+    </>
+  );
+}
+
 function CareerList({ items, muted = false }: { items: { period: string; org: string; role: string; note?: string }[]; muted?: boolean }) {
   return (
     <ol className="mt-4">
@@ -97,10 +123,30 @@ export default function ExpertDetailPage({
       */}
       <div className="shell lg:grid lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-x-10">
         {/* ── 누구인지 · 무엇을 잘하는지 · 신뢰 지표 ── */}
-        <section className="relative bg-navy-900 py-6 shadow-[0_0_0_100vmax_#16294B] [clip-path:inset(0_-100vmax)] sm:py-10 lg:col-start-1 lg:row-start-1">
+        <section className="relative bg-navy-900 pb-6 shadow-[0_0_0_100vmax_#16294B] [clip-path:inset(0_-100vmax)] sm:pb-10 lg:col-start-1 lg:row-start-1 lg:py-10">
+          {/* 모바일·태블릿: 사진이 화면을 여는 프로필 */}
+          <div className="relative -mx-5 sm:-mx-6 lg:hidden">
+            <Portrait
+              name={expert.name}
+              accent={expert.accent}
+              photo={expert.photo}
+              rounded="rounded-none"
+              priority
+              sizes="100vw"
+              className="aspect-square w-full sm:aspect-[16/10]"
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy-900 via-navy-900/70 to-transparent"
+              aria-hidden
+            />
+            <div className="absolute inset-x-0 bottom-0 px-5 pb-1 sm:px-6">
+              <ExpertIdentity expert={expert} />
+            </div>
+          </div>
+
           <nav
             aria-label="현재 위치"
-            className="flex flex-wrap items-center gap-1 text-sm text-navy-300"
+            className="hidden flex-wrap items-center gap-1 text-sm text-navy-300 lg:flex"
           >
             <Link href="/" className="transition-colors hover:text-white">
               홈
@@ -118,61 +164,52 @@ export default function ExpertDetailPage({
             </Link>
           </nav>
 
-          <div className="mt-5 flex items-start gap-4 sm:mt-6 sm:gap-6">
+          {/* 데스크톱: 사진 + 이름 나란히 */}
+          <div className="mt-6 hidden items-end gap-6 lg:flex">
             <Portrait
               name={expert.name}
               accent={expert.accent}
               photo={expert.photo}
               rounded="rounded-2xl"
               priority
-              sizes="(max-width: 640px) 104px, 168px"
-              className="h-[104px] w-[104px] shrink-0 ring-1 ring-white/15 sm:h-[168px] sm:w-[168px]"
+              sizes="184px"
+              className="h-[184px] w-[184px] shrink-0 ring-1 ring-white/15"
             />
-
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-teal-500/15 px-2 py-1 text-sm font-semibold text-teal-200">
-                  <Icon name={primary.icon} className="h-4 w-4" />
-                  {primary.name}
-                </span>
-                {expert.badge && (
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-gold-300">
-                    <BadgeCheck className="h-4 w-4" strokeWidth={2.4} />
-                    {expert.badge}
-                  </span>
-                )}
-              </div>
-              <h1 className="mt-2 text-6xl font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-8xl">
-                {expert.name}
-              </h1>
-              <p className="mt-0.5 text-lg font-semibold leading-snug text-teal-200 sm:text-2xl">
-                {expert.title}
-              </p>
-              <p className="mt-1 hidden text-base text-navy-300 sm:block">{expert.affiliation}</p>
+            <div className="min-w-0 flex-1 pb-1">
+              <ExpertIdentity expert={expert} />
             </div>
           </div>
 
-          <p className="mt-3 text-base text-navy-300 sm:hidden">{expert.affiliation}</p>
-
-          {/* 신뢰 지표 */}
-          <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-md text-navy-200 sm:mt-5">
-            <span className="inline-flex items-center gap-1.5">
-              <Star className="h-4 w-4 text-amber-400" fill="currentColor" strokeWidth={0} />
-              <span className="font-bold text-white">{expert.rating.toFixed(1)}</span>
-              <a href="#reviews" className="underline-offset-2 hover:underline">
-                후기 {formatCount(expert.reviewCount)}
-              </a>
-            </span>
-            <span>
-              상담 <span className="font-bold text-white">{formatCount(expert.consultCount)}</span>회
-            </span>
-            <span>
-              경력 <span className="font-bold text-white">{expert.yearsOfExperience}</span>년
-            </span>
-          </p>
+          {/* 신뢰 지표 — 세 칸으로 나란히 */}
+          <dl className="mt-5 grid grid-cols-3 rounded-2xl border border-white/10 bg-white/[0.04] py-3.5 sm:mt-6">
+            <div className="px-4">
+              <dt className="text-sm text-navy-300">평점</dt>
+              <dd className="mt-0.5 flex items-center gap-1 text-2xl font-bold text-white">
+                <Star className="h-4 w-4 text-amber-400" fill="currentColor" strokeWidth={0} />
+                {expert.rating.toFixed(1)}
+                <a href="#reviews" className="ml-0.5 text-base font-medium text-navy-200 underline-offset-2 hover:underline">
+                  ({formatCount(expert.reviewCount)})
+                </a>
+              </dd>
+            </div>
+            <div className="border-l border-white/10 px-4">
+              <dt className="text-sm text-navy-300">상담</dt>
+              <dd className="mt-0.5 text-2xl font-bold text-white">
+                {formatCount(expert.consultCount)}
+                <span className="ml-0.5 text-base font-medium text-navy-200">회</span>
+              </dd>
+            </div>
+            <div className="border-l border-white/10 px-4">
+              <dt className="text-sm text-navy-300">경력</dt>
+              <dd className="mt-0.5 text-2xl font-bold text-white">
+                {expert.yearsOfExperience}
+                <span className="ml-0.5 text-base font-medium text-navy-200">년</span>
+              </dd>
+            </div>
+          </dl>
 
           {/* 어떤 문제를 잘 해결하는지 */}
-          <p className="mt-3 max-w-2xl text-lg leading-relaxed text-white sm:text-2xl">
+          <p className="mt-4 max-w-2xl text-xl leading-relaxed text-white sm:mt-5 sm:text-2xl">
             {expert.headline}
           </p>
 

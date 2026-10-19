@@ -15,11 +15,11 @@ export function CategoryGrid() {
   );
 
   return (
-    <section className="shell py-12 sm:py-20">
+    <section className="shell py-10 sm:py-20">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="section-title">어떤 분야가 필요하세요?</h2>
-          <p className="section-sub">분야를 고르면 맞는 전문가만 보여드려요.</p>
+          <p className="section-sub hidden sm:block">분야를 고르면 맞는 전문가만 보여드려요.</p>
         </div>
         <Link
           href="/experts?panel=categories"
@@ -31,7 +31,7 @@ export function CategoryGrid() {
       </div>
 
       {/* 모바일: 원형 아이콘 그리드 */}
-      <ul className="mt-7 grid grid-cols-4 gap-x-2 gap-y-5 sm:hidden">
+      <ul className="mt-6 grid grid-cols-4 gap-x-2 gap-y-5 sm:hidden">
         {/* 7개 분야 + 전체 = 4×2 로 딱 맞춘다 */}
         {items.slice(0, 7).map((cat) => {
           const tone = CATEGORY_TONE[cat.id];
@@ -43,13 +43,13 @@ export function CategoryGrid() {
               >
                 <span
                   className={cx(
-                    "flex h-[68px] w-[68px] items-center justify-center rounded-full border border-white shadow-card transition-transform duration-200 active:scale-95",
+                    "flex h-[64px] w-[64px] items-center justify-center rounded-2xl transition-transform duration-200 active:scale-95",
                     tone.tile,
                   )}
                 >
                   <Icon name={cat.icon} className="h-7 w-7" />
                 </span>
-                <span className="text-center text-base font-semibold text-navy-800">
+                <span className="text-center text-base font-medium text-navy-800">
                   {cat.name}
                 </span>
               </Link>
@@ -61,10 +61,10 @@ export function CategoryGrid() {
             href="/experts?panel=categories"
             className="flex flex-col items-center gap-2.5"
           >
-            <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full border border-white bg-cream-100 text-navy-500 shadow-card">
+            <span className="flex h-[64px] w-[64px] items-center justify-center rounded-2xl bg-cream-100 text-navy-500">
               <LayoutGrid className="h-7 w-7" strokeWidth={1.9} />
             </span>
-            <span className="text-center text-base font-semibold text-navy-800">
+            <span className="text-center text-base font-medium text-navy-800">
               전체
             </span>
           </Link>

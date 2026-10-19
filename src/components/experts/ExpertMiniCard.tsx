@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Portrait } from "@/components/ui/Portrait";
+import { CATEGORY_MAP } from "@/lib/data/categories";
 import { useExpertAvailability } from "@/lib/useAvailability";
 import { cx, formatCount, formatPrice, formatSlotLabel } from "@/lib/format";
 import type { Expert } from "@/lib/types";
@@ -20,46 +21,38 @@ export function ExpertMiniCard({ expert, className }: { expert: Expert; classNam
     : null;
 
   return (
-    <Link
-      href={`/experts/${expert.id}`}
-      className={cx(
-        "group flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card transition-[border-color,box-shadow] duration-200 hover:border-navy-200 hover:shadow-card-hover",
-        className,
-      )}
-    >
-      <Portrait
-        name={expert.name}
-        accent={expert.accent}
-        photo={expert.photo}
-        rounded="rounded-none"
-        sizes="(min-width: 1024px) 300px, 280px"
-        className="aspect-square w-full"
-      />
-      <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <p className="text-2xl font-bold leading-tight text-navy-900">
+    <Link href={`/experts/${expert.id}`} className={cx("group flex flex-col", className)}>
+      <div className="relative overflow-hidden rounded-2xl bg-navy-100">
+        <Portrait
+          name={expert.name}
+          accent={expert.accent}
+          photo={expert.photo}
+          rounded="rounded-2xl"
+          sizes="(min-width: 1024px) 300px, 280px"
+          className="aspect-square w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        />
+        <span className="absolute left-3 top-3 rounded-lg bg-white/95 px-2 py-1 text-sm font-semibold text-navy-800 shadow-sm">
+          {CATEGORY_MAP[expert.categories[0]].name}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col px-0.5 pt-3.5">
+        <p className="text-2xl font-bold leading-tight text-navy-900 transition-colors group-hover:text-teal-700">
           {expert.name}
-          <span className="ml-1 text-sm font-semibold text-navy-400">전문가</span>
+          <span className="ml-1 text-sm font-medium text-navy-400">전문가</span>
         </p>
         <p className="mt-1 truncate text-base text-navy-500">{expert.title}</p>
         <p className="mt-1.5 inline-flex items-center gap-1 text-base">
           <Star className="h-4 w-4 text-amber-500" fill="currentColor" strokeWidth={0} />
-          <span className="font-bold text-navy-900">{expert.rating.toFixed(1)}</span>
+          <span className="font-semibold text-navy-900">{expert.rating.toFixed(1)}</span>
           <span className="text-navy-400">후기 {formatCount(expert.reviewCount)}</span>
         </p>
-        <div className="mt-auto pt-3">
-          <p className="text-lg font-extrabold text-navy-900">
-            {formatPrice(lead.price)}
-            <span className="text-sm font-semibold text-navy-500">원~</span>
-          </p>
-          <p
-            className={cx(
-              "mt-0.5 text-sm font-semibold",
-              label ? "text-teal-700" : "text-navy-400",
-            )}
-          >
-            {!avail ? "예약 가능 시간 확인 중" : label ? `${label} 가능` : "이번 주 예약 마감"}
-          </p>
-        </div>
+        <p className="mt-auto pt-2.5 text-xl font-bold text-navy-900">
+          {formatPrice(lead.price)}
+          <span className="text-base font-medium text-navy-500">원~</span>
+        </p>
+        <p className={cx("mt-0.5 text-sm font-semibold", label ? "text-teal-700" : "text-navy-400")}>
+          {!avail ? "예약 가능 시간 확인 중" : label ? `${label} 예약 가능` : "이번 주 예약 마감"}
+        </p>
       </div>
     </Link>
   );

@@ -76,7 +76,7 @@ export function ProductGuide({ expert }: { expert: Expert }) {
                     ? "bg-navy-900 text-white hover:bg-navy-800"
                     : "border border-navy-200 bg-white text-navy-800 hover:bg-navy-50",
                 )}
-                aria-label={`${p.name} ${p.minutes}분으로 예약`}
+                aria-label={`이 상담으로 예약 — ${p.name}`}
               >
                 이 상담으로 예약
                 <ArrowRight className="h-4 w-4" strokeWidth={2.4} />

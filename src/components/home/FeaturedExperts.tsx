@@ -15,7 +15,7 @@ export function FeaturedExperts() {
         <div className="flex items-end justify-between gap-4">
           <div className="min-w-0">
             <h2 className="section-title">이번 주 추천 전문가</h2>
-            <p className="section-sub">평점과 상담 만족도가 높은 전문가예요.</p>
+            <p className="section-sub">평점과 상담 만족도가 높고, 이번 주에 바로 예약할 수 있어요.</p>
           </div>
           <Link
             href="/experts"
@@ -27,11 +27,11 @@ export function FeaturedExperts() {
         </div>
 
         {/* 모바일·태블릿: 옆으로 넘겨 보기 / 데스크톱: 4명 그리드 */}
-        <ul className="no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0">
+        <ul className="no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0">
           {featured.map((expert, i) => (
             <li
               key={expert.id}
-              className={cx("w-[72%] max-w-[280px] shrink-0 snap-start lg:w-auto lg:max-w-none", i >= 4 && "lg:hidden")}
+              className={cx("w-[64%] max-w-[260px] shrink-0 snap-start lg:w-auto lg:max-w-none", i >= 4 && "lg:hidden")}
             >
               <ExpertMiniCard expert={expert} className="h-full" />
             </li>

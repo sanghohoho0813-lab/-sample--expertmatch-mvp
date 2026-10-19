@@ -1,5 +1,6 @@
 "use client";
 
+import { photoFor } from "@/lib/data/experts";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -93,7 +94,7 @@ export function ChatClient() {
                 <Portrait
                   name={b.expertName}
                   accent={b.expertAccent}
-                  photo={b.expertPhoto}
+                  photo={photoFor(b.expertId, b.expertPhoto)}
                   rounded="rounded-xl"
                   sizes="56px"
                   className={cx("h-14 w-14 shrink-0", status === "done" && "opacity-70")}
@@ -167,7 +168,7 @@ function Room({ booking, now }: { booking: Booking; now: Date | null }) {
         <Portrait
           name={booking.expertName}
           accent={booking.expertAccent}
-          photo={booking.expertPhoto}
+          photo={photoFor(booking.expertId, booking.expertPhoto)}
           rounded="rounded-2xl"
           sizes="64px"
           className="h-16 w-16 shrink-0"

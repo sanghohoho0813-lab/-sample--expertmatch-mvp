@@ -23,52 +23,37 @@ const STEPS = [
   },
 ];
 
+/**
+ * 이용 흐름 — 밝은 바탕의 번호 타임라인.
+ * 홈의 어두운 면은 첫 화면(히어로)과 마지막 CTA 두 곳만 남겨 리듬을 만든다.
+ */
 export function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="relative scroll-mt-24 overflow-hidden bg-navy-900 py-12 sm:py-20"
-    >
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(110%_100%_at_80%_0%,#22406E_0%,#16294B_55%,#0C1B36_100%)]"
-        aria-hidden
-      />
-
-      <div className="shell relative">
-        <div className="max-w-xl">
-          <h2 className="text-5xl font-bold leading-tight tracking-[-0.02em] text-white sm:text-7xl">
-            고민 정리부터 재상담까지 한 흐름으로
-          </h2>
-          <p className="mt-2 text-lg leading-relaxed text-navy-200 sm:text-xl">
-            누구에게 물어야 할지 몰라도 괜찮아요. 고르는 일부터 도와 드려요.
-          </p>
+    <section id="how-it-works" className="scroll-mt-24 border-y border-cream-200 bg-cream-50 py-12 sm:py-20">
+      <div className="shell">
+        <div className="max-w-2xl">
+          <p className="text-base font-semibold text-gold-700">이용 흐름</p>
+          <h2 className="section-title mt-1.5">고민 정리부터 재상담까지 한 흐름으로</h2>
+          <p className="section-sub">누구에게 물어야 할지 몰라도 괜찮아요. 고르는 일부터 도와 드려요.</p>
         </div>
 
-        <ol className="mt-7 grid sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <ol className="relative mt-8 grid gap-0 sm:mt-12 lg:grid-cols-4 lg:gap-8">
+          {/* 데스크톱: 번호를 잇는 가로선 */}
+          <span className="absolute left-6 right-6 top-6 hidden h-px bg-gold-200 lg:block" aria-hidden />
           {STEPS.map((step, i) => {
             const StepIcon = step.icon;
+            const last = i === STEPS.length - 1;
             return (
-              <li
-                key={step.title}
-                className="relative flex gap-4 border-b border-white/10 py-4 last:border-0 sm:block sm:overflow-hidden sm:rounded-2xl sm:border sm:bg-white/[0.05] sm:p-6 sm:last:border"
-              >
-                <span
-                  className="pointer-events-none absolute -right-2 -top-5 hidden text-mega font-extrabold leading-none text-white/[0.06] sm:block"
-                  aria-hidden
-                >
-                  {i + 1}
+              <li key={step.title} className="relative flex gap-4 pb-7 last:pb-0 lg:block lg:pb-0">
+                {/* 모바일: 번호를 잇는 세로선 */}
+                {!last && <span className="absolute bottom-0 left-6 top-12 w-px bg-gold-200 lg:hidden" aria-hidden />}
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-gold-200 bg-white text-navy-800 shadow-card">
+                  <StepIcon className="h-5 w-5" strokeWidth={2} />
                 </span>
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white sm:h-[52px] sm:w-[52px]">
-                  <StepIcon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2} />
-                </span>
-                <div className="relative min-w-0 sm:mt-5">
-                  <h3 className="text-lg font-bold text-white sm:text-2xl">
-                    <span className="mr-1.5 text-teal-300 sm:hidden">{i + 1}.</span>
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-base leading-relaxed text-navy-200 sm:mt-2 sm:text-md">
-                    {step.body}
-                  </p>
+                <div className="min-w-0 pt-1 lg:mt-5 lg:pt-0">
+                  <p className="text-sm font-semibold text-gold-700">STEP {i + 1}</p>
+                  <h3 className="mt-0.5 text-2xl font-bold text-navy-900">{step.title}</h3>
+                  <p className="mt-1.5 text-md leading-relaxed text-navy-500">{step.body}</p>
                 </div>
               </li>
             );

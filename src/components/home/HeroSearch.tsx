@@ -64,7 +64,7 @@ export function HeroSearch() {
           }}
           role="search"
           className={cx(
-            "flex flex-col gap-2 rounded-2xl bg-white p-2 transition-all duration-300 sm:flex-row sm:items-center sm:rounded-[20px]",
+            "flex items-center gap-1.5 rounded-2xl bg-white p-1.5 transition-shadow duration-300 sm:gap-2 sm:rounded-[20px] sm:p-2",
             focused
               ? "shadow-[0_0_0_4px_rgba(18,179,168,0.35),0_24px_50px_-24px_rgba(0,0,0,0.6)]"
               : "shadow-[0_20px_44px_-24px_rgba(0,0,0,0.55)]",
@@ -73,8 +73,8 @@ export function HeroSearch() {
           <label htmlFor="hero-search" className="sr-only">
             어떤 분야의 전문가가 필요하신가요?
           </label>
-          <div className="flex min-w-0 flex-1 items-center gap-2.5 px-3">
-            <Search className="h-6 w-6 shrink-0 text-navy-300" strokeWidth={2.2} />
+          <div className="flex min-w-0 flex-1 items-center gap-2.5 pl-3">
+            <Search className="h-5 w-5 shrink-0 text-navy-300 sm:h-6 sm:w-6" strokeWidth={2.2} />
             <input
               id="hero-search"
               ref={inputRef}
@@ -87,7 +87,7 @@ export function HeroSearch() {
               onBlur={() => setFocused(false)}
               onKeyDown={onKeyDown}
               placeholder="분야·고민을 검색해 보세요"
-              className="h-14 w-full min-w-0 bg-transparent text-lg text-navy-900 outline-none placeholder:text-navy-300 sm:h-[60px]"
+              className="h-12 w-full min-w-0 bg-transparent text-lg text-navy-900 outline-none placeholder:text-navy-300 sm:h-[60px]"
               autoComplete="off"
               role="combobox"
               aria-expanded={open}
@@ -95,12 +95,14 @@ export function HeroSearch() {
               aria-autocomplete="list"
             />
           </div>
+          {/* 모바일은 아이콘 버튼 하나로 — 검색창을 한 줄에 */}
           <button
             type="submit"
-            className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-xl bg-teal-600 px-7 text-md font-bold text-white transition-all duration-200 hover:bg-teal-700 active:scale-[0.98] sm:h-[60px] sm:rounded-[14px] sm:px-8"
+            aria-label="전문가 찾기"
+            className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white transition-colors duration-200 hover:bg-teal-700 active:scale-[0.97] sm:h-[60px] sm:w-auto sm:gap-2 sm:rounded-[14px] sm:px-8"
           >
             <Search className="h-5 w-5 sm:hidden" strokeWidth={2.6} />
-            전문가 찾기
+            <span className="hidden text-md font-bold sm:inline">전문가 찾기</span>
           </button>
         </form>
 
@@ -114,7 +116,7 @@ export function HeroSearch() {
       </div>
 
       {/* 모바일은 한 줄 가로 스크롤로 — 히어로 높이를 줄인다 */}
-      <div className="no-scrollbar -mx-5 mt-4 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
+      <div className="no-scrollbar -mx-5 mt-3.5 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
         <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-teal-300">
           <Sparkles className="h-4 w-4" strokeWidth={2.4} />
           인기 검색어

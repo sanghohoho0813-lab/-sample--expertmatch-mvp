@@ -1,5 +1,6 @@
 "use client";
 
+import { photoFor } from "@/lib/data/experts";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -26,7 +27,7 @@ import { effectiveStatus } from "@/lib/availability";
 import { roomState } from "@/lib/bookingRules";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { useAppStore } from "@/lib/store/AppStore";
-import { cx, dDay, formatDateFull, formatPrice, formatTimeKorean } from "@/lib/format";
+import { cx, dDay, formatDateFull, formatDateKorean, formatPrice, formatTimeKorean } from "@/lib/format";
 import { downloadIcs } from "@/lib/prep";
 import { useNow } from "@/lib/useAvailability";
 
@@ -151,7 +152,7 @@ export function BookingComplete() {
               </div>
             </>
           ) : (
-            // 마이페이지에서 다시 열었을 때는 축하 대신 '예약 상세'로
+            // 마이페이지에서 다시 열었을 때는 축하 대신 상태 카드로 — 언제 · 누구와 · 지금 어느 단계인지
             <div>
               <Link
                 href={status === "done" ? "/mypage?tab=done" : "/mypage?tab=upcoming"}
@@ -159,25 +160,41 @@ export function BookingComplete() {
               >
                 <ChevronLeft className="h-4 w-4" strokeWidth={2.4} />내 예약
               </Link>
-              <h1 className="mt-2 text-5xl font-extrabold tracking-tight text-navy-900 sm:text-6xl">
-                {status === "done" ? "상담 완료" : "예약 상세"}
-              </h1>
-              {now && (
-                <p className={cx("mt-1 text-lg font-semibold", status === "done" ? "text-navy-500" : "text-teal-700")}>
-                  {status === "done" ? "" : `${dDay(booking.date, now)} · `}
-                  {formatDateFull(booking.date)} {formatTimeKorean(booking.time)}
-                </p>
-              )}
+              <section className="mt-2 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up">
+                <div className="bg-navy-900 px-5 pb-5 pt-4 text-white">
+                  <h1 className="flex flex-wrap items-center gap-x-2 text-md font-semibold text-teal-300">
+                    {status === "done" ? "상담 완료" : "예약 확정"}
+                    {status === "upcoming" && now && (
+                      <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-sm font-bold text-white">
+                        {dDay(booking.date, now)}
+                      </span>
+                    )}
+                    <span className="sr-only">· 예약 상세</span>
+                  </h1>
+                  <p className="mt-1.5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                    {formatDateKorean(booking.date)}
+                    <span className="block text-teal-200">{formatTimeKorean(booking.time)}</span>
+                  </p>
+                  <p className="mt-1.5 text-md text-navy-200">
+                    {booking.expertName} 전문가 · {METHOD_LABEL[booking.method]} · {booking.minutes}분
+                  </p>
+                </div>
+                <div className="px-3 py-5 sm:px-5">
+                  <JourneySteps stage={stage} />
+                </div>
+              </section>
             </div>
           )}
 
-          <div className="mt-8 animate-fade-up [animation-delay:80ms]">
-            <JourneySteps stage={stage} />
-          </div>
+          {justBooked && (
+            <div className="mt-8 animate-fade-up [animation-delay:80ms]">
+              <JourneySteps stage={stage} />
+            </div>
+          )}
 
           <div className="mt-6 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up [animation-delay:120ms]">
             <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
-              <Portrait name={booking.expertName} accent={booking.expertAccent} photo={booking.expertPhoto} rounded="rounded-2xl" className="h-14 w-14" />
+              <Portrait name={booking.expertName} accent={booking.expertAccent} photo={photoFor(booking.expertId, booking.expertPhoto)} rounded="rounded-2xl" className="h-14 w-14" />
               <div className="min-w-0 flex-1">
                 <p className="text-2xl font-bold text-navy-900">
                   {booking.expertName}
@@ -193,11 +210,13 @@ export function BookingComplete() {
 
             <dl className="divide-y divide-navy-100">
               {[
-                { label: "날짜", value: formatDateFull(booking.date) },
-                {
-                  label: "시간",
-                  value: `${formatTimeKorean(booking.time)} · ${booking.minutes}분`,
-                },
+                // 상세에서는 위 상태 카드가 일시를 크게 보여 주므로 영수증에서는 뺀다
+                ...(justBooked
+                  ? [
+                      { label: "날짜", value: formatDateFull(booking.date) },
+                      { label: "시간", value: `${formatTimeKorean(booking.time)} · ${booking.minutes}분` },
+                    ]
+                  : []),
                 { label: "상담 방식", value: METHOD_LABEL[booking.method] },
                 { label: "상담 상품", value: booking.productName },
               ].map((row) => (

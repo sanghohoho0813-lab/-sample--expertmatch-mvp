@@ -526,3 +526,11 @@ export const EXPERT_MAP: Record<string, Expert> = Object.fromEntries(
 export function getExpert(id: string): Expert | undefined {
   return EXPERT_MAP[id];
 }
+
+/**
+ * 예약에 저장해 둔 사진 경로보다 현재 프로필 사진을 우선한다.
+ * (사진 파일이 바뀌어도 지난 예약 화면이 깨진 이미지를 보여 주지 않도록)
+ */
+export function photoFor(expertId: string, stored?: string): string | undefined {
+  return EXPERT_MAP[expertId]?.photo ?? stored;
+}

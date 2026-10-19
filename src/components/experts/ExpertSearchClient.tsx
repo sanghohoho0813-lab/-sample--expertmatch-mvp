@@ -298,6 +298,41 @@ export function ExpertSearchClient() {
         </div>
       </div>
 
+      {/* 모바일·태블릿: 분야 한 번에 고르기 (데스크톱은 왼쪽 필터) */}
+      <div
+        className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 sm:-mx-6 sm:px-6 lg:hidden"
+        role="group"
+        aria-label="분야 빠른 선택"
+      >
+        {[{ id: null, name: "전체", icon: null }, ...CATEGORIES].map((cat) => {
+          const only = filters.categories.length === 1 ? filters.categories[0] : null;
+          const active = cat.id === null ? filters.categories.length === 0 : only === cat.id;
+          return (
+            <button
+              key={cat.id ?? "all"}
+              type="button"
+              aria-pressed={active}
+              aria-label={cat.id === null ? "전체 분야" : `${cat.name} 분야`}
+              onClick={() =>
+                setFilters({
+                  ...filters,
+                  categories: cat.id === null || active ? [] : [cat.id as CategoryId],
+                })
+              }
+              className={cx(
+                "inline-flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 text-base font-semibold transition-colors",
+                active
+                  ? "border-navy-900 bg-navy-900 text-white"
+                  : "border-navy-200 bg-white text-navy-600 hover:border-navy-300",
+              )}
+            >
+              {cat.icon && <Icon name={cat.icon} className="h-4 w-4" />}
+              {cat.name}
+            </button>
+          );
+        })}
+      </div>
+
       {/* 검색어 기반 분야 추천 */}
       {query && suggestedCategories.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2 rounded-2xl border border-teal-100 bg-teal-50/60 px-4 py-3">

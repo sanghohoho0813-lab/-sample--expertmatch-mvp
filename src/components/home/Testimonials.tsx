@@ -7,7 +7,7 @@ export function Testimonials() {
   return (
     <section
       id="reviews"
-      className="scroll-mt-24 border-y border-cream-200 bg-cream-50 py-12 sm:py-20"
+      className="scroll-mt-24 bg-white py-12 sm:py-20"
     >
       <div className="shell">
         <h2 className="section-title">상담을 받은 분들의 이야기</h2>
@@ -20,17 +20,17 @@ export function Testimonials() {
             return (
               <li
                 key={t.id}
-                className="flex w-[82%] max-w-[340px] shrink-0 snap-start flex-col rounded-2xl border border-cream-200 bg-white p-5 shadow-card sm:p-6 lg:w-auto lg:max-w-none"
+                className="flex w-[82%] max-w-[340px] shrink-0 snap-start flex-col rounded-2xl bg-canvas p-5 sm:p-6 lg:w-auto lg:max-w-none"
               >
                 <Stars value={t.rating} size={17} />
                 <p className="mt-3 flex-1 text-md leading-relaxed text-navy-700">
                   {t.quote}
                 </p>
                 <p className="mt-4 text-base text-navy-500">
-                  <span className="font-bold text-navy-900">{t.name}</span> · {t.role}
+                  <span className="font-semibold text-navy-900">{t.name}</span> · {t.role}
                 </p>
                 {expert && (
-                  <div className="mt-3 flex items-center gap-2.5 border-t border-cream-200 pt-3">
+                  <div className="mt-3 flex items-center gap-2.5 border-t border-navy-100 pt-3">
                     <Portrait
                       name={expert.name}
                       accent={expert.accent}

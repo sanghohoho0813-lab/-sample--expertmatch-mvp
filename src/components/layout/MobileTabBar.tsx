@@ -60,17 +60,23 @@ export function MobileTabBar() {
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 className={cx(
-                  "relative flex min-h-[56px] flex-col items-center justify-center gap-1 pt-1.5 transition-colors duration-200",
+                  "relative flex min-h-[60px] flex-col items-center justify-center gap-0.5 pt-1.5 transition-colors duration-200",
                   active ? "text-teal-700" : "text-navy-400",
                 )}
               >
-                <span className="relative">
+                {/* 현재 탭은 아이콘 뒤 알약 모양 배경으로 — 색만으로 구분하지 않는다 */}
+                <span
+                  className={cx(
+                    "relative flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-200",
+                    active && "bg-teal-50",
+                  )}
+                >
                   <TabIcon
                     className="h-[22px] w-[22px]"
                     strokeWidth={active ? 2.4 : 1.9}
                   />
                   {t.href === "/mypage?tab=upcoming" && ready && upcomingCount > 0 && (
-                    <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-2xs font-bold text-white">
+                    <span className="absolute -top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-teal-600 px-1 text-2xs font-bold text-white">
                       {upcomingCount}
                     </span>
                   )}

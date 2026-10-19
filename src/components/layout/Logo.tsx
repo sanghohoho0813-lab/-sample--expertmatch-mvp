@@ -12,7 +12,7 @@ export function Logo({
     <Link
       href="/"
       className={cx("group inline-flex items-center gap-2.5", className)}
-      aria-label="(sample) ExpertMatch 홈"
+      aria-label="Expert Match sample 홈"
     >
       <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-[0_4px_12px_-4px_rgba(14,124,134,0.7)] transition-transform duration-200 group-hover:scale-105">
         <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" fill="none" aria-hidden>

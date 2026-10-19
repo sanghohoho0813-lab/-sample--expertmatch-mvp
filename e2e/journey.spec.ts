@@ -152,7 +152,7 @@ test("전문가 상세는 맞는 사람·결과·상품별 차이를 보여 주�
   await expect(page.getByRole("heading", { name: "이런 고민이라면 도움이 돼요" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "상담 후 얻는 것" })).toBeVisible();
   await expect(page.getByText("이런 경우에 고르세요").first()).toBeVisible();
-  await page.getByRole("link", { name: "90분 사업계획서 리뷰 90분으로 예약" }).click();
+  await page.getByRole("link", { name: "이 상담으로 예약 — 90분 사업계획서 리뷰" }).click();
   await page.waitForURL(/product=p3/);
   await expect(page.getByRole("heading", { name: "어떤 방식으로 상담할까요?" })).toBeVisible();
 });

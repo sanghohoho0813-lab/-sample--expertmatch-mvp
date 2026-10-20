@@ -125,7 +125,7 @@ export function MyPageClient() {
           </span>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-teal-700">{DEMO_USER.org}</p>
-            <h1 className="truncate text-4xl font-extrabold tracking-tight text-navy-900 sm:text-5xl">
+            <h1 className="truncate text-4xl font-bold tracking-tight text-navy-900 sm:text-5xl">
               {DEMO_USER.name}님의 상담
             </h1>
           </div>

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, GitCompareArrows, Info, SlidersHorizontal } from "lucide-react";
 import { ExpertCard } from "@/components/experts/ExpertCard";
-import { CardSkeleton } from "@/components/ui/Skeleton";
+import { ExpertCardSkeleton } from "@/components/ui/Skeleton";
 import { earliestSlot } from "@/lib/availability";
 import { CATEGORY_MAP } from "@/lib/data/categories";
 import {
@@ -94,7 +94,7 @@ export function MatchResult() {
       </nav>
 
       <header className="mt-4 max-w-3xl">
-        <h1 className="text-5xl font-bold leading-tight text-navy-900 sm:text-7xl" aria-live="polite">
+        <h1 className="min-h-[2.5em] text-5xl font-bold leading-tight text-navy-900 sm:min-h-0 sm:text-7xl" aria-live="polite">
           {heading}
         </h1>
         <p className="mt-3 flex items-start gap-2 text-md leading-relaxed text-navy-500 sm:text-lg">
@@ -122,19 +122,6 @@ export function MatchResult() {
         </Link>
       </div>
 
-      {relax && (
-        <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-md text-navy-700">
-          <span>
-            &lsquo;{conditionLabel(needs, relax.key)}&rsquo; 조건을 빼면 <b>{relax.gain}명</b>이 모든 조건에 맞아요.
-          </span>
-          <Link
-            href={`/match/result?${needsToParams(withoutCondition(needs, relax.key))}`}
-            className="font-semibold text-teal-700 underline-offset-4 hover:underline"
-          >
-            이 조건 빼고 보기
-          </Link>
-        </p>
-      )}
 
       {/* 먼저 볼 전문가 */}
       <section className="mt-8" aria-labelledby="match-top">
@@ -144,7 +131,7 @@ export function MatchResult() {
         {recs === null ? (
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" aria-busy="true">
             {Array.from({ length: TOP }).map((_, i) => (
-              <CardSkeleton key={i} />
+              <ExpertCardSkeleton key={i} />
             ))}
           </div>
         ) : top.length > 0 ? (
@@ -163,13 +150,27 @@ export function MatchResult() {
             <p className="mt-2 text-lg text-navy-500">분야를 바꾸거나 검색으로 직접 찾아보세요.</p>
             <Link
               href="/experts"
-              className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-5 text-lg font-bold text-white hover:bg-navy-800"
+              className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-5 text-lg font-bold text-white hover:bg-navy-800 transition-[color,background-color,border-color,transform] active:scale-[0.98]"
             >
               전체 전문가 보기
             </Link>
           </div>
         )}
       </section>
+
+      {relax && (
+        <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-md text-navy-700">
+          <span>
+            &lsquo;{conditionLabel(needs, relax.key)}&rsquo; 조건을 빼면 <b>{relax.gain}명</b>이 모든 조건에 맞아요.
+          </span>
+          <Link
+            href={`/match/result?${needsToParams(withoutCondition(needs, relax.key))}`}
+            className="font-semibold text-teal-700 underline-offset-4 hover:underline"
+          >
+            이 조건 빼고 보기
+          </Link>
+        </p>
+      )}
 
       {top.length >= 2 && (
         <div className="mt-6 flex flex-col gap-4 rounded-2xl bg-navy-900 px-5 py-5 text-white sm:flex-row sm:items-center sm:px-6">

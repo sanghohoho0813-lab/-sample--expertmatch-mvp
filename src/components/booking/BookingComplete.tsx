@@ -22,7 +22,7 @@ import {
 } from "@/components/booking/BookingJourney";
 import { ReviewDialog } from "@/components/mypage/ReviewDialog";
 import { Portrait } from "@/components/ui/Portrait";
-import { CardSkeleton } from "@/components/ui/Skeleton";
+import { BookingDetailSkeleton } from "@/components/ui/Skeleton";
 import { effectiveStatus } from "@/lib/availability";
 import { roomState } from "@/lib/bookingRules";
 import { METHOD_LABEL } from "@/lib/data/categories";
@@ -78,7 +78,7 @@ export function BookingComplete() {
     Date.now() - new Date(booking.createdAt).getTime() < 5 * 60_000;
 
   if (!ready) {
-    return <CardSkeleton />;
+    return <BookingDetailSkeleton />;
   }
 
   if (!booking || booking.status === "cancelled") {
@@ -100,7 +100,7 @@ export function BookingComplete() {
                 ? `/booking/${booking.expertId}?product=${booking.productId}`
                 : "/mypage?tab=upcoming"
             }
-            className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
+            className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
           >
             {cancelled ? "다시 예약하기" : "내 예약 보기"}
           </Link>
@@ -132,133 +132,137 @@ export function BookingComplete() {
   return (
     <div className="relative overflow-hidden pb-28 lg:pb-16">
       <div className={cx("shell relative", justBooked ? "py-12 sm:py-16" : "py-6 sm:py-10")}>
-        <div className="mx-auto max-w-lg">
-          {justBooked ? (
-            <>
-              <SuccessMark />
-              <div className="mt-6 text-center animate-fade-up">
-                <h1 className="text-6xl font-extrabold tracking-[-0.03em] text-navy-900 sm:text-8xl">
-                  상담 예약이 완료되었습니다
-                </h1>
-                <p className="mt-3 text-lg leading-relaxed text-navy-500">
-                  {booking.expertName} 전문가에게 예약이 전달되었어요.
-                  {now && (
-                    <span className="mt-1 block font-semibold text-teal-700">
-                      {dDay(booking.date, now)} · {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
-                    </span>
-                  )}
-                </p>
-              </div>
-            </>
-          ) : (
-            // 마이페이지에서 다시 열었을 때는 축하 대신 상태 카드로 — 언제 · 누구와 · 지금 어느 단계인지
-            <div>
-              <Link
-                href={status === "done" ? "/mypage?tab=done" : "/mypage?tab=upcoming"}
-                className="-ml-2 inline-flex min-h-[44px] items-center gap-1 rounded-lg px-2 text-base font-semibold text-navy-500 hover:text-navy-900"
-              >
-                <ChevronLeft className="h-4 w-4" strokeWidth={2.4} />내 예약
-              </Link>
-              <section className="mt-2 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up">
-                <div className="bg-navy-900 px-5 pb-5 pt-4 text-white">
-                  <h1 className="flex flex-wrap items-center gap-x-2 text-md font-semibold text-teal-300">
-                    {status === "done" ? "상담 완료" : "예약 확정"}
-                    {status === "upcoming" && now && (
-                      <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-sm font-bold text-white">
-                        {dDay(booking.date, now)}
+        {/* 모바일은 한 줄로, 데스크톱은 두 칸: 왼쪽 일정·영수증·보조 행동 / 오른쪽 지금 할 일 */}
+        <div className="mx-auto grid max-w-lg grid-cols-1 lg:max-w-5xl lg:grid-cols-2 lg:grid-rows-[auto_auto_auto_auto_1fr] lg:items-start lg:gap-x-10">
+          <div className={cx(justBooked ? "lg:col-span-2 lg:mx-auto lg:w-full lg:max-w-lg" : "lg:col-start-1")}>
+            {justBooked ? (
+              <>
+                <SuccessMark />
+                <div className="mt-6 text-center animate-fade-up">
+                  <h1 className="text-6xl font-bold tracking-[-0.03em] text-navy-900 sm:text-8xl">
+                    상담 예약이 완료되었습니다
+                  </h1>
+                  <p className="mt-3 text-lg leading-relaxed text-navy-500">
+                    {booking.expertName} 전문가에게 예약이 전달되었어요.
+                    {now && (
+                      <span className="mt-1 block font-semibold text-teal-700">
+                        {dDay(booking.date, now)} · {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
                       </span>
                     )}
-                    <span className="sr-only">· 예약 상세</span>
-                  </h1>
-                  <p className="mt-1.5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-                    {formatDateKorean(booking.date)}
-                    <span className="block text-teal-200">{formatTimeKorean(booking.time)}</span>
-                  </p>
-                  <p className="mt-1.5 text-md text-navy-200">
-                    {booking.expertName} 전문가 · {METHOD_LABEL[booking.method]} · {booking.minutes}분
                   </p>
                 </div>
-                <div className="px-3 py-5 sm:px-5">
-                  <JourneySteps stage={stage} />
-                </div>
-              </section>
-            </div>
-          )}
-
-          {justBooked && (
-            <div className="mt-8 animate-fade-up [animation-delay:80ms]">
-              <JourneySteps stage={stage} />
-            </div>
-          )}
-
-          <div className="mt-6 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up [animation-delay:120ms]">
-            <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
-              <Portrait name={booking.expertName} accent={booking.expertAccent} photo={photoFor(booking.expertId, booking.expertPhoto)} rounded="rounded-2xl" className="h-14 w-14" />
-              <div className="min-w-0 flex-1">
-                <p className="text-2xl font-bold text-navy-900">
-                  {booking.expertName}
-                </p>
-                <p className="truncate text-base text-navy-500">
-                  {booking.expertTitle}
-                </p>
-              </div>
-              <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1.5 text-md font-bold text-teal-700">
-                {booking.categoryName}
-              </span>
-            </div>
-
-            <dl className="divide-y divide-navy-100">
-              {[
-                // 상세에서는 위 상태 카드가 일시를 크게 보여 주므로 영수증에서는 뺀다
-                ...(justBooked
-                  ? [
-                      { label: "날짜", value: formatDateFull(booking.date) },
-                      { label: "시간", value: `${formatTimeKorean(booking.time)} · ${booking.minutes}분` },
-                    ]
-                  : []),
-                { label: "상담 방식", value: METHOD_LABEL[booking.method] },
-                { label: "상담 상품", value: booking.productName },
-              ].map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-start justify-between gap-4 px-5 py-3.5"
+              </>
+            ) : (
+              // 마이페이지에서 다시 열었을 때는 축하 대신 상태 카드로 — 언제 · 누구와 · 지금 어느 단계인지
+              <div>
+                <Link
+                  href={status === "done" ? "/mypage?tab=done" : "/mypage?tab=upcoming"}
+                  className="-ml-2 inline-flex min-h-[44px] items-center gap-1 rounded-lg px-2 text-base font-semibold text-navy-500 hover:text-navy-900"
                 >
-                  <dt className="shrink-0 text-md text-navy-500">{row.label}</dt>
-                  <dd className="text-right text-lg font-semibold text-navy-900">
-                    {row.value}
+                  <ChevronLeft className="h-4 w-4" strokeWidth={2.4} />내 예약
+                </Link>
+                <section className="mt-2 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up">
+                  <div className="bg-navy-900 px-5 pb-5 pt-4 text-white">
+                    <h1 className="flex flex-wrap items-center gap-x-2 text-md font-semibold text-teal-300">
+                      {status === "done" ? "상담 완료" : "예약 확정"}
+                      {status === "upcoming" && now && (
+                        <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-sm font-bold text-white">
+                          {dDay(booking.date, now)}
+                        </span>
+                      )}
+                      <span className="sr-only">· 예약 상세</span>
+                    </h1>
+                    <p className="mt-1.5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+                      {formatDateKorean(booking.date)}
+                      <span className="block text-teal-200">{formatTimeKorean(booking.time)}</span>
+                    </p>
+                    <p className="mt-1.5 text-md text-navy-200">
+                      {booking.expertName} 전문가 · {METHOD_LABEL[booking.method]} · {booking.minutes}분
+                    </p>
+                  </div>
+                  <div className="px-3 py-5 sm:px-5">
+                    <JourneySteps stage={stage} />
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {justBooked && (
+              <div className="mt-8 animate-fade-up [animation-delay:80ms]">
+                <JourneySteps stage={stage} />
+              </div>
+            )}
+          </div>
+
+          <div className="lg:col-start-1">
+            <div className="mt-6 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card animate-fade-up [animation-delay:120ms]">
+              <div className="flex items-center gap-3.5 border-b border-dashed border-navy-200 p-5">
+                <Portrait name={booking.expertName} accent={booking.expertAccent} photo={photoFor(booking.expertId, booking.expertPhoto)} rounded="rounded-2xl" className="h-14 w-14" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-2xl font-bold text-navy-900">
+                    {booking.expertName}
+                  </p>
+                  <p className="truncate text-base text-navy-500">
+                    {booking.expertTitle}
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-lg bg-teal-50 px-2.5 py-1.5 text-md font-bold text-teal-700">
+                  {booking.categoryName}
+                </span>
+              </div>
+
+              <dl className="divide-y divide-navy-100">
+                {[
+                  // 상세에서는 위 상태 카드가 일시를 크게 보여 주므로 영수증에서는 뺀다
+                  ...(justBooked
+                    ? [
+                        { label: "날짜", value: formatDateFull(booking.date) },
+                        { label: "시간", value: `${formatTimeKorean(booking.time)} · ${booking.minutes}분` },
+                      ]
+                    : []),
+                  { label: "상담 방식", value: METHOD_LABEL[booking.method] },
+                  { label: "상담 상품", value: booking.productName },
+                ].map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-start justify-between gap-4 px-5 py-3.5"
+                  >
+                    <dt className="shrink-0 text-md text-navy-500">{row.label}</dt>
+                    <dd className="text-right text-lg font-semibold text-navy-900">
+                      {row.value}
+                    </dd>
+                  </div>
+                ))}
+                <div className="flex items-center justify-between gap-4 px-5 py-4">
+                  <dt className="text-2xl font-bold text-navy-900">상담료</dt>
+                  <dd className="text-6xl font-bold tracking-tight text-navy-900">
+                    {formatPrice(booking.price)}
+                    <span className="ml-0.5 text-lg font-semibold text-navy-500">
+                      원
+                    </span>
                   </dd>
                 </div>
-              ))}
-              <div className="flex items-center justify-between gap-4 px-5 py-4">
-                <dt className="text-2xl font-bold text-navy-900">상담료</dt>
-                <dd className="text-6xl font-extrabold tracking-tight text-navy-900">
-                  {formatPrice(booking.price)}
-                  <span className="ml-0.5 text-lg font-semibold text-navy-500">
-                    원
-                  </span>
-                </dd>
-              </div>
-            </dl>
+              </dl>
 
-            <div className="flex items-center justify-between gap-3 border-t border-dashed border-navy-200 bg-navy-50/60 px-5 py-4">
-              <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-md text-navy-400">
-                  <Ticket className="h-3.5 w-3.5" strokeWidth={2.2} />
-                  예약번호
-                </p>
-                <p className="mt-0.5 break-all font-mono text-md font-bold tracking-tight text-navy-900 sm:text-2xl">
-                  {booking.code}
-                </p>
+              <div className="flex items-center justify-between gap-3 border-t border-dashed border-navy-200 bg-navy-50/60 px-5 py-4">
+                <div className="min-w-0">
+                  <p className="flex items-center gap-1.5 text-md text-navy-400">
+                    <Ticket className="h-3.5 w-3.5" strokeWidth={2.2} />
+                    예약번호
+                  </p>
+                  <p className="mt-0.5 break-all font-mono text-md font-bold tracking-tight text-navy-900 sm:text-2xl">
+                    {booking.code}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={copyCode}
+                  className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-lg font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                >
+                  <Copy className="h-3.5 w-3.5" strokeWidth={2.2} />
+                  복사
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={copyCode}
-                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl border border-navy-200 bg-white px-3.5 text-lg font-semibold text-navy-600 transition-colors hover:border-navy-300 hover:bg-navy-50"
-              >
-                <Copy className="h-3.5 w-3.5" strokeWidth={2.2} />
-                복사
-              </button>
-            </div>
           </div>
 
           {booking.note && (
@@ -272,8 +276,16 @@ export function BookingComplete() {
             </div>
           )}
 
-          {/* 지금 할 일 — 단계에 따라 */}
-          <div className="mt-8 space-y-8 animate-fade-up [animation-delay:260ms]">
+          </div>
+
+          {/* 지금 할 일 — 단계에 따라 (데스크톱은 오른쪽 칸) */}
+          <div
+            className={cx(
+              // 오른쪽 칸을 끝까지 늘여, 왼쪽 블록 사이에 빈 줄이 생기지 않게 한다
+              "mt-8 space-y-8 animate-fade-up [animation-delay:260ms] lg:col-start-2 lg:row-end-6",
+              justBooked ? "lg:row-start-2 lg:mt-6" : "lg:row-start-1 lg:mt-[52px]",
+            )}
+          >
             {status === "done" ? (
               <AfterPanel booking={booking} review={review} onReview={() => setReviewing(true)} />
             ) : (
@@ -288,58 +300,60 @@ export function BookingComplete() {
           </div>
 
           {/* 보조 행동 */}
-          <div className="mt-8 grid grid-cols-1 gap-2.5 border-t border-navy-100 pt-6 min-[400px]:grid-cols-2">
-            {status === "upcoming" ? (
+          <div className="lg:col-start-1">
+            <div className="mt-8 grid grid-cols-1 gap-2.5 border-t border-navy-100 pt-6 min-[400px]:grid-cols-2">
+              {status === "upcoming" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    downloadIcs(booking);
+                    pushToast({ message: "캘린더 파일을 내려받았어요", tone: "success" });
+                  }}
+                  className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                >
+                  <CalendarPlus className="h-4 w-4 shrink-0" strokeWidth={2.2} />
+                  캘린더에 추가
+                </button>
+              ) : (
+                <Link
+                  href="/mypage?tab=done"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                >
+                  <CalendarCheck className="h-4 w-4 shrink-0" strokeWidth={2.2} />
+                  완료된 상담
+                </Link>
+              )}
+              <Link
+                href={`/experts/${booking.expertId}`}
+                className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+              >
+                <UserRound className="h-4 w-4 shrink-0" strokeWidth={2.2} />
+                프로필 다시 보기
+              </Link>
+            </div>
+            <Link
+              href="/mypage?tab=upcoming"
+              className="mt-2.5 flex h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-navy-900 text-xl font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
+            >
+              <CalendarCheck className="h-5 w-5" strokeWidth={2.4} />
+              내 예약 전체 보기
+            </Link>
+
+            {status === "upcoming" && (
               <button
                 type="button"
-                onClick={() => {
-                  downloadIcs(booking);
-                  pushToast({ message: "캘린더 파일을 내려받았어요", tone: "success" });
-                }}
-                className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
+                onClick={() => completeBooking(booking.id)}
+                className="mx-auto mt-4 flex min-h-[40px] items-center gap-1.5 px-1 text-sm font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
               >
-                <CalendarPlus className="h-4 w-4 shrink-0" strokeWidth={2.2} />
-                캘린더에 추가
+                데모: 상담 완료로 표시해 후기·재상담 흐름 보기
               </button>
-            ) : (
-              <Link
-                href="/mypage?tab=done"
-                className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
-              >
-                <CalendarCheck className="h-4 w-4 shrink-0" strokeWidth={2.2} />
-                완료된 상담
-              </Link>
             )}
-            <Link
-              href={`/experts/${booking.expertId}`}
-              className="inline-flex min-h-[52px] items-center justify-center gap-1.5 rounded-xl border border-navy-200 bg-white px-2 text-lg font-semibold text-navy-700 transition-colors hover:border-navy-300 hover:bg-navy-50"
-            >
-              <UserRound className="h-4 w-4 shrink-0" strokeWidth={2.2} />
-              프로필 다시 보기
-            </Link>
+
+            <p className="mt-5 text-center text-md leading-relaxed text-navy-400">
+              데모 예약입니다. 실제 결제는 발생하지 않았으며 예약 내역은 이
+              브라우저에만 저장됩니다.
+            </p>
           </div>
-          <Link
-            href="/mypage?tab=upcoming"
-            className="mt-2.5 flex h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-navy-900 text-xl font-bold text-white transition-colors hover:bg-navy-800"
-          >
-            <CalendarCheck className="h-5 w-5" strokeWidth={2.4} />
-            내 예약 전체 보기
-          </Link>
-
-          {status === "upcoming" && (
-            <button
-              type="button"
-              onClick={() => completeBooking(booking.id)}
-              className="mx-auto mt-4 flex min-h-[40px] items-center gap-1.5 px-1 text-sm font-medium text-navy-400 underline-offset-2 hover:text-navy-700 hover:underline"
-            >
-              데모: 상담 완료로 표시해 후기·재상담 흐름 보기
-            </button>
-          )}
-
-          <p className="mt-5 text-center text-md leading-relaxed text-navy-400">
-            데모 예약입니다. 실제 결제는 발생하지 않았으며 예약 내역은 이
-            브라우저에만 저장됩니다.
-          </p>
         </div>
       </div>
 

@@ -63,7 +63,7 @@ export function SearchSuggest({
     >
       {suggestions.keywords.length > 0 && (
         <div className="border-b border-navy-100 py-1.5">
-          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">추천 검색어</p>
+          <p className="px-4 py-1.5 text-xs font-bold text-navy-400">추천 검색어</p>
           {suggestions.keywords.map((k) => {
             const i = indexOf("keyword", k);
             return (
@@ -91,7 +91,7 @@ export function SearchSuggest({
 
       {suggestions.categories.length > 0 && (
         <div className="border-b border-navy-100 py-1.5">
-          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">상담 분야</p>
+          <p className="px-4 py-1.5 text-xs font-bold text-navy-400">상담 분야</p>
           {suggestions.categories.map((c) => {
             const i = indexOf("category", c.id);
             return (
@@ -123,7 +123,7 @@ export function SearchSuggest({
 
       {suggestions.experts.length > 0 && (
         <div className="py-1.5">
-          <p className="px-4 py-1.5 text-2xs font-bold text-navy-400">전문가</p>
+          <p className="px-4 py-1.5 text-xs font-bold text-navy-400">전문가</p>
           {suggestions.experts.map((e) => {
             const i = indexOf("expert", e.id);
             const lead = e.products.reduce((a, b) => (b.price < a.price ? b : a));

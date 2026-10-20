@@ -13,7 +13,7 @@ export function Logo({
       href="/"
       className={cx("group inline-flex items-center gap-2.5", className)}
     >
-      <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-[0_4px_12px_-4px_rgba(14,124,134,0.7)] transition-transform duration-200 group-hover:scale-105">
+      <span className="relative flex h-8 w-8 items-center justify-center rounded-full sm:h-9 sm:w-9 bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-[0_4px_12px_-4px_rgba(14,124,134,0.7)] transition-transform duration-200 group-hover:scale-105">
         <svg viewBox="0 0 24 24" className="h-[19px] w-[19px]" fill="none" aria-hidden>
           <circle cx="12" cy="12" r="8.6" stroke="currentColor" strokeWidth="1.6" opacity="0.55" />
           <path d="M15.6 8.4 13.7 13.7 8.4 15.6l1.9-5.3 5.3-1.9Z" fill="currentColor" />
@@ -23,7 +23,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={cx(
-            "whitespace-nowrap text-lg font-extrabold tracking-[-0.03em] sm:text-3xl",
+            "whitespace-nowrap text-xl font-extrabold tracking-[-0.03em] sm:text-3xl",
             tone === "dark" ? "text-navy-900" : "text-white",
           )}
         >

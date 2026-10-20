@@ -328,7 +328,7 @@ export function AfterPanel({
           <button
             type="button"
             onClick={onReview}
-            className="mt-3 inline-flex h-12 w-full items-center justify-center gap-1.5 rounded-xl bg-navy-900 text-lg font-bold text-white transition-colors hover:bg-navy-800"
+            className="mt-3 inline-flex h-12 w-full items-center justify-center gap-1.5 rounded-xl bg-navy-900 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
           >
             <PenLine className="h-4 w-4" strokeWidth={2.2} />
             후기 남기기
@@ -344,7 +344,7 @@ export function AfterPanel({
         <div className="mt-3 grid grid-cols-1 gap-2 min-[400px]:grid-cols-2">
           <Link
             href={`/booking/${booking.expertId}?product=${booking.productId}&rebook=${booking.code}`}
-            className="inline-flex min-h-[48px] items-center justify-center gap-1.5 rounded-xl bg-teal-600 px-3 text-lg font-bold text-white transition-colors hover:bg-teal-700"
+            className="inline-flex min-h-[48px] items-center justify-center gap-1.5 rounded-xl bg-teal-600 px-3 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 active:scale-[0.98]"
           >
             <RotateCcw className="h-4 w-4" strokeWidth={2.2} />
             {booking.expertName} 전문가 재상담

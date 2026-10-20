@@ -29,7 +29,7 @@ export function CompareBar() {
       <div
         className={cx(
           // 데스크톱은 가운데 정렬한 폭으로 — 오른쪽 아래 공용 이동 버튼 자리를 비워 둔다
-          "fixed inset-x-0 bottom-[60px] z-40 px-3 pb-2 lg:inset-x-auto lg:bottom-0 lg:left-1/2 lg:w-[min(860px,calc(100vw-260px))] lg:-translate-x-1/2 lg:px-0 lg:pb-6",
+          "fixed inset-x-0 bottom-[56px] z-40 px-3 pb-2 lg:inset-x-auto lg:bottom-0 lg:left-1/2 lg:w-[min(860px,calc(100vw-260px))] lg:-translate-x-1/2 lg:px-0 lg:pb-6",
           onDetail && "hidden lg:block",
         )}
       >
@@ -76,7 +76,7 @@ export function CompareBar() {
             {canCompare ? (
               <Link
                 href="/compare"
-                className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-lg font-bold text-navy-950 transition-colors duration-200 hover:bg-teal-400"
+                className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-xl bg-teal-500 px-4 text-lg font-bold text-navy-950 transition-[color,background-color,border-color,transform] duration-200 hover:bg-teal-400 active:scale-[0.98]"
               >
                 <GitCompareArrows className="h-4 w-4 sm:hidden" strokeWidth={2.4} />
                 {experts.length}명 비교하기

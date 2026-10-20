@@ -72,7 +72,7 @@ export function Header() {
         scrolled ? "border-navy-100 shadow-[0_1px_16px_-8px_rgba(11,26,51,0.25)]" : "border-transparent",
       )}
     >
-      <div className="shell flex h-16 items-center gap-3 lg:h-[72px]">
+      <div className="shell flex h-14 items-center gap-3 lg:h-16">
         <Logo />
 
         <nav className="ml-4 hidden items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
@@ -128,7 +128,7 @@ export function Header() {
               {DEMO_USER.initials}
             </span>
             <span className="hidden leading-tight xl:block">
-              <span className="block text-2xs font-semibold text-teal-700">
+              <span className="block text-xs font-semibold text-teal-700">
                 {DEMO_USER.org}
               </span>
               <span className="block text-sm font-bold text-navy-800">
@@ -150,7 +150,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="animate-fade-in max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-navy-100 bg-white lg:hidden">
+        <div className="animate-fade-in max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-navy-100 bg-white lg:hidden">
           <nav className="shell py-4" aria-label="전체 메뉴">
             <Link
               href="/mypage?tab=profile"

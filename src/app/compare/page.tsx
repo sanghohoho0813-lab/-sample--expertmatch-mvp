@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { CompareSkeleton } from "@/components/ui/Skeleton";
 import { ComparePage } from "@/components/compare/ComparePage";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function CompareRoute() {
   return (
-    <Suspense fallback={<div className="shell py-12" aria-busy="true" />}>
+    <Suspense fallback={<CompareSkeleton />}>
       <ComparePage />
     </Suspense>
   );

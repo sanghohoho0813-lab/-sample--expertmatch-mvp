@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { MatchResultSkeleton } from "@/components/ui/Skeleton";
 import { MatchResult } from "@/components/match/MatchResult";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function MatchResultPage() {
   return (
-    <Suspense fallback={<div className="shell py-12" aria-busy="true" />}>
+    <Suspense fallback={<MatchResultSkeleton />}>
       <MatchResult />
     </Suspense>
   );

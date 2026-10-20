@@ -37,7 +37,7 @@ export function Hero() {
               경력·자격 검증을 마친 전문가만 등록됩니다
             </span>
 
-            <h1 className="mt-3.5 sm:mt-5 text-5xl font-extrabold leading-[1.22] tracking-[-0.035em] text-white xs:text-6xl min-[390px]:text-6xl sm:text-9xl lg:text-9xl xl:text-display">
+            <h1 className="mt-3.5 sm:mt-5 text-6xl font-extrabold leading-[1.22] tracking-[-0.035em] text-white min-[390px]:text-7xl sm:text-9xl lg:text-9xl xl:text-display">
               당신의 고민,
               <br />
               {/* '전문가의 경험으로'가 좁은 화면에서 끊기지 않도록 한 덩어리로 묶는다 */}
@@ -98,7 +98,7 @@ export function Hero() {
               className={cx(i > 0 ? "border-l border-white/10 pl-4 sm:pl-5" : "pr-1 sm:pr-0", i === 3 && "hidden sm:block")}
             >
               <dt className="whitespace-nowrap text-xs text-navy-300 sm:text-base">{s.label}</dt>
-              <dd className="mt-0.5 whitespace-nowrap text-xl font-bold tracking-tight text-white sm:mt-1 sm:text-7xl sm:font-extrabold">
+              <dd className="mt-0.5 whitespace-nowrap text-3xl font-bold tracking-tight text-white sm:mt-1 sm:text-7xl">
                 {s.value}
               </dd>
             </div>

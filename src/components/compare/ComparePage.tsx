@@ -7,7 +7,7 @@ import { ArrowLeft, ListChecks, Plus } from "lucide-react";
 import { CompareView } from "@/components/compare/CompareView";
 import { FitList } from "@/components/match/FitList";
 import { Portrait } from "@/components/ui/Portrait";
-import { Bone } from "@/components/ui/Skeleton";
+import { Bone, CompareSkeleton } from "@/components/ui/Skeleton";
 import { earliestSlot } from "@/lib/availability";
 import { compareDifferences, compareVerdicts, type Earliest } from "@/lib/compareInsights";
 import { CATEGORY_MAP } from "@/lib/data/categories";
@@ -67,15 +67,7 @@ export function ComparePage() {
       .map((x) => x.e);
   }, [experts, compare]);
 
-  if (!ready || idsParam !== null) {
-    return (
-      <div className="shell py-10" aria-busy="true">
-        <Bone className="h-10 w-64" />
-        <Bone className="mt-6 h-48 w-full rounded-2xl" />
-        <Bone className="mt-6 h-96 w-full rounded-2xl" />
-      </div>
-    );
-  }
+  if (!ready || idsParam !== null) return <CompareSkeleton />;
 
   return (
     <div className="shell py-8 pb-32 sm:py-12">
@@ -192,7 +184,7 @@ export function ComparePage() {
                     </Link>
                     <Link
                       href={`/booking/${expert.id}`}
-                      className="inline-flex h-12 flex-[2] items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors hover:bg-teal-700"
+                      className="inline-flex h-12 flex-[2] items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 active:scale-[0.98]"
                     >
                       예약하기
                     </Link>
@@ -282,7 +274,7 @@ function EmptyCompare({ experts, onRemove }: { experts: Expert[]; onRemove: (id:
       <div className="mt-6 flex flex-wrap justify-center gap-2.5">
         <Link
           href="/match"
-          className="inline-flex h-12 items-center gap-1.5 rounded-xl bg-navy-900 px-5 text-lg font-bold text-white hover:bg-navy-800"
+          className="inline-flex h-12 items-center gap-1.5 rounded-xl bg-navy-900 px-5 text-lg font-bold text-white hover:bg-navy-800 transition-[color,background-color,border-color,transform] active:scale-[0.98]"
         >
           <ListChecks className="h-4 w-4 text-teal-300" strokeWidth={2.2} />
           맞춤 찾기

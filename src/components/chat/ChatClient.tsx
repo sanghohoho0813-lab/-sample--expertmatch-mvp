@@ -7,6 +7,7 @@ import { useState } from "react";
 import { CalendarClock, ChevronLeft, ChevronRight, DoorOpen, Info, Lock, MessageSquareText } from "lucide-react";
 import { JourneySteps, stageOf } from "@/components/booking/BookingJourney";
 import { Portrait } from "@/components/ui/Portrait";
+import { RoomSkeleton } from "@/components/ui/Skeleton";
 import { effectiveStatus } from "@/lib/availability";
 import { ROOM_OPENS_MINUTES, minutesUntil, roomState, type RoomState } from "@/lib/bookingRules";
 import { METHOD_LABEL } from "@/lib/data/categories";
@@ -28,9 +29,7 @@ export function ChatClient() {
   const { bookings, ready } = useAppStore();
   const now = useNow();
 
-  if (!ready) {
-    return <div className="mx-auto h-72 max-w-2xl animate-pulse rounded-3xl bg-navy-100/70" />;
-  }
+  if (!ready) return <RoomSkeleton />;
 
   const booking = code ? bookings.find((b) => b.code === code && b.status !== "cancelled") : undefined;
   if (booking) return <Room booking={booking} now={now} />;
@@ -60,7 +59,7 @@ export function ChatClient() {
         <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
           <Link
             href="/match"
-            className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
+            className="inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
           >
             맞춤 전문가 찾기
           </Link>
@@ -216,7 +215,7 @@ function Room({ booking, now }: { booking: Booking; now: Date | null }) {
             type="button"
             disabled={room !== "open"}
             onClick={() => setEntered(true)}
-            className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-navy-100 disabled:text-navy-400"
+            className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-navy-100 disabled:text-navy-400 active:scale-[0.98]"
           >
             <DoorOpen className="h-5 w-5" strokeWidth={2.2} />
             {METHOD_LABEL[booking.method]} 입장
@@ -278,7 +277,7 @@ function Room({ booking, now }: { booking: Booking; now: Date | null }) {
                     updateNote(booking.id, draft.trim());
                     setEditing(false);
                   }}
-                  className="inline-flex h-11 items-center rounded-xl bg-navy-900 px-4 text-md font-bold text-white hover:bg-navy-800"
+                  className="inline-flex h-11 items-center rounded-xl bg-navy-900 px-4 text-md font-bold text-white hover:bg-navy-800 transition-[color,background-color,border-color,transform] active:scale-[0.98]"
                 >
                   저장
                 </button>

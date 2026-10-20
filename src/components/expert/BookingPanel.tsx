@@ -75,7 +75,7 @@ export function BookingPanel({ expert }: { expert: Expert }) {
                   <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                     <span className="text-md font-bold leading-snug text-navy-900">{p.name}</span>
                     {p.recommended && (
-                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-2xs font-bold text-teal-800">
+                      <span className="rounded-md bg-teal-50 px-1.5 py-0.5 text-xs font-bold text-teal-800">
                         가장 많이 선택
                       </span>
                     )}
@@ -87,7 +87,7 @@ export function BookingPanel({ expert }: { expert: Expert }) {
                     </span>
                   )}
                   <span className="mt-1 flex items-baseline gap-2">
-                    <span className="text-lg font-extrabold text-navy-900">
+                    <span className="text-lg font-bold text-navy-900">
                       {formatPrice(p.price)}
                       <span className="text-xs font-semibold text-navy-500">원</span>
                     </span>
@@ -109,7 +109,7 @@ export function BookingPanel({ expert }: { expert: Expert }) {
 
       <Link
         href={`/booking/${expert.id}?product=${product.id}`}
-        className="mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors duration-200 hover:bg-teal-700"
+        className="mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-teal-600 text-lg font-bold text-white transition-[color,background-color,border-color,transform] duration-200 hover:bg-teal-700 active:scale-[0.98]"
       >
         상담 예약하기
         <ArrowRight className="h-5 w-5" strokeWidth={2.4} />

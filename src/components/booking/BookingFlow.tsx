@@ -210,7 +210,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
   return (
     <div className="pb-36 lg:pb-16">
       {/* 상단: 전문가 + 진행 단계 */}
-      <div className="sticky top-16 z-30 border-b border-navy-100 bg-white lg:top-[72px]">
+      <div className="sticky top-14 z-30 border-b border-navy-100 bg-white lg:top-16">
         <div className="shell py-3 lg:py-4">
           <div className="flex items-center gap-3">
             <Link
@@ -330,7 +330,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   type="button"
                   disabled={!canAdvance}
                   onClick={() => goTo(step + 1)}
-                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-navy-900 px-8 text-lg font-bold text-white transition-colors hover:bg-navy-800 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400"
+                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-navy-900 px-8 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400 active:scale-[0.98]"
                 >
                   {canAdvance ? `다음: ${STEPS[step + 1]}` : NEED[step]}
                   {canAdvance && <ArrowRight className="h-4 w-4" strokeWidth={2.4} />}
@@ -340,7 +340,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
                   type="button"
                   disabled={submitting}
                   onClick={submit}
-                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-9 text-xl font-bold text-white transition-colors hover:bg-teal-700 disabled:opacity-60"
+                  className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-9 text-xl font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 disabled:opacity-60 active:scale-[0.98]"
                 >
                   {submitting ? "예약 처리 중..." : "상담 예약하기"}
                 </button>
@@ -373,7 +373,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
           {/* 가격은 선택 칩에 이미 보이므로, 결제 직전 단계에서만 함께 보여준다 */}
           <div className={cx("min-w-0 shrink-0", isLast ? "block" : "hidden")}>
             <p className="text-xs text-navy-400">총 상담료</p>
-            <p className="text-lg font-extrabold leading-tight text-navy-900">
+            <p className="text-lg font-bold leading-tight text-navy-900">
               {formatPrice(product.price)}원
             </p>
           </div>
@@ -382,7 +382,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               type="button"
               disabled={!canAdvance}
               onClick={() => goTo(step + 1)}
-              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-4 text-lg font-bold text-white transition-colors disabled:bg-navy-200 disabled:text-navy-500"
+              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-navy-900 px-4 text-lg font-bold text-white transition-[color,background-color,border-color,transform] disabled:bg-navy-200 disabled:text-navy-500 active:scale-[0.98]"
             >
               <span className="truncate">
                 {canAdvance ? `다음 · ${STEPS[step + 1]}` : NEED[step]}
@@ -394,7 +394,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
               type="button"
               disabled={submitting}
               onClick={submit}
-              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-3 text-lg font-bold text-white transition-colors disabled:opacity-60 xs:text-lg"
+              className="inline-flex h-[52px] min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-xl bg-teal-600 px-3 text-lg font-bold text-white transition-[color,background-color,border-color,transform] disabled:opacity-60 xs:text-lg active:scale-[0.98]"
             >
               {submitting ? "예약 처리 중..." : "상담 예약하기"}
             </button>

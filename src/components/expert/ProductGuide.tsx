@@ -34,7 +34,7 @@ export function ProductGuide({ expert }: { expert: Expert }) {
                 {p.recommended && <span className="text-sm font-bold text-teal-700">가장 많이 선택</span>}
               </div>
               <p className="mt-1.5 flex items-baseline gap-2">
-                <span className="text-4xl font-extrabold tracking-tight text-navy-900">
+                <span className="text-4xl font-bold tracking-tight text-navy-900">
                   {formatPrice(p.price)}
                   <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
                 </span>

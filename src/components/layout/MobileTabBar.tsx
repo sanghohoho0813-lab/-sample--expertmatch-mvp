@@ -60,7 +60,7 @@ export function MobileTabBar() {
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 className={cx(
-                  "relative flex min-h-[60px] flex-col items-center justify-center gap-0.5 pt-1.5 transition-colors duration-200",
+                  "relative flex min-h-[56px] flex-col items-center justify-center gap-0.5 pt-1.5 transition-colors duration-200",
                   active ? "text-teal-700" : "text-navy-400",
                 )}
               >

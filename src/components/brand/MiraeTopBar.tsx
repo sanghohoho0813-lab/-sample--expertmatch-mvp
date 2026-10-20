@@ -11,7 +11,7 @@ export function MiraeTopBar() {
     <div className="relative z-[60] bg-mirae-ink text-white">
       {/* 모바일에서도 한 줄로 유지 — 본문이 최대한 빨리 보이도록 */}
       <div className="shell flex h-10 items-center justify-between gap-3 sm:h-[46px]">
-        <p className="flex min-w-0 items-center gap-2 text-2xs font-medium text-mirae-mist sm:gap-2.5 sm:text-xs">
+        <p className="flex min-w-0 items-center gap-2 text-xs font-medium text-mirae-mist sm:gap-2.5 sm:text-sm">
           <MiraeSymbol className="h-6 shrink-0 sm:h-7" />
           <span className="truncate">
             <span className="font-bold text-white">미래에이아이랩</span>
@@ -21,7 +21,7 @@ export function MiraeTopBar() {
         </p>
         <Link
           href="/about"
-          className="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg px-2 text-2xs font-semibold text-teal-300 transition-colors hover:bg-white/10 sm:text-xs"
+          className="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-teal-300 transition-colors hover:bg-white/10 sm:text-xs"
         >
           <span className="sm:hidden">소개</span>
           <span className="hidden sm:inline">제작사 소개</span>

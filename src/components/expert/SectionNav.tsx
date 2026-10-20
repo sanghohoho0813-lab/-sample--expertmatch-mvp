@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cx } from "@/lib/format";
 
 /** 헤더 + 이 줄의 높이 — 이 선을 지난 섹션을 '지금 보는 섹션'으로 본다 */
-const OFFSET = 140;
+const OFFSET = 120;
 
 /**
  * 상세의 섹션 바로가기 — 스크롤해도 위에 붙어 있고, 지금 읽는 섹션을 표시한다.
@@ -56,7 +56,7 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
   return (
     <nav
       aria-label="상세 정보 바로가기"
-      className="sticky top-16 z-30 -mx-5 border-b border-navy-100 bg-white/95 backdrop-blur-md sm:-mx-6 lg:top-[72px] lg:col-start-1 lg:row-start-2 lg:mx-0"
+      className="sticky top-14 z-30 -mx-5 border-b border-navy-100 bg-white/95 backdrop-blur-md sm:-mx-6 lg:top-16 lg:col-start-1 lg:row-start-2 lg:mx-0"
     >
       <ul ref={listRef} className="relative no-scrollbar flex gap-1 overflow-x-auto px-3 sm:px-4 lg:px-0">
         {sections.map((sec, i) => {
@@ -67,7 +67,7 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
                 href={`#${sec.id}`}
                 aria-current={on ? "location" : undefined}
                 className={cx(
-                  "relative inline-flex min-h-[52px] items-center px-2.5 text-base font-semibold transition-colors lg:first:pl-0",
+                  "relative inline-flex min-h-[46px] items-center px-2.5 text-md font-semibold transition-colors lg:first:pl-0",
                   on ? "text-navy-900" : "text-navy-400 hover:text-navy-800",
                 )}
               >

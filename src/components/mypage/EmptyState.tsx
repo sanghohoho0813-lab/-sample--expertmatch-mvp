@@ -24,7 +24,7 @@ export function EmptyState({
       <p className="mt-1.5 text-md leading-relaxed text-navy-500">{body}</p>
       <Link
         href={actionHref}
-        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
+        className="mt-5 inline-flex h-12 items-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
       >
         {actionLabel}
       </Link>

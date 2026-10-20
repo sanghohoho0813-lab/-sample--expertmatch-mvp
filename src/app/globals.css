@@ -19,11 +19,12 @@
     overflow-x: hidden;
   }
 
-  /* 한국어 가독성 우선 — 본문 기준 크기를 크게 잡는다 */
+  /* 앱 표준 본문 크기 — 한국어는 행간을 조금 넉넉하게 */
   body {
-    font-size: 21px;
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.6;
     word-break: keep-all;
+    letter-spacing: -0.01em;
   }
 
   h1,

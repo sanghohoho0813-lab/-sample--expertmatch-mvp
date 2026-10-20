@@ -44,11 +44,33 @@ export function CardSkeleton() {
   );
 }
 
-/** 마이페이지 목록 자리 — 빈 화면 안내와 같은 높이로 잡아 로딩 후 아래 영역이 밀리지 않게 */
+/** 마이페이지 목록 자리 — 예약 카드·빈 화면 안내와 같은 높이(약 310px)로 잡아 로딩 후 아래 영역이 밀리지 않게 */
 export function ListSkeleton() {
   return (
     <div className="space-y-3" role="status" aria-label="내 상담을 불러오는 중">
-      <Bone className="h-[330px] w-full rounded-2xl" />
+      <Bone className="h-[310px] w-full rounded-2xl" />
+    </div>
+  );
+}
+
+/**
+ * 예약 상세 로딩 — 마이페이지에서 다시 여는 경우가 대부분이라 상세 배치(뒤로 · 상태 카드 · 영수증,
+ * 데스크톱은 오른쪽 상담방·준비)와 같은 자리·크기로 그린다.
+ */
+export function BookingDetailSkeleton() {
+  return (
+    <div className="shell py-6 sm:py-10" role="status" aria-label="예약 정보를 불러오는 중">
+      <div className="mx-auto grid max-w-lg grid-cols-1 lg:max-w-5xl lg:grid-cols-2 lg:items-start lg:gap-x-10">
+        <div>
+          <Bone className="h-11 w-24" />
+          <Bone className="mt-2 h-[240px] w-full rounded-3xl" />
+          <Bone className="mt-6 h-[366px] w-full rounded-3xl" />
+        </div>
+        <div className="hidden lg:block">
+          <Bone className="mt-[52px] h-[154px] w-full rounded-2xl" />
+          <Bone className="mt-8 h-[320px] w-full rounded-2xl" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -65,9 +87,101 @@ export function MyPageSkeleton() {
         </div>
       </div>
       <Bone className="mt-6 h-12 w-full" />
-      <div className="mt-6">
+      {/* 기본 탭(상담)의 예정·완료·취소 선택 */}
+      <Bone className="mt-4 h-[52px] w-full sm:w-72" />
+      <div className="mt-5">
         <ListSkeleton />
       </div>
+    </div>
+  );
+}
+
+/** 전문가 카드 자리 — 사진 · 이름 줄 · 문구 · 근거 · 가격 줄 (맞춤 찾기 결과처럼 카드가 늦게 그려지는 곳) */
+export function ExpertCardSkeleton() {
+  return (
+    <div className="flex min-h-[420px] flex-col rounded-2xl border border-navy-100 bg-white p-4 sm:p-5" aria-hidden>
+      <div className="flex gap-3.5">
+        <Bone className="h-[84px] w-[84px] shrink-0 sm:h-[100px] sm:w-[100px]" />
+        <div className="flex-1 space-y-2 pt-1">
+          <Bone className="h-3.5 w-12" />
+          <Bone className="h-5 w-28" />
+          <Bone className="h-4 w-full" />
+          <Bone className="h-4 w-24" />
+        </div>
+      </div>
+      <Bone className="mt-4 h-4 w-full" />
+      <Bone className="mt-2 h-4 w-4/5" />
+      <Bone className="mt-3 h-[84px] w-full" />
+      <Bone className="mt-auto h-11 w-full" />
+    </div>
+  );
+}
+
+/** 맞춤 찾기 질문 화면 로딩 — 진행 줄 · 질문 · 두 칸 선택지 */
+export function MatchSkeleton() {
+  return (
+    <div className="shell max-w-2xl py-8 pb-32 sm:py-12" role="status" aria-label="질문을 불러오는 중">
+      <Bone className="h-11 w-40" />
+      <Bone className="mt-3 h-1.5 w-full rounded-full" />
+      <Bone className="mt-8 h-8 w-4/5" />
+      <Bone className="mt-3 h-5 w-1/2" />
+      <div className="mt-7 grid grid-cols-2 gap-2.5 sm:gap-3">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <Bone key={i} className="h-[96px] rounded-2xl" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** 맞춤 찾기 결과 로딩 — 제목 · 조건 · 카드 세 장 */
+export function MatchResultSkeleton() {
+  return (
+    <div className="shell py-8 pb-32 sm:py-12" role="status" aria-label="추천 결과를 불러오는 중">
+      <Bone className="h-5 w-32" />
+      <Bone className="mt-4 h-[60px] w-full max-w-xl sm:h-10" />
+      <Bone className="mt-3 h-10 w-full max-w-2xl" />
+      <Bone className="mt-6 h-[88px] w-full max-w-xl sm:h-10" />
+      <Bone className="mt-8 h-7 w-44" />
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {[0, 1, 2].map((i) => (
+          <ExpertCardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** 비교 화면 로딩 — 제목 · 차이 표 · 이런 경우 카드 */
+export function CompareSkeleton() {
+  return (
+    <div className="shell py-8 pb-32 sm:py-12" role="status" aria-label="비교 화면을 불러오는 중">
+      <Bone className="h-10 w-32" />
+      <Bone className="mt-3 h-10 w-64" />
+      <Bone className="mt-2 h-5 w-80 max-w-full" />
+      <Bone className="mt-8 h-7 w-40" />
+      <Bone className="mt-4 h-[300px] w-full rounded-2xl" />
+      <Bone className="mt-10 h-7 w-52" />
+      <Bone className="mt-4 h-[420px] w-full rounded-2xl" />
+    </div>
+  );
+}
+
+/** 상담방 로딩 — 뒤로 · 전문가 머리말 · 진행 단계 · 입장 안내 · 전달 내용 */
+export function RoomSkeleton() {
+  return (
+    <div className="mx-auto max-w-2xl" role="status" aria-label="상담방을 불러오는 중">
+      <Bone className="h-11 w-24" />
+      <div className="mt-2 flex items-center gap-3.5">
+        <Bone className="h-16 w-16 shrink-0 rounded-2xl" />
+        <div className="flex-1 space-y-2">
+          <Bone className="h-7 w-3/4" />
+          <Bone className="h-4 w-1/2" />
+        </div>
+      </div>
+      <Bone className="mt-6 h-[52px] w-full" />
+      <Bone className="mt-6 h-[164px] w-full rounded-2xl" />
+      <Bone className="mt-6 h-[132px] w-full rounded-2xl" />
     </div>
   );
 }

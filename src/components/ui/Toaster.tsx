@@ -26,7 +26,7 @@ export function Toaster() {
         return (
           <div
             key={t.id}
-            className="pointer-events-auto flex w-full max-w-[420px] animate-fade-in items-center gap-3 rounded-2xl bg-navy-900 px-4 py-3 text-white shadow-pop lg:animate-fade-up"
+            className="pointer-events-auto flex w-full max-w-[420px] animate-fade-in items-center gap-3 rounded-2xl bg-navy-900 py-2.5 pl-4 pr-3 text-white shadow-pop lg:animate-fade-up"
           >
             <span
               className={cx(
@@ -41,7 +41,7 @@ export function Toaster() {
               <Link
                 href={t.action.href}
                 onClick={() => dismissToast(t.id)}
-                className="shrink-0 rounded-lg px-2 py-1 text-lg font-semibold text-teal-300 transition-colors hover:bg-white/10"
+                className="inline-flex min-h-[36px] shrink-0 items-center rounded-lg px-2.5 text-md font-semibold text-teal-300 transition-colors hover:bg-white/10"
               >
                 {t.action.label}
               </Link>
@@ -50,7 +50,7 @@ export function Toaster() {
               type="button"
               onClick={() => dismissToast(t.id)}
               aria-label="알림 닫기"
-              className="shrink-0 rounded-lg p-1 text-navy-300 transition-colors hover:bg-white/10 hover:text-white"
+              className="-mr-1.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-navy-300 transition-colors hover:bg-white/10 hover:text-white"
             >
               <X className="h-4 w-4" />
             </button>

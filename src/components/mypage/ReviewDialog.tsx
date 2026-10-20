@@ -32,7 +32,7 @@ export function ReviewDialog({
           type="button"
           disabled={!valid}
           onClick={() => onSubmit(rating, body.trim())}
-          className="flex h-14 w-full items-center justify-center rounded-xl bg-navy-900 text-xl font-bold text-white transition-colors hover:bg-navy-800 disabled:bg-navy-200 disabled:text-navy-500"
+          className="flex h-14 w-full items-center justify-center rounded-xl bg-navy-900 text-xl font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 disabled:bg-navy-200 disabled:text-navy-500 active:scale-[0.98]"
         >
           {valid ? "후기 등록" : "10자 이상 작성해 주세요"}
         </button>

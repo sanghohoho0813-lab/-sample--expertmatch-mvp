@@ -54,10 +54,10 @@ export function RecentExperts({ exclude }: { exclude?: string }) {
                   <span className="block truncate text-sm font-bold text-navy-900">
                     {e.name}
                   </span>
-                  <span className="block truncate text-2xs text-navy-400">
+                  <span className="block truncate text-xs text-navy-400">
                     {e.title}
                   </span>
-                  <span className="mt-0.5 block text-2xs font-semibold text-navy-700">
+                  <span className="mt-0.5 block text-sm font-semibold text-navy-700">
                     {formatPrice(lead.price)}원 / {lead.minutes}분
                   </span>
                 </span>

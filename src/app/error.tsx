@@ -19,7 +19,7 @@ export default function RouteError({
   return (
     <div className="shell py-20 text-center">
       <p className="text-base font-bold text-teal-700">일시적인 오류</p>
-      <h1 className="mt-3 text-5xl font-extrabold tracking-tight text-navy-900 sm:text-7xl">
+      <h1 className="mt-3 text-5xl font-bold tracking-tight text-navy-900 sm:text-7xl">
         화면을 불러오지 못했어요
       </h1>
       <p className="mt-3 text-lg text-navy-500">
@@ -29,7 +29,7 @@ export default function RouteError({
         <button
           type="button"
           onClick={reset}
-          className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-colors hover:bg-navy-800"
+          className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-navy-900 px-6 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-navy-800 active:scale-[0.98]"
         >
           <RotateCcw className="h-5 w-5" strokeWidth={2.2} />
           다시 시도

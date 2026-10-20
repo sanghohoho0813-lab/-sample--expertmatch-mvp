@@ -325,7 +325,7 @@ export function CompareView({
                   <Link
                     href={`/booking/${e.id}`}
                     onClick={onNavigate}
-                    className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-lg font-bold text-white transition-colors hover:bg-teal-700"
+                    className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 px-4 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 active:scale-[0.98]"
                   >
                     상담 예약하기
                   </Link>
@@ -396,7 +396,7 @@ export function CompareView({
             <Link
               href={`/booking/${e.id}`}
               onClick={onNavigate}
-              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors hover:bg-teal-700"
+              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 active:scale-[0.98]"
             >
               {e.name} 전문가 상담 예약하기
             </Link>

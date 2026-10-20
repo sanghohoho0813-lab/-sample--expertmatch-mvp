@@ -383,7 +383,7 @@ export function ExpertSearchClient() {
               aria-live="polite"
             >
               검색 결과{" "}
-              <span className="text-3xl font-extrabold text-navy-900">
+              <span className="text-3xl font-bold text-navy-900">
                 {results.length}명
               </span>
               {query && (
@@ -528,7 +528,7 @@ export function ExpertSearchClient() {
             <button
               type="button"
               onClick={() => setSheetOpen(false)}
-              className="h-12 flex-[2] rounded-xl bg-teal-600 text-2xl font-bold text-white transition-colors hover:bg-teal-700"
+              className="h-12 flex-[2] rounded-xl bg-teal-600 text-2xl font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 active:scale-[0.98]"
             >
               전문가 {results.length}명 보기
             </button>

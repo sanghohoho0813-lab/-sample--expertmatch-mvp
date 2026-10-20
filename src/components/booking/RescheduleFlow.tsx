@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ArrowRight, ChevronLeft } from "lucide-react";
 import { DateStep, TimeStep } from "@/components/booking/steps";
 import { Portrait } from "@/components/ui/Portrait";
-import { CardSkeleton } from "@/components/ui/Skeleton";
+import { BookingSkeleton } from "@/components/ui/Skeleton";
 import { CHANGE_POLICY, canChange } from "@/lib/bookingRules";
 import { METHOD_LABEL } from "@/lib/data/categories";
 import { cx, formatDateKorean, formatTimeKorean } from "@/lib/format";
@@ -25,7 +25,7 @@ export function RescheduleFlow() {
   const { bookings, ready } = useAppStore();
   const booking = bookings.find((b) => b.code === code);
 
-  if (!ready) return <CardSkeleton />;
+  if (!ready) return <BookingSkeleton />;
   if (!booking) {
     return (
       <Notice title="예약 정보를 찾을 수 없어요" body="예약 내역은 이 브라우저에 저장돼요. 내 예약에서 확인해 보세요." />
@@ -41,7 +41,7 @@ function Notice({ title, body, booking }: { title: string; body: string; booking
       <p className="mt-2 text-lg leading-relaxed text-navy-500">{body}</p>
       <Link
         href={booking ? `/booking/complete?code=${booking.code}` : "/mypage?tab=upcoming"}
-        className="mt-7 inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white hover:bg-navy-800"
+        className="mt-7 inline-flex h-14 items-center justify-center rounded-xl bg-navy-900 px-6 text-lg font-bold text-white hover:bg-navy-800 transition-[color,background-color,border-color,transform] active:scale-[0.98]"
       >
         {booking ? "예약 상세로" : "내 예약 보기"}
       </Link>
@@ -173,7 +173,7 @@ function Picker({ booking }: { booking: Booking }) {
             type="button"
             disabled={!dateKey || !time || same || saving}
             onClick={save}
-            className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-8 text-lg font-bold text-white transition-colors hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400"
+            className="inline-flex h-14 items-center gap-2 rounded-xl bg-teal-600 px-8 text-lg font-bold text-white transition-[color,background-color,border-color,transform] hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-navy-200 disabled:text-navy-400 active:scale-[0.98]"
           >
             {saving ? "변경 중..." : "이 일정으로 변경"}
             <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
@@ -186,7 +186,7 @@ function Picker({ booking }: { booking: Booking }) {
           type="button"
           disabled={!dateKey || !time || same || saving}
           onClick={save}
-          className="inline-flex h-[52px] w-full items-center justify-center gap-1.5 rounded-xl bg-teal-600 text-lg font-bold text-white transition-colors disabled:bg-navy-200 disabled:text-navy-500"
+          className="inline-flex h-[52px] w-full items-center justify-center gap-1.5 rounded-xl bg-teal-600 text-lg font-bold text-white transition-[color,background-color,border-color,transform] disabled:bg-navy-200 disabled:text-navy-500 active:scale-[0.98]"
         >
           {saving ? "변경 중..." : !dateKey ? "날짜를 선택해 주세요" : !time ? "시간을 선택해 주세요" : "이 일정으로 변경"}
         </button>

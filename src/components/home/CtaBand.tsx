@@ -41,7 +41,7 @@ export function CtaBand() {
           <div className="mt-7 flex flex-col justify-center gap-2.5 sm:flex-row">
             <Link
               href="/match"
-              className="inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-lg font-bold text-navy-950 transition-colors hover:bg-teal-400 sm:w-auto"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-teal-500 px-8 text-lg font-bold text-navy-950 transition-[color,background-color,border-color,transform] hover:bg-teal-400 sm:w-auto active:scale-[0.98]"
             >
               질문 5개로 맞춤 찾기
               <ArrowRight className="h-5 w-5" strokeWidth={2.4} />

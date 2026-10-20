@@ -40,7 +40,7 @@ export function ReviewList({
       <div className="mt-4 flex flex-col gap-5 rounded-2xl border border-navy-100 bg-white p-5 sm:flex-row sm:items-center sm:gap-8">
         <div className="flex shrink-0 items-center gap-4 sm:flex-col sm:items-start">
           <div>
-            <p className="text-9xl font-extrabold leading-none tracking-tight text-navy-900">
+            <p className="text-9xl font-bold leading-none tracking-tight text-navy-900">
               {rating.toFixed(1)}
             </p>
             <Stars value={rating} size={16} className="mt-2" />

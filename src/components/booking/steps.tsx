@@ -92,7 +92,7 @@ export function ProductStep({
                     </span>
                   )}
                   <span className="mt-2.5 flex flex-wrap items-baseline gap-3">
-                    <span className="text-4xl font-extrabold text-navy-900">
+                    <span className="text-4xl font-bold text-navy-900">
                       {formatPrice(p.price)}
                       <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
                     </span>
@@ -508,7 +508,7 @@ export function ConfirmStep({
           </div>
           <div className="flex items-center justify-between gap-4 bg-canvas px-5 py-5">
             <p className="text-xl font-bold text-navy-900">결제 예정 금액</p>
-            <p className="text-5xl font-extrabold tracking-tight text-navy-900">
+            <p className="text-5xl font-bold tracking-tight text-navy-900">
               {formatPrice(price)}
               <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
             </p>
@@ -596,7 +596,7 @@ export function BookingSummary({
 
         <div className="mt-4 flex items-center justify-between border-t border-navy-100 pt-4">
           <span className="text-lg text-navy-600">총 상담료</span>
-          <span className="text-5xl font-extrabold tracking-tight text-navy-900">
+          <span className="text-5xl font-bold tracking-tight text-navy-900">
             {formatPrice(price)}
             <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
           </span>

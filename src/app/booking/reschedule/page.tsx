@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { RescheduleFlow } from "@/components/booking/RescheduleFlow";
-import { CardSkeleton } from "@/components/ui/Skeleton";
+import { BookingSkeleton } from "@/components/ui/Skeleton";
 
 export const metadata: Metadata = {
   title: "일정 변경",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ReschedulePage() {
   return (
-    <Suspense fallback={<CardSkeleton />}>
+    <Suspense fallback={<BookingSkeleton />}>
       <RescheduleFlow />
     </Suspense>
   );

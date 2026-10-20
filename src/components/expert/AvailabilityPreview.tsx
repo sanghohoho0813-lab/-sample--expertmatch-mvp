@@ -53,7 +53,7 @@ export function AvailabilityPreview({ expert }: { expert: Expert }) {
                 <span className={cx("text-sm font-semibold", closed ? "text-navy-300" : "text-navy-500")}>
                   {dayLabel}
                 </span>
-                <span className={cx("text-3xl font-extrabold leading-tight", closed ? "text-navy-300" : "text-navy-900")}>
+                <span className={cx("text-3xl font-bold leading-tight", closed ? "text-navy-300" : "text-navy-900")}>
                   {d.getMonth() + 1}/{d.getDate()}
                 </span>
                 {closed ? (

@@ -248,7 +248,7 @@ export function CompareView({
   return (
     <div>
       {/* 데스크톱: 넓은 비교 표 */}
-      <div className="scroll-slim hidden overflow-x-auto md:block">
+      <div className="relative scroll-slim hidden overflow-x-auto md:block">
         <table className="w-full min-w-[720px] border-collapse text-left">
           <thead>
             <tr>

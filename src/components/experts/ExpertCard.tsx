@@ -118,14 +118,10 @@ export function ExpertCard({
             </Link>
           </h3>
           <p className="mt-0.5 line-clamp-2 text-lg leading-snug text-navy-500">{expert.title}</p>
-          <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-md text-navy-500">
+          {/* 좁은 칸에서는 두 줄로 — 줄 맨 앞에 구분점이 남지 않도록 점 대신 간격으로 나눈다 */}
+          <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-md text-navy-500">
             <Rating expert={expert} />
-            <span className="whitespace-nowrap">
-              <span className="mr-2 text-navy-200" aria-hidden>
-                ·
-              </span>
-              경력 {expert.yearsOfExperience}년
-            </span>
+            <span className="whitespace-nowrap">경력 {expert.yearsOfExperience}년</span>
           </p>
         </div>
       </div>

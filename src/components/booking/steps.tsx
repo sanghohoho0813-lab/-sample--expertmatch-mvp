@@ -39,7 +39,7 @@ export function ProductStep({
         어떤 상담을 받으시겠어요?
       </h1>
       <p className="mt-2 text-xl text-navy-500">
-        고민의 크기에 맞춰 고르세요. 어떤 상품이든 방식은 다음 단계에서 골라요.
+        고민의 크기에 맞춰 고르세요.
       </p>
 
       <ul className="mt-6 space-y-3">
@@ -210,7 +210,7 @@ export function DateStep({
         언제 상담받으시겠어요?
       </h1>
       <p className="mt-2 text-xl text-navy-500">
-        {minutes}분 상담이 가능한 날짜만 선택할 수 있어요.
+        {minutes}분 상담이 가능한 날짜예요.
       </p>
 
       <div className="mt-6">

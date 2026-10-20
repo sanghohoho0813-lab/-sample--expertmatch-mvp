@@ -9,9 +9,8 @@ import type { Expert } from "@/lib/types";
  * 옵션 이름만 보고 고르지 않게 한다. 데스크톱은 나란히, 모바일은 위아래로.
  */
 export function ProductGuide({ expert }: { expert: Expert }) {
-  const n = expert.products.length;
   return (
-    <section id="products" className="scroll-mt-28" aria-labelledby="products-title">
+    <section id="products" className="scroll-mt-32" aria-labelledby="products-title">
       <h2 id="products-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
         상담 상품
       </h2>
@@ -19,31 +18,34 @@ export function ProductGuide({ expert }: { expert: Expert }) {
         모든 상품은 {expert.methods.map((m) => METHOD_LABEL[m]).join("·")}으로 받을 수 있어요. 고민의 크기에 맞춰 고르세요.
       </p>
 
-      <ul className={cx("mt-5 grid grid-cols-1 gap-3", n >= 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
+      {/* 모바일: 위아래 카드 / 태블릿 이상: 왼쪽 이름·가격·예약, 오른쪽 범위 — 상품이 늘어도 칸이 좁아지지 않는다 */}
+      <ul className="mt-5 space-y-3">
         {expert.products.map((p) => (
           <li
             key={p.id}
             className={cx(
-              "flex flex-col rounded-2xl border bg-white p-5",
+              "flex flex-col rounded-2xl border bg-white p-5 md:grid md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:grid-rows-[auto_1fr] md:gap-x-8 md:p-6",
               p.recommended ? "border-navy-900" : "border-navy-100",
             )}
           >
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <h3 className="text-2xl font-bold text-navy-900">{p.name}</h3>
-              {p.recommended && <span className="text-sm font-bold text-teal-700">가장 많이 선택</span>}
+            <div className="md:col-start-1 md:row-start-1">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <h3 className="text-2xl font-bold text-navy-900">{p.name}</h3>
+                {p.recommended && <span className="text-sm font-bold text-teal-700">가장 많이 선택</span>}
+              </div>
+              <p className="mt-1.5 flex items-baseline gap-2">
+                <span className="text-4xl font-extrabold tracking-tight text-navy-900">
+                  {formatPrice(p.price)}
+                  <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
+                </span>
+                <span className="inline-flex items-center gap-1 text-md text-navy-500">
+                  <Clock3 className="h-4 w-4" strokeWidth={2.2} />
+                  {p.minutes}분
+                </span>
+              </p>
             </div>
-            <p className="mt-1.5 flex items-baseline gap-2">
-              <span className="text-4xl font-extrabold tracking-tight text-navy-900">
-                {formatPrice(p.price)}
-                <span className="ml-0.5 text-md font-semibold text-navy-500">원</span>
-              </span>
-              <span className="inline-flex items-center gap-1 text-md text-navy-500">
-                <Clock3 className="h-4 w-4" strokeWidth={2.2} />
-                {p.minutes}분
-              </span>
-            </p>
 
-            <dl className="mt-4 space-y-3.5 border-t border-navy-100 pt-4">
+            <dl className="mt-4 space-y-3.5 border-t border-navy-100 pt-4 md:col-start-2 md:row-span-2 md:row-start-1 md:mt-0 md:border-l md:border-t-0 md:pl-8 md:pt-0">
               <div>
                 <dt className="text-base font-semibold text-navy-400">이런 경우에 고르세요</dt>
                 <dd className="mt-0.5 text-lg leading-snug text-navy-800">{p.recommendedFor}</dd>
@@ -67,7 +69,7 @@ export function ProductGuide({ expert }: { expert: Expert }) {
               </div>
             </dl>
 
-            <div className="mt-auto pt-5">
+            <div className="mt-auto pt-5 md:col-start-1 md:row-start-2 md:mt-0 md:self-end">
               <Link
                 href={`/booking/${expert.id}?product=${p.id}`}
                 className={cx(

@@ -116,7 +116,7 @@ export function HeroSearch() {
       </div>
 
       {/* 모바일은 한 줄 가로 스크롤로 — 히어로 높이를 줄인다 */}
-      <div className="no-scrollbar -mx-5 mt-3.5 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
+      <div className="relative no-scrollbar -mx-5 mt-3.5 flex items-center gap-2 overflow-x-auto px-5 sm:mx-0 sm:mt-5 sm:flex-wrap sm:gap-x-2.5 sm:gap-y-2.5 sm:overflow-visible sm:px-0">
         <span className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-teal-300">
           <Sparkles className="h-4 w-4" strokeWidth={2.4} />
           인기 검색어

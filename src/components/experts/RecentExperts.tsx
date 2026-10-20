@@ -33,7 +33,7 @@ export function RecentExperts({ exclude }: { exclude?: string }) {
         </button>
       </div>
 
-      <ul className="scroll-slim mt-4 flex gap-3 overflow-x-auto pb-1">
+      <ul className="relative scroll-slim mt-4 flex gap-3 overflow-x-auto pb-1">
         {experts.map((e) => {
           const lead = e.products.reduce((a, b) => (b.price < a.price ? b : a));
           return (

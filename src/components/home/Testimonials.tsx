@@ -14,7 +14,7 @@ export function Testimonials() {
         <p className="section-sub">상담 후 남겨주신 후기예요.</p>
 
         {/* 모바일: 옆으로 넘겨 보기 / 데스크톱: 4열 */}
-        <ul className="no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:mt-9 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0">
+        <ul className="relative no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:mt-9 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0">
           {TESTIMONIALS.map((t) => {
             const expert = EXPERT_MAP[t.expertId];
             return (

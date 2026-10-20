@@ -70,7 +70,7 @@ export function DayStrip({
           <ChevronLeft className="h-4 w-4" strokeWidth={2.4} />
         </button>
 
-        <ul className="no-scrollbar -mx-5 flex min-w-0 flex-1 snap-x gap-2 overflow-x-auto scroll-px-5 px-5 py-1 sm:mx-0 sm:grid sm:grid-cols-7 sm:gap-1.5 sm:overflow-visible sm:px-0">
+        <ul className="relative no-scrollbar -mx-5 flex min-w-0 flex-1 snap-x gap-2 overflow-x-auto scroll-px-5 px-5 py-1 sm:mx-0 sm:grid sm:grid-cols-7 sm:gap-1.5 sm:overflow-visible sm:px-0">
           {days.map(({ d, dateKey, count }, i) => {
             const disabled = count === 0;
             const selected = value === dateKey;

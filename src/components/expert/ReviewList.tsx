@@ -32,7 +32,7 @@ export function ReviewList({
   const total = reviewCount || 1;
 
   return (
-    <section id="reviews" className="scroll-mt-24">
+    <section id="reviews" className="scroll-mt-32">
       <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">
         후기 <span className="text-teal-700">{formatCount(reviewCount)}</span>
       </h2>

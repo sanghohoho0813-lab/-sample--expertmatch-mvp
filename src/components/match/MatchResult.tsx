@@ -97,11 +97,10 @@ export function MatchResult() {
         <h1 className="text-5xl font-bold leading-tight text-navy-900 sm:text-7xl" aria-live="polite">
           {heading}
         </h1>
-        <p className="mt-3 flex items-start gap-2 text-lg leading-relaxed text-navy-500">
+        <p className="mt-3 flex items-start gap-2 text-md leading-relaxed text-navy-500 sm:text-lg">
           <Info className="mt-1 h-4 w-4 shrink-0 text-navy-400" strokeWidth={2.2} />
           <span>
-            추천 이유는 전문가의 상담 분야·대상·방식·상담료와 지금 예약 가능한 시간을 내 답변과 하나씩
-            대조한 결과예요. 근거 없는 매칭 점수는 표시하지 않아요.
+            내 답변을 전문가의 분야·대상·방식·상담료·빈 시간과 하나씩 대조했어요. 매칭 점수는 만들지 않아요.
           </span>
         </p>
       </header>

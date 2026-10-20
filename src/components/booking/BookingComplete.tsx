@@ -144,8 +144,7 @@ export function BookingComplete() {
                   {booking.expertName} 전문가에게 예약이 전달되었어요.
                   {now && (
                     <span className="mt-1 block font-semibold text-teal-700">
-                      {dDay(booking.date, now)} · {formatDateFull(booking.date)}{" "}
-                      {formatTimeKorean(booking.time)}
+                      {dDay(booking.date, now)} · {formatDateKorean(booking.date)} {formatTimeKorean(booking.time)}
                     </span>
                   )}
                 </p>

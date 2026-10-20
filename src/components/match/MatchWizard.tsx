@@ -204,29 +204,45 @@ export function MatchWizard() {
                   className={cx(
                     "relative flex w-full rounded-2xl border text-left transition-colors duration-150",
                     question.grid && o.icon
-                      ? "h-full min-h-[112px] flex-col items-start gap-2.5 p-4"
+                      ? "h-full min-h-[96px] flex-col items-start gap-2 p-3.5 sm:p-4"
                       : "min-h-[64px] items-center gap-3.5 px-5 py-4",
                     active
                       ? "border-teal-600 bg-teal-50/70 ring-1 ring-teal-600"
                       : "border-navy-200 bg-white hover:border-navy-300 hover:bg-canvas",
                   )}
                 >
-                  {o.icon && (
-                    <span
-                      className={cx(
-                        "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
-                        active ? "bg-teal-600 text-white" : "bg-navy-50 text-navy-600",
+                  {question.grid && o.icon ? (
+                    <>
+                      {/* 상자 안 상자 대신 아이콘만 — 좁은 두 칸에서도 분야 이름이 한 줄에 */}
+                      <span className="flex items-center gap-1.5 pr-6">
+                        <Icon
+                          name={o.icon}
+                          className={cx("h-5 w-5 shrink-0", active ? "text-teal-700" : "text-navy-500")}
+                        />
+                        <span className="text-xl font-bold leading-snug text-navy-900">{o.label}</span>
+                      </span>
+                      {o.hint && <span className="text-base leading-snug text-navy-500">{o.hint}</span>}
+                    </>
+                  ) : (
+                    <>
+                      {o.icon && (
+                        <span
+                          className={cx(
+                            "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
+                            active ? "bg-teal-600 text-white" : "bg-navy-50 text-navy-600",
+                          )}
+                        >
+                          <Icon name={o.icon} className="h-5 w-5" />
+                        </span>
                       )}
-                    >
-                      <Icon name={o.icon} className="h-5 w-5" />
-                    </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-xl font-bold leading-snug text-navy-900">{o.label}</span>
+                        {o.hint && (
+                          <span className="mt-0.5 block text-base leading-snug text-navy-500">{o.hint}</span>
+                        )}
+                      </span>
+                    </>
                   )}
-                  <span className={cx("min-w-0", !(question.grid && o.icon) && "flex-1")}>
-                    <span className="block text-xl font-bold leading-snug text-navy-900">{o.label}</span>
-                    {o.hint && (
-                      <span className="mt-0.5 block text-base leading-snug text-navy-500">{o.hint}</span>
-                    )}
-                  </span>
                   {active && (
                     <Check
                       className={cx(

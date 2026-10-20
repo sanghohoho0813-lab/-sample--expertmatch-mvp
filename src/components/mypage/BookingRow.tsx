@@ -63,8 +63,8 @@ export function BookingRow({
   const prepDone = prepAll.filter((item) => booking.prepDone?.includes(item)).length;
 
   return (
-    <li className="overflow-hidden rounded-2xl border border-navy-100 bg-white" data-status={status}>
-      <div className="p-4 sm:p-5">
+    <li className="flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white" data-status={status}>
+      <div className="flex-1 p-4 sm:p-5">
         {/* 상태 · 남은 날 · 예약번호 */}
         <div className="flex items-center gap-2">
           <span className={cx("rounded-md px-2 py-0.5 text-sm font-bold", badge.className)}>{badge.label}</span>

@@ -11,6 +11,7 @@ import { AvailabilityPreview } from "@/components/expert/AvailabilityPreview";
 import { ReviewList } from "@/components/expert/ReviewList";
 import { MobileBookingBar } from "@/components/expert/MobileBookingBar";
 import { TrackView } from "@/components/expert/TrackView";
+import { SectionNav } from "@/components/expert/SectionNav";
 import { RecentExperts } from "@/components/experts/RecentExperts";
 import { CHANGE_POLICY, ROOM_OPENS_MINUTES } from "@/lib/bookingRules";
 import { AUDIENCE_LABEL, CATEGORY_MAP, METHOD_LABEL } from "@/lib/data/categories";
@@ -218,29 +219,13 @@ export default function ExpertDetailPage({
           </div>
         </section>
 
-        {/* 섹션 바로가기 */}
-        <nav
-          aria-label="상세 정보 바로가기"
-          className="-mx-5 border-b border-navy-100 bg-white sm:-mx-6 lg:col-start-1 lg:row-start-2 lg:mx-0"
-        >
-          <ul className="no-scrollbar flex gap-1 overflow-x-auto px-3 sm:px-4 lg:px-0">
-            {SECTIONS.map((sec) => (
-              <li key={sec.id} className="shrink-0">
-                <a
-                  href={`#${sec.id}`}
-                  className="inline-flex min-h-[52px] items-center px-2.5 text-base font-semibold text-navy-500 transition-colors hover:text-navy-900 lg:first:pl-0"
-                >
-                  {sec.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {/* 섹션 바로가기 — 위에 붙어 지금 보는 섹션을 표시 */}
+        <SectionNav sections={SECTIONS} />
 
         {/* ── 판단을 뒷받침하는 상세 정보 ── */}
         <div className="min-w-0 space-y-12 py-8 lg:col-start-1 lg:row-start-3 lg:py-10">
           {/* 1. 나에게 맞는 전문가인가 */}
-          <section id="fit" className="scroll-mt-28" aria-labelledby="fit-title">
+          <section id="fit" className="scroll-mt-32" aria-labelledby="fit-title">
             <h2 id="fit-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
               이런 고민이라면 도움이 돼요
             </h2>
@@ -279,7 +264,7 @@ export default function ExpertDetailPage({
           </section>
 
           {/* 2. 무엇을 해결해 왔나 */}
-          <section id="specialties" className="scroll-mt-28" aria-labelledby="solves-title">
+          <section id="specialties" className="scroll-mt-32" aria-labelledby="solves-title">
             <h2 id="solves-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
               해결해 온 문제
             </h2>
@@ -321,7 +306,7 @@ export default function ExpertDetailPage({
           />
 
           {/* 6. 어떤 사람인가 */}
-          <section id="about" className="scroll-mt-28" aria-labelledby="about-title">
+          <section id="about" className="scroll-mt-32" aria-labelledby="about-title">
             <h2 id="about-title" className="text-4xl font-bold text-navy-900 sm:text-5xl">
               전문가 소개
             </h2>
@@ -331,7 +316,7 @@ export default function ExpertDetailPage({
               상담 언어 · {expert.languages.join(", ")}
             </p>
 
-            <h3 id="career" className="mt-8 scroll-mt-28 text-2xl font-bold text-navy-900">
+            <h3 id="career" className="mt-8 scroll-mt-32 text-2xl font-bold text-navy-900">
               대표 경력
             </h3>
             <CareerList items={expert.career.slice(0, CAREER_LEAD)} />

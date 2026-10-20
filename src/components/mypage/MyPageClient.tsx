@@ -36,6 +36,17 @@ const TABS = [
 
 type TabId = (typeof TABS)[number]["id"];
 
+/** 위 탭은 네 개로 — 예정·완료·취소는 '상담' 안의 상태 선택으로 묶어 한 줄에 다 보이게 한다 */
+const CONSULT_TABS: TabId[] = ["upcoming", "done", "cancelled"];
+const SECTIONS = [
+  { id: "consults", label: "상담 내역", short: "상담", icon: CalendarClock },
+  { id: "favorites", label: "찜", short: "찜", icon: Heart },
+  { id: "recent", label: "최근 본", short: "최근 본", icon: History },
+  { id: "profile", label: "프로필", short: "프로필", icon: UserRound },
+] as const;
+type SectionId = (typeof SECTIONS)[number]["id"];
+const sectionOf = (t: TabId): SectionId => (CONSULT_TABS.includes(t) ? "consults" : (t as SectionId));
+
 /** 이전 버전 링크 호환 */
 const LEGACY_TAB: Record<string, TabId> = { reviews: "done", history: "upcoming" };
 
@@ -62,6 +73,10 @@ export function MyPageClient() {
     : (LEGACY_TAB[rawTab] ?? "upcoming");
 
   const setTab = (next: TabId) => router.replace(`/mypage?tab=${next}`, { scroll: false });
+  const section = sectionOf(tab);
+  // '상담'을 다시 누르면 예정부터 — 다른 상태를 보고 있었다면 그대로 둔다
+  const openSection = (id: SectionId) =>
+    setTab(id === "consults" ? (CONSULT_TABS.includes(tab) ? tab : "upcoming") : (id as TabId));
 
   const groups = useMemo(() => {
     const withStatus = bookings.map((b) => ({ b, s: effectiveStatus(b, now) }));
@@ -119,28 +134,28 @@ export function MyPageClient() {
       </section>
 
       <div
-        className="scroll-slim mt-6 flex gap-1 overflow-x-auto border-b border-navy-100 pb-px"
+        className="mt-6 flex gap-1 border-b border-navy-100 pb-px"
         role="tablist"
         aria-label="마이페이지"
         onKeyDown={(e) => {
           // 탭 사이 이동: ←/→, 처음·끝: Home/End (WAI-ARIA Tabs 패턴)
-          const i = TABS.findIndex((t) => t.id === tab);
+          const i = SECTIONS.findIndex((t) => t.id === section);
           const nextIndex =
-            e.key === "ArrowRight" ? (i + 1) % TABS.length
-            : e.key === "ArrowLeft" ? (i - 1 + TABS.length) % TABS.length
+            e.key === "ArrowRight" ? (i + 1) % SECTIONS.length
+            : e.key === "ArrowLeft" ? (i - 1 + SECTIONS.length) % SECTIONS.length
             : e.key === "Home" ? 0
-            : e.key === "End" ? TABS.length - 1
+            : e.key === "End" ? SECTIONS.length - 1
             : -1;
           if (nextIndex < 0) return;
           e.preventDefault();
-          setTab(TABS[nextIndex].id);
-          document.getElementById(`mypage-tab-${TABS[nextIndex].id}`)?.focus();
+          openSection(SECTIONS[nextIndex].id);
+          document.getElementById(`mypage-tab-${SECTIONS[nextIndex].id}`)?.focus();
         }}
       >
-        {TABS.map((t) => {
+        {SECTIONS.map((t) => {
           const TabIcon = t.icon;
-          const active = tab === t.id;
-          const count = counts[t.id];
+          const active = section === t.id;
+          const count = t.id === "consults" ? counts.upcoming : counts[t.id as TabId];
           return (
             <button
               key={t.id}
@@ -150,33 +165,86 @@ export function MyPageClient() {
               aria-selected={active}
               aria-controls="mypage-panel"
               tabIndex={active ? 0 : -1}
-              onClick={() => setTab(t.id)}
+              onClick={() => openSection(t.id)}
               className={cx(
-                "relative inline-flex min-h-[48px] shrink-0 items-center gap-1.5 whitespace-nowrap px-2.5 text-lg font-semibold transition-colors duration-200 sm:px-3 sm:text-lg",
+                "relative inline-flex min-h-[48px] flex-1 items-center justify-center gap-1.5 whitespace-nowrap px-1.5 text-lg font-semibold transition-colors duration-200 sm:flex-none sm:justify-start sm:px-3",
                 active ? "text-navy-900" : "text-navy-400 hover:text-navy-700",
               )}
             >
               <TabIcon className="hidden h-4 w-4 sm:block" strokeWidth={2.2} />
-              {t.label}
+              <span className="sm:hidden">{t.short}</span>
+              <span className="hidden sm:inline">{t.label}</span>
               {ready && count !== null && count > 0 && (
                 <span className={cx("text-sm font-bold", active ? "text-teal-700" : "text-navy-400")}>
                   {count}
                 </span>
               )}
-              {active && <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-teal-600" />}
+              {active && <span className="absolute inset-x-1.5 -bottom-px h-0.5 rounded-full bg-teal-600 sm:inset-x-2" />}
             </button>
           );
         })}
       </div>
 
-      <div className="mt-6" id="mypage-panel" role="tabpanel" aria-labelledby={`mypage-tab-${tab}`}>
+      {/* 상담 상태 — 예정 · 완료 · 취소 */}
+      {section === "consults" && (
+        <div
+          className="mt-4 inline-flex w-full rounded-xl bg-navy-50 p-1 sm:w-auto"
+          role="tablist"
+          aria-label="상담 상태"
+          onKeyDown={(e) => {
+            const i = CONSULT_TABS.indexOf(tab);
+            const nextIndex =
+              e.key === "ArrowRight" ? (i + 1) % CONSULT_TABS.length
+              : e.key === "ArrowLeft" ? (i - 1 + CONSULT_TABS.length) % CONSULT_TABS.length
+              : -1;
+            if (nextIndex < 0) return;
+            e.preventDefault();
+            setTab(CONSULT_TABS[nextIndex]);
+            document.getElementById(`mypage-status-${CONSULT_TABS[nextIndex]}`)?.focus();
+          }}
+        >
+          {CONSULT_TABS.map((id) => {
+            const meta = TABS.find((t) => t.id === id)!;
+            const active = tab === id;
+            const count = counts[id];
+            return (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                id={`mypage-status-${id}`}
+                aria-selected={active}
+                aria-controls="mypage-panel"
+                tabIndex={active ? 0 : -1}
+                onClick={() => setTab(id)}
+                className={cx(
+                  "inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg px-4 text-md font-semibold transition-all duration-200 sm:flex-none",
+                  active ? "bg-white text-navy-900 shadow-card" : "text-navy-500 hover:text-navy-800",
+                )}
+              >
+                {meta.label}
+                {ready && count !== null && (
+                  <span className={cx("text-sm font-bold", active ? "text-teal-700" : "text-navy-400")}>{count}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <div
+        className="mt-5"
+        id="mypage-panel"
+        role="tabpanel"
+        aria-labelledby={section === "consults" ? `mypage-status-${tab}` : `mypage-tab-${section}`}
+      >
         {!ready ? (
           <ListSkeleton />
         ) : (
           <>
             {tab === "upcoming" &&
               (groups.upcoming.length > 0 ? (
-                <ul className="space-y-3">
+                <ul className="grid gap-3 lg:grid-cols-2 lg:gap-4">
                   {groups.upcoming.map(({ b, s }) => (
                     <BookingRow key={b.id} booking={b} status={s} {...rowProps} />
                   ))}
@@ -198,7 +266,7 @@ export function MyPageClient() {
                     남겨 주신 후기는 전문가 프로필에 바로 반영돼요.
                   </p>
                 )}
-                <ul className="space-y-3">
+                <ul className="grid gap-3 lg:grid-cols-2 lg:gap-4">
                   {groups.done.map(({ b, s }) => (
                     <BookingRow key={b.id} booking={b} status={s} review={reviewOf(b.id)} {...rowProps} />
                   ))}
@@ -214,7 +282,7 @@ export function MyPageClient() {
 
             {tab === "cancelled" &&
               (groups.cancelled.length > 0 ? (
-                <ul className="space-y-3">
+                <ul className="grid gap-3 lg:grid-cols-2 lg:gap-4">
                   {groups.cancelled.map(({ b, s }) => (
                     <BookingRow key={b.id} booking={b} status={s} {...rowProps} />
                   ))}

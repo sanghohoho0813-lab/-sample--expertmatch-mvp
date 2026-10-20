@@ -142,7 +142,7 @@ function Room({ booking, now }: { booking: Booking; now: Date | null }) {
     {
       key: "booked",
       when: formatDateKorean(booking.createdAt.slice(0, 10)),
-      text: `예약 확정 · ${booking.productName} ${booking.minutes}분 · ${METHOD_LABEL[booking.method]}`,
+      text: `예약 확정 · ${booking.productName} · ${METHOD_LABEL[booking.method]}`,
     },
   ];
   if (booking.rescheduledFrom) {

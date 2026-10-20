@@ -29,6 +29,10 @@ export async function pickMethodDateTime(page: Page) {
   return { dayLabel, time };
 }
 
+/** 가로로 넘친 폭(px) — 0 이하면 정상. 모바일 에뮬레이션에서는 innerWidth 가 함께 늘어나 clientWidth 와 비교한다 */
+export const noHorizontalOverflow = (page: Page) =>
+  page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+
 /** 상세 → 예약 완료까지 */
 export async function bookFromDetail(page: Page, expertId = "kim-dohyun") {
   await page.goto(`/experts/${expertId}`);
@@ -41,6 +45,8 @@ export async function bookFromDetail(page: Page, expertId = "kim-dohyun") {
   }
   const picked = await pickMethodDateTime(page);
   await nextStep(page).click(); // 상담 내용 (선택)
+  // 고른 내용 칩이 쌓여도 페이지가 옆으로 넘치지 않는다 (넘치면 하단 버튼이 화면 밖으로 밀린다)
+  expect(await noHorizontalOverflow(page)).toBeLessThanOrEqual(0);
   await nextStep(page).click(); // 예약 확인
   await page.getByRole("button", { name: "상담 예약하기" }).filter({ visible: true }).first().click();
   await page.waitForURL(/\/booking\/complete\?code=/);

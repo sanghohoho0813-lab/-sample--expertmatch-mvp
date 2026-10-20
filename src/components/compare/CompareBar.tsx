@@ -39,7 +39,7 @@ export function CompareBar() {
             <span className="text-xl font-bold">전문가 비교</span>
           </div>
 
-          <ul className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto no-scrollbar">
+          <ul className="relative flex min-w-0 flex-1 items-center gap-2 overflow-x-auto no-scrollbar">
             {experts.map((e) => (
               <li key={e.id} className="relative shrink-0">
                 <Portrait name={e.name} accent={e.accent}

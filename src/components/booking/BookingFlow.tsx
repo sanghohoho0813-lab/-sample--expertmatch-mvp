@@ -190,7 +190,7 @@ export function BookingFlow({ expert }: { expert: Expert }) {
 
   /** 지금까지 고른 내용 — 탭하면 그 단계로 돌아간다 */
   const trail = [
-    { step: 0, label: "상품", value: `${product.name} · ${formatPrice(product.price)}원` },
+    { step: 0, label: "상품", value: product.name },
     { step: 1, label: "방식", value: method ? METHOD_LABEL[method] : null },
     { step: 2, label: "날짜", value: dateKey ? formatDateKorean(dateKey) : null },
     { step: 3, label: "시간", value: time ? formatTimeKorean(time) : null },
@@ -246,20 +246,23 @@ export function BookingFlow({ expert }: { expert: Expert }) {
           <div className="min-w-0 flex-1">
             {/* 이전 단계 선택 내용 (모바일 — 데스크톱은 우측 요약) */}
             {trail.length > 0 && !isLast && (
+              // 한 줄 가로 스크롤 — 단계가 진행돼도 본문이 아래로 밀리지 않는다.
+              // relative: 안쪽 sr-only(절대 위치)가 스크롤 영역 밖으로 새어 페이지 폭을 늘리지 않도록
               <ul
-                className="-mt-1 mb-5 flex flex-wrap gap-2 lg:hidden"
+                className="no-scrollbar relative -mx-5 -mt-1 mb-5 flex gap-2 overflow-x-auto px-5 sm:-mx-6 sm:px-6 lg:hidden"
                 aria-label="지금까지 선택한 내용"
               >
                 {trail.map((t) => (
-                  <li key={t.label}>
+                  <li key={t.label} className="shrink-0">
                     <button
                       type="button"
                       onClick={() => goTo(t.step)}
-                      className="inline-flex min-h-[40px] items-center gap-1.5 rounded-2xl border border-navy-100 bg-white px-3 py-1 text-left text-base text-navy-600 transition-colors hover:border-navy-300"
+                      aria-label={`${t.label} ${t.value} — 바꾸기`}
+                      className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-full border border-navy-100 bg-white px-3.5 text-base font-semibold text-navy-800 transition-colors hover:border-navy-300"
                     >
                       <Check className="h-3.5 w-3.5 shrink-0 text-teal-600" strokeWidth={3} />
-                      <span className="shrink-0 text-navy-400">{t.label}</span>
-                      <span className="font-semibold text-navy-800">{t.value}</span>
+                      <span className="sr-only">{t.label}</span>
+                      {t.value}
                     </button>
                   </li>
                 ))}

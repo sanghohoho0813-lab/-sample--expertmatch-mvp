@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { noHorizontalOverflow } from "./helpers";
 
 const PAGES = [
   "/",
@@ -25,7 +26,8 @@ for (const path of PAGES) {
     });
     await page.goto(path);
     await page.waitForLoadState("networkidle");
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    // 모바일 에뮬레이션에서는 내용이 넘치면 innerWidth 도 함께 늘어나므로 clientWidth 와 비교한다
+    const overflow = await noHorizontalOverflow(page);
     expect(overflow).toBeLessThanOrEqual(0);
     expect(errors).toEqual([]);
   });

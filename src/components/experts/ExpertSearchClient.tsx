@@ -300,7 +300,7 @@ export function ExpertSearchClient() {
 
       {/* 모바일·태블릿: 분야 한 번에 고르기 (데스크톱은 왼쪽 필터) */}
       <div
-        className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 sm:-mx-6 sm:px-6 lg:hidden"
+        className="relative no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 sm:-mx-6 sm:px-6 lg:hidden"
         role="group"
         aria-label="분야 빠른 선택"
       >
@@ -433,8 +433,14 @@ export function ExpertSearchClient() {
                 <ListChecks className="h-5 w-5" strokeWidth={2.2} />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-lg font-bold text-navy-900">누구에게 물어야 할지 모르겠다면</span>
-                <span className="block text-base text-navy-500">질문 5개로 고민·예산·일정에 맞는 전문가를 좁혀 드려요</span>
+                <span className="block text-lg font-bold text-navy-900">
+                  <span className="sm:hidden">질문 5개로 맞춤 찾기</span>
+                  <span className="hidden sm:inline">누구에게 물어야 할지 모르겠다면</span>
+                </span>
+                <span className="block text-base leading-snug text-navy-500">
+                  <span className="sm:hidden">고민·예산·일정에 맞는 분을 골라 드려요</span>
+                  <span className="hidden sm:inline">질문 5개로 고민·예산·일정에 맞는 전문가를 좁혀 드려요</span>
+                </span>
               </span>
               <span className="hidden shrink-0 items-center gap-1 text-md font-bold text-teal-700 sm:inline-flex">
                 맞춤 찾기

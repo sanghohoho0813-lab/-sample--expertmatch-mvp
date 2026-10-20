@@ -24,7 +24,7 @@ export function AvailabilityPreview({ expert }: { expert: Expert }) {
   }, [now, getOpen]);
 
   return (
-    <section id="availability" className="scroll-mt-28">
+    <section id="availability" className="scroll-mt-32">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-4xl font-bold text-navy-900 sm:text-5xl">상담 가능 시간</h2>
         <Link
@@ -43,7 +43,7 @@ export function AvailabilityPreview({ expert }: { expert: Expert }) {
           ))}
         </div>
       ) : (
-        <ul className="no-scrollbar -mx-5 mt-4 flex gap-2 overflow-x-auto px-5 pb-1 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-7 md:overflow-visible md:px-0">
+        <ul className="relative no-scrollbar -mx-5 mt-4 flex gap-2 overflow-x-auto px-5 pb-1 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-7 md:overflow-visible md:px-0">
           {days.map(({ dateKey, offset, slots }) => {
             const d = parseDateKey(dateKey);
             const closed = slots.length === 0;
